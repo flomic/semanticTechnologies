@@ -1,0 +1,24 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix foaf: <http://xmlns.com/foaf/spec/>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix : <http://www.example.org/>.
+
+:Museum rdfs:subClassOf :TourismAttraction.
+:ArtMuseum rdfs:subClassOf :Museum.
+:ModernArtMuseum rdfs:subClassOf :ArtMuseum.
+:HistoryMuseum rdfs:subClassOf :Museum.
+:Landmark rdfs:subClassOf :TourismAttraction.
+:OutdoorSport rdfs:subClassOf :TourismAttraction.
+:AmusementPark rdfs:subClassOf :TourismAttraction.
+:Restaurant rdfs:subClassOf :TourismObject.
+:Hotel rdfs:subClassOf :TourismObject.
+:TourismAttraction rdfs:subClassOf :TourismObject.
+
+:hasTripAdvisorRating rdfs:domain :TourismObject.
+:hasTripAdvisorRating rdfs:subPropertyOf :hasRating.
+:hasHotel rdfs:range :Hotel.
+
+:Museion rdf:type :ModernArtMuseum.
+:Museion :locatedIn :Bolzano.
+:ChickenHut :hasTripAdvisorRating "3.5"^^xsd:float.
