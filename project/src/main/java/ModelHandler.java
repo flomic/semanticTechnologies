@@ -7,6 +7,8 @@ import org.eclipse.rdf4j.query.TupleQueryResult;
 import org.eclipse.rdf4j.repository.Repository;
 import org.eclipse.rdf4j.repository.RepositoryConnection;
 
+import java.util.Date;
+
 /**
  * Created by christine on 13.01.17.
  */
@@ -27,7 +29,7 @@ public class ModelHandler {
         }
     }
 
-    public static Model addItem(String subject, String predicate, String object, char objectType, Model model) {
+    public static void addItem(String subject, String predicate, String object, char objectType, Model model) {
 
         ValueFactory factory = SimpleValueFactory.getInstance();
         Resource subjectPart = factory.createIRI(subject);
@@ -51,7 +53,35 @@ public class ModelHandler {
 
         Statement statement = factory.createStatement(subjectPart, predicatePart, objectPart);
         model.add(statement);
-        return (model);
     }
+
+    public static void addBook(Book book, Model model){
+        addItem("http://www.example.org/"+book.getBookId(), "http://www.example.org/hasAuthor", "http://www.example.org/"+book.getAuthor().getId(), 'I', model);
+        addItem("http://www.example.org/"+book.getBookId(), "http://www.example.org/hasTitle", book.getTitle(), 'L', model);
+        addItem("http://www.example.org/"+book.getBookId(), "http://www.example.org/hasGenre", book.getGenre(), 'L', model);
+        addItem("http://www.example.org/"+book.getBookId(), "http://www.example.org/hasLanguage", book.getLanguage(), 'L', model);
+        addItem("http://www.example.org/"+book.getBookId(), "http://www.example.org/hasCover", "http://www.example.org/"+book.getCover().getPath(), 'I', model);
+        addItem("http://www.example.org/"+book.getBookId(), "http://www.example.org/hasPublicationYear", book.getPublicationYear().toString(), 'L', model);
+        addItem("http://www.example.org/"+book.getBookId(), "http://www.example.org/hasPublisher", "http://www.example.org/"+book.getPublisher().getPublisherId(), 'I', model);
+    }
+
+        public static void addAuthor(Author author, Model model) {
+            addItem("http://www.example.org/" + author.getId(), "http://www.example.org/hasGender", author.getGender(), 'L', model);
+            addItem("http://www.example.org/" + author.getId(), "http://www.example.org/hasFirstName", author.getFirstName(), 'L', model);
+            addItem("http://www.example.org/" + author.getId(), "http://www.example.org/hasLastName", author.getLastName(), 'L', model);
+            addItem("http://www.example.org/" + author.getId(), "http://www.example.org/hasDateOfBirth", author.getDateOfBirth().toString(), 'L', model);
+        }
+
+        public static void addReader(Reader reader, Model model) {
+            addItem("http://www.example.org/" + reader.getId(), "http://www.example.org/hasGender", reader.getGender(), 'L', model);
+            addItem("http://www.example.org/" + reader.getId(), "http://www.example.org/hasFirstName", reader.getFirstName(), 'L', model);
+            addItem("http://www.example.org/" + reader.getId(), "http://www.example.org/hasLastName", reader.getLastName(), 'L', model);
+            addItem("http://www.example.org/" + reader.getId(), "http://www.example.org/hasDateOfBirth", reader.getDateOfBirth().toString(), 'L', model);
+            addItem("http://www.example.org/" + reader.getId(), "http://www.example.org/hasLibrary", "http://www.example.org/" + reader.getLibrary().getId(), 'I', model);
+        }
+
+        public static void addBookToLibrary(String bookId, String libId, Model model){
+            addItem("http://www.example.org/" + bookId, "http://www.example.org/belongsTo", "http://www.example.org/" +libId, 'I', model);
+        }
 
 }
