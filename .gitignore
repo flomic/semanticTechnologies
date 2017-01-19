@@ -1,3 +1,4 @@
-project/*.class
+*.class
 
-project/.idea
+project/
+.idea
