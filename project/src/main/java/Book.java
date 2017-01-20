@@ -8,20 +8,20 @@ import java.time.Year;
 
 public class Book {
     private String bookId;
-    private Author author;
+    private String authorId;
     private String title;
     private String language;
-    private Publisher publisher;
+    private String publisherId;
     private String genre;
     private Integer publicationYear;
     private Cover cover;
 
-    public Book (String bookId, Author author, String title, String language, Publisher publisher, String genre, Integer publicationYear, Cover cover) {
+    public Book (String bookId, String authorId, String title, String language, String publisherId, String genre, Integer publicationYear, Cover cover) {
     	this.bookId = bookId;
-    	this.author = author;
+    	this.authorId = authorId;
     	this.title = title;
     	this.language = language;
-    	this.publisher = publisher;
+    	this.publisherId = publisherId;
     	this.genre = genre;
     	this.publicationYear = publicationYear;
     	this.cover = cover;
@@ -35,12 +35,12 @@ public class Book {
         this.bookId = bookId;
     }
 
-    public Author getAuthor() {
-        return author;
+    public String getAuthor() {
+        return authorId;
     }
 
     public void setAuthor(Author author) {
-        this.author = author;
+        this.authorId = authorId;
     }
 
     public String getTitle() {
@@ -59,12 +59,12 @@ public class Book {
         this.language = language;
     }
 
-    public Publisher getPublisher() {
-        return publisher;
+    public String getPublisher() {
+        return publisherId;
     }
 
     public void setPublisher(Publisher publisher) {
-        this.publisher = publisher;
+        this.publisherId = publisherId;
     }
 
     public String getGenre() {

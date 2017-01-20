@@ -1,17 +1,25 @@
-@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix ex:  <http://www.semantic-web-grundlagen.de/Beispiele#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix foaf: <http://xmlns.com/foaf/spec/>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix : <http://www.example.org/>.
 
-ex:Animalia  rdf:type  rdfs:Class .
+:Museum rdfs:subClassOf :TourismAttraction.
+:ArtMuseum rdfs:subClassOf :Museum.
+:ModernArtMuseum rdfs:subClassOf :ArtMuseum.
+:HistoryMuseum rdfs:subClassOf :Museum.
+:Landmark rdfs:subClassOf :TourismAttraction.
+:OutdoorSport rdfs:subClassOf :TourismAttraction.
+:AmusementPark rdfs:subClassOf :TourismAttraction.
+:Restaurant rdfs:subClassOf :TourismObject.
+:Hotel rdfs:subClassOf :TourismObject.
+:TourismAttraction rdfs:subClassOf :TourismObject.
 
-ex:Chordata  rdf:type    rdfs:Class ;
-        rdfs:subClassOf  ex:Animalia .
+:hasTripAdvisorRating rdfs:domain :TourismObject.
+:hasTripAdvisorRating rdfs:subPropertyOf :hasRating.
+:hasHotel rdfs:range :Hotel.
 
-ex:Mammalia  rdf:type    rdfs:Class ;
-        rdfs:subClassOf  ex:Chordata .
+:Museion rdf:type :ModernArtMuseum.
+:Museion :locatedIn :Bolzano.
+:ChickenHut :hasTripAdvisorRating "3.5"^^xsd:float.
 
-ex:Primates  rdf:type    rdfs:Class ;
-        rdfs:subClassOf  ex:Mammalia .
-
-ex:Hominidae  rdf:type   rdfs:Class ;
-        rdfs:subClassOf  ex:Primates .
