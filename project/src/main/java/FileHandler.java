@@ -15,6 +15,10 @@ import java.io.*;
 /**
  * Created by christine on 13.01.17.
  */
+
+/**
+ * Helper class to handle the reading and writing of the files
+ */
 public class FileHandler {
     public static Repository readRepositoryFromFile(String fileName){
         Repository repo = new SailRepository(
@@ -22,10 +26,11 @@ public class FileHandler {
                         new MemoryStore()));
         repo.initialize();
 
+
         final RepositoryConnection connection = repo.getConnection();
 
         try {
-            connection.add(new File(fileName), null, RDFFormat.TURTLE);
+            connection.add(new File(fileName), null, RDFFormat.TURTLE); //TODO allow also other formats
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -37,7 +42,7 @@ public class FileHandler {
         Model results = null;
         try {
             inputStream = new FileInputStream(file);
-            results = Rio.parse(inputStream, file.toURL().toString(), RDFFormat.TURTLE);
+            results = Rio.parse(inputStream, file.toURL().toString(), RDFFormat.TURTLE); //TODO allow also other formats
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -46,7 +51,7 @@ public class FileHandler {
     }
     public static void writeModelToFile (String fileName, Model results) throws FileNotFoundException {
         FileOutputStream out = new FileOutputStream(fileName);
-        RDFWriter writer = Rio.createWriter(RDFFormat.TURTLE, out);
+        RDFWriter writer = Rio.createWriter(RDFFormat.TURTLE, out); //TODO allow also other formats
 
         try {
             writer.startRDF();

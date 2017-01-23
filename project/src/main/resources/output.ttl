@@ -50,6 +50,8 @@
 	<http://www.example.org/hasPublicationYear> "2016" ;
 	<http://www.example.org/hasPublisher> <http://www.example.org/P1> .
 
+<http://www.example.org/https://d30y9cdsu7xlg0.cloudfront.net/png/1009-200.png> a <http://www.example.org/Cover> .
+
 <http://www.example.org/B2> a <http://www.example.org/Book> ;
 	<http://www.example.org/hasAuthor> <http://www.example.org/AB2> ;
 	<http://www.example.org/hasTitle> "Title2" ;
@@ -69,3 +71,5 @@
 <http://www.example.org/Lib_R1> a <http://example.org/Library> .
 
 <http://www.example.org/B1> <http://www.example.org/belongsTo> <http://www.example.org/Lib_R1> .
+
+<http://www.example.org/P1> a <http://www.example.org/Publisher> .

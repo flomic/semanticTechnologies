@@ -3,6 +3,10 @@ import java.util.LinkedList;
 /**
  * Created by christine on 17.01.17.
  */
+
+/**
+ * Class to represent the collection of books of a reader
+ */
 public class Library {
     private String id;
     private LinkedList<Book> books;

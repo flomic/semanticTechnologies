@@ -5,7 +5,9 @@ import java.time.Year;
  * Created by christine on 13.01.17.
  */
 
-
+/**
+ * Class to represent a book object.
+ */
 public class Book {
     private String bookId;
     private String authorId;
@@ -16,6 +18,17 @@ public class Book {
     private Integer publicationYear;
     private Cover cover;
 
+    /**
+     * Constructor of a book object
+     * @param bookId
+     * @param authorId
+     * @param title
+     * @param language
+     * @param publisherId
+     * @param genre
+     * @param publicationYear
+     * @param cover
+     */
     public Book (String bookId, String authorId, String title, String language, String publisherId, String genre, Integer publicationYear, Cover cover) {
     	this.bookId = bookId;
     	this.authorId = authorId;

@@ -1,7 +1,11 @@
+import com.intellij.uiDesigner.core.GridConstraints;
+import com.intellij.uiDesigner.core.GridLayoutManager;
+import org.eclipse.rdf4j.model.Model;
+
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicOptionPaneUI;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 
 /**
  * Created by christine on 19.01.17.
@@ -10,11 +14,14 @@ public class MainWindow {
     private JButton addBookButton;
     private JButton searchBookButton;
     private JPanel mainView;
-    public static JFrame mainFrame, addBookFrame, searchBookFrame;
+    public static JFrame mainFrame;
+    private static Model model;
+    private static final String INPUT_FILE_PATH = "src/main/resources/output.ttl";
 
     public MainWindow() {
         addBookButton.addActionListener(new AddBookBtnClicked());
         searchBookButton.addActionListener(new SearchBookButtonClicked());
+        model = FileHandler.readModelFromFile(INPUT_FILE_PATH);
     }
 
     public static void main(String[] args) {
@@ -24,15 +31,11 @@ public class MainWindow {
         mainFrame.pack();
         mainFrame.setVisible(true);
 
-        searchBookFrame = new JFrame("Search Book");
-        searchBookFrame.setContentPane(new SearchBook().searchBookView);
-        searchBookFrame.addWindowListener(new WindowClosed());
-        searchBookFrame.pack();
 
-        addBookFrame = new JFrame("Add Book");
-        addBookFrame.setContentPane(new AddBookWindow("src/main/resources/output.ttl").addBookView);
-        addBookFrame.addWindowListener(new WindowClosed());
-        addBookFrame.pack();
+    }
+
+    public static Model getModel() {
+        return model;
     }
 
     {
@@ -51,18 +54,18 @@ public class MainWindow {
      */
     private void $$$setupUI$$$() {
         mainView = new JPanel();
-        mainView.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(3, 2, new Insets(0, 0, 0, 0), -1, -1));
+        mainView.setLayout(new GridLayoutManager(3, 2, new Insets(0, 0, 0, 0), -1, -1));
         final JLabel label1 = new JLabel();
         label1.setFont(new Font(label1.getFont().getName(), label1.getFont().getStyle(), 48));
         label1.setHorizontalTextPosition(0);
         label1.setText("Book Manager");
-        mainView.add(label1, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 2, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        mainView.add(label1, new GridConstraints(0, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         addBookButton = new JButton();
         addBookButton.setText("Add Book");
-        mainView.add(addBookButton, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 2, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        mainView.add(addBookButton, new GridConstraints(1, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         searchBookButton = new JButton();
         searchBookButton.setText("Search Book");
-        mainView.add(searchBookButton, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 2, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        mainView.add(searchBookButton, new GridConstraints(2, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
@@ -72,30 +75,50 @@ public class MainWindow {
         return mainView;
     }
 
-    private static class WindowClosed extends WindowAdapter {
-        @Override
-        public void windowClosing(WindowEvent e) {
-            searchBookFrame.setVisible(false);
-            addBookFrame.setVisible(false);
-            mainFrame.setVisible(true);
-        }
-    }
-
 
     private class SearchBookButtonClicked implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            searchBookFrame.setVisible(true);
-            mainFrame.setVisible(false);
-
+            Object[] options = {"Back"};
+            SearchBookPanel sbp = new SearchBookPanel();
+            JOptionPane.showOptionDialog(null, sbp.getSearchBookView(), "Search Book", JOptionPane.CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
         }
     }
 
     private class AddBookBtnClicked implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            addBookFrame.setVisible(true);
-            mainFrame.setVisible(false);
+            Object[] options = {"Save", "Cancel"};
+            AddBookPanel abp = new AddBookPanel(INPUT_FILE_PATH);
+            int o = JOptionPane.showOptionDialog(null, abp.getAddBookView(), "Add Book", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+            if (o == JOptionPane.YES_OPTION) {
+                String isbn = abp.getIsbn();
+                String title = abp.getTitle();
+                String urlCover = abp.getUrlCover();
+                String publicationYear = abp.getPublicationYear();
+                String genre = abp.getGenre();
+                String publisher = abp.getPublisher();
+                String language = abp.getLanguage();
+                String author = abp.getAuthor();
+
+                try {
+                    if (!isbn.equals("")) {
+                        Book b = null;
+                        if (publicationYear.equals("")) {
+                            b = new Book(isbn, author, title, language, publisher, genre, null, new Cover(urlCover));
+                        } else {
+                            b = new Book(isbn, author, title, language, publisher, genre, Integer.parseInt(publicationYear), new Cover(urlCover));
+                        }
+                        ModelHandler.addBook(b, MainWindow.getModel());
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Please enter the ISBN number!", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                } catch (NumberFormatException nfe) {
+                    JOptionPane.showMessageDialog(null, "Publication Year needs to be a number!", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
         }
     }
 
