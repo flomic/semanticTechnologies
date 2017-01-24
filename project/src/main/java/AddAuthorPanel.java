@@ -13,13 +13,16 @@ import java.awt.event.ActionListener;
 /**
  * Created by christine on 20.01.17.
  */
+
+/**
+ * Used in a JOptionDialog to add a new author.
+ */
 public class AddAuthorPanel {
     private JTextField firstNameTextField;
     private JTextField lastNameTextField;
     private JRadioButton maleRadioButton;
     private JRadioButton femaleRadioButton;
     private JPanel addAuthorView;
-    private static JButton saveButton;
     private JTextField dateOfBirthTextField;
 
     public JPanel getAuthorView() {

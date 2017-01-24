@@ -10,11 +10,15 @@ import java.io.IOException;
 /**
  * Created by christine on 19.01.17.
  */
+
+/**
+ * Main window from where the user starts
+ */
 public class MainWindow {
     private JButton addBookButton;
     private JButton searchBookButton;
     private JPanel mainView;
-    public static JFrame mainFrame;
+    private static JFrame mainFrame;
     private static Model model;
     private static final String INPUT_FILE_PATH = "src/main/resources/output.ttl";
 
@@ -30,8 +34,6 @@ public class MainWindow {
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.pack();
         mainFrame.setVisible(true);
-
-
     }
 
     public static Model getModel() {
@@ -75,23 +77,33 @@ public class MainWindow {
         return mainView;
     }
 
-
+    /**
+     * ActionListener for the search book button
+     */
     private class SearchBookButtonClicked implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            Object[] options = {"Back"};
+            //shows a dialog which contains the search book panel
+            Object[] options = {"Back"}; //Button to return to the main window
             SearchBookPanel sbp = new SearchBookPanel();
             JOptionPane.showOptionDialog(null, sbp.getSearchBookView(), "Search Book", JOptionPane.CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
         }
     }
 
+    /**
+     * Action listener for the add book button (manual addition)
+     */
     private class AddBookBtnClicked implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            Object[] options = {"Save", "Cancel"};
-            AddBookPanel abp = new AddBookPanel(INPUT_FILE_PATH);
-            int o = JOptionPane.showOptionDialog(null, abp.getAddBookView(), "Add Book", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
-            if (o == JOptionPane.YES_OPTION) {
+
+            //show the AddBookDialog, which returns the value of the button clicked
+            AddBookDialog abp = new AddBookDialog(null, INPUT_FILE_PATH);
+            String o = abp.showDialog();
+
+            if (o.equals("Save")) { // if the user wanted to save the book
+
+                //get all the information for the AddBookDialog
                 String isbn = abp.getIsbn();
                 String title = abp.getTitle();
                 String urlCover = abp.getUrlCover();
@@ -101,22 +113,17 @@ public class MainWindow {
                 String language = abp.getLanguage();
                 String author = abp.getAuthor();
 
+
                 try {
-                    if (!isbn.equals("")) {
-                        Book b = null;
-                        if (publicationYear.equals("")) {
-                            b = new Book(isbn, author, title, language, publisher, genre, null, new Cover(urlCover));
-                        } else {
-                            b = new Book(isbn, author, title, language, publisher, genre, Integer.parseInt(publicationYear), new Cover(urlCover));
-                        }
-                        ModelHandler.addBook(b, MainWindow.getModel());
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Please enter the ISBN number!", "Error", JOptionPane.ERROR_MESSAGE);
+                    Book b;
+                    if (publicationYear.equals("")) { //if the publicationYear is empty, replace it with null
+                        b = new Book(isbn, author, title, language, publisher, genre, null, new Cover(urlCover));
+                    } else { //if the publicationYear is not empty, parse it to an integer
+                        b = new Book(isbn, author, title, language, publisher, genre, Integer.parseInt(publicationYear), new Cover(urlCover));
                     }
+                    ModelHandler.addBook(b, MainWindow.getModel()); //add the book to the model
                 } catch (IOException e1) {
-                    e1.printStackTrace();
-                } catch (NumberFormatException nfe) {
-                    JOptionPane.showMessageDialog(null, "Publication Year needs to be a number!", "Error", JOptionPane.ERROR_MESSAGE);
+                    e1.printStackTrace(); //TODO Handle IOException for Cover Url
                 }
             }
         }

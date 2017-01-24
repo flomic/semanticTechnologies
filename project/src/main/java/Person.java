@@ -73,6 +73,7 @@ public class Person {
     }
 
     public void setDateOfBirth(String dateOfBirthString) {
+        //TODO Check for correctness of the format of the string
         this.dateOfBirth = new Date(Integer.parseInt(dateOfBirthString.substring(0,4))-1900, Integer.parseInt(dateOfBirthString.substring(5,7))-1, Integer.parseInt(dateOfBirthString.substring(9,11)));
     }
 }

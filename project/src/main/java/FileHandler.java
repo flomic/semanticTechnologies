@@ -20,7 +20,13 @@ import java.io.*;
  * Helper class to handle the reading and writing of the files
  */
 public class FileHandler {
-    public static Repository readRepositoryFromFile(String fileName){
+
+    /**
+     * Takes the path to a turtle file and returns a repository with the information of the file
+     * @param filePath
+     * @return
+     */
+    public static Repository readRepositoryFromFile(String filePath){
         Repository repo = new SailRepository(
                 new ForwardChainingRDFSInferencer(
                         new MemoryStore()));
@@ -30,38 +36,51 @@ public class FileHandler {
         final RepositoryConnection connection = repo.getConnection();
 
         try {
-            connection.add(new File(fileName), null, RDFFormat.TURTLE); //TODO allow also other formats
+            connection.add(new File(filePath), null, RDFFormat.TURTLE); //TODO allow also other formats
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(); //TODO handle this exception better
         }
         return repo;
     }
-    public static Model readModelFromFile(String filename) {
-        final File file = new File(filename);
+
+    /**
+     * Takes the path to a turtle file and returns a model with the contained information
+     * @param filePath
+     * @return
+     */
+    public static Model readModelFromFile(String filePath) {
+        final File file = new File(filePath);
         InputStream inputStream = null;
         Model results = null;
         try {
             inputStream = new FileInputStream(file);
             results = Rio.parse(inputStream, file.toURL().toString(), RDFFormat.TURTLE); //TODO allow also other formats
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace(); //TODO handle this exception better
         }
         return results;
 
     }
-    public static void writeModelToFile (String fileName, Model results) throws FileNotFoundException {
-        FileOutputStream out = new FileOutputStream(fileName);
+
+    /**
+     * Takes a model and writes it to the specified file.
+     * @param filePath
+     * @param model
+     * @throws FileNotFoundException //TODO handle the exception here
+     */
+    public static void writeModelToFile (String filePath, Model model) throws FileNotFoundException {
+        FileOutputStream out = new FileOutputStream(filePath);
         RDFWriter writer = Rio.createWriter(RDFFormat.TURTLE, out); //TODO allow also other formats
 
         try {
             writer.startRDF();
-            for (Statement st: results) {
+            for (Statement st: model) {
                 writer.handleStatement(st);
             }
             writer.endRDF();
         }
         catch (RDFHandlerException e) {
-            // oh no, do something!
+            // oh no, do something! //TODO handle this exception better
             System.err.println("Error");
         }
     }

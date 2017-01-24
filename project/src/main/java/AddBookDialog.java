@@ -1,18 +1,22 @@
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import org.eclipse.rdf4j.repository.Repository;
-import org.eclipse.rdf4j.repository.RepositoryConnection;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.IOException;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.LinkedList;
 
 /**
  * Created by christine on 19.01.17.
  */
-public class AddBookPanel {
+
+/**
+ * Dialog to manually add a book
+ */
+public class AddBookDialog extends JDialog {
     private JTextField titleTextField;
     private JTextField urlCoverTextField;
     private JTextField publicationYearTextField;
@@ -21,30 +25,49 @@ public class AddBookPanel {
     private JTextField isbnTextField;
     private JComboBox<String> authorComboBox;
     private JComboBox<String> publisherComboBox;
+    private JOptionPane optionPane;
     public JPanel addBookView;
 
 
-    public AddBookPanel(String filePath) {
+    public AddBookDialog(Frame aFrame, String filePath) {
+        super(aFrame, true);
         Repository repo = FileHandler.readRepositoryFromFile(filePath);
-        LinkedList<String> authors = RepoHandler.getAllAuthors(repo);
-        LinkedList<String> publisher = RepoHandler.getAllPublishers(repo);
+        LinkedList<String> authors = RepoHandler.getAllAuthors(repo); //get all authors in the repo
+        LinkedList<String> publisher = RepoHandler.getAllPublishers(repo); //get all publisher in the repo
 
-        authorComboBox.addItem("Please select an author");
-        authorComboBox.addItem("New Author");
+        authorComboBox.addItem("Please select an author"); //First item that should be shown in the comboBox
+        authorComboBox.addItem("New Author"); //Used to allow the user to add a new author
         for (String a : authors) {
-            authorComboBox.addItem(a);
+            authorComboBox.addItem(a); //add all authors of the repo to the comboBox
         }
 
+        //add itemListener to react when the user wants to add a new author
         authorComboBox.addItemListener(new AuthorSelected());
 
-        publisherComboBox.addItem("Please select a publisher");
-        publisherComboBox.addItem("New Publisher");
+
+        publisherComboBox.addItem("Please select a publisher");//First item that should be shown in the comboBox
+        publisherComboBox.addItem("New Publisher"); //Used to allow the user to add a new publisher
         for (String p : publisher) {
-            publisherComboBox.addItem(p);
+            publisherComboBox.addItem(p); //add all publishers of the repo to the comboBox
         }
+
+        //add itemListener to react when the user wants to add a new publisher
         publisherComboBox.addItemListener(new PublisherSelected());
 
+        Object[] options = {"Save", "Cancel"}; // the two options the user can select in the optionPane
+        optionPane = new JOptionPane(getAddBookView(), JOptionPane.PLAIN_MESSAGE, JOptionPane.OK_CANCEL_OPTION, null, options, options[0]);
+        setContentPane(optionPane);
+        optionPane.addPropertyChangeListener(new MyPropertyChangeListener());
+        pack();
+    }
 
+    /**
+     * set the dialog to visible and return "Save" or "Cancel" depending on what the user clicks
+     * @return
+     */
+    public String showDialog() {
+        setVisible(true);
+        return optionPane.getValue().toString();
     }
 
     public JPanel getAddBookView() {
@@ -81,17 +104,6 @@ public class AddBookPanel {
 
     public String getPublisher() {
         return publisherComboBox.getSelectedItem().toString();
-    }
-
-    public void resetFields() {
-        isbnTextField.setText("");
-        titleTextField.setText("");
-        urlCoverTextField.setText("");
-        publicationYearTextField.setText("");
-        genreTextField.setText("");
-        publisherComboBox.setSelectedItem("Please select a publisher");
-        languageTextField.setText("");
-        authorComboBox.setSelectedItem("Please select an author");
     }
 
     {
@@ -182,6 +194,9 @@ public class AddBookPanel {
         label9.setText("ISBN*");
         panel9.add(label9, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         isbnTextField = new JTextField();
+        isbnTextField.setColumns(13);
+        isbnTextField.setEditable(true);
+        isbnTextField.setEnabled(true);
         panel9.add(isbnTextField, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         label2.setLabelFor(titleTextField);
         label3.setLabelFor(urlCoverTextField);
@@ -200,55 +215,110 @@ public class AddBookPanel {
         return addBookView;
     }
 
-
+    /**
+     * Class to allow the user to add a new author
+     */
     private class AuthorSelected implements ItemListener {
 
         @Override
         public void itemStateChanged(ItemEvent e) {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
+            if (e.getStateChange() == ItemEvent.SELECTED  //if a new item is selected and it is "New Author"
+                    && authorComboBox.getSelectedItem().toString().equals("New Author")) {
+
+                //Create an new Dialog to enter the information about the author
                 Object[] options = {"Save", "Cancel"};
-                if (authorComboBox.getSelectedItem().toString().equals("New Author")) {
-                    AddAuthorPanel aap = new AddAuthorPanel();
-                    int o = JOptionPane.showOptionDialog(null, aap.getAuthorView(), "Add Author", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
-                    if (o == JOptionPane.YES_OPTION) {
-                        String firstName = aap.getFirstName();
-                        String lastName = aap.getLastName();
-                        String gender = aap.getGender();
-                        String dob = aap.getDateOfBirth();
-                        String id = firstName + " " + lastName + " " + dob;
-                        if (!id.equals("  ")) {
-                            Author a = new Author(id, gender, firstName, lastName, dob);
-                            ModelHandler.addAuthor(a, MainWindow.getModel());
-                            authorComboBox.addItem(id);
-                            authorComboBox.setSelectedItem(id);
-                        } else {
-                            authorComboBox.setSelectedItem("Please select an author");
-                        }
-                    } else {
+                AddAuthorPanel aap = new AddAuthorPanel();
+                int o = JOptionPane.showOptionDialog(null, aap.getAuthorView(), "Add Author", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+
+                if (o == JOptionPane.YES_OPTION) { //if the user wants to save the author
+
+                    //get all the information and construct an id
+                    String firstName = aap.getFirstName();
+                    String lastName = aap.getLastName();
+                    String gender = aap.getGender();
+                    String dob = aap.getDateOfBirth();
+                    String id = firstName + " " + lastName + " " + dob;
+
+
+                    if (!id.equals("  ")) { //if the id is not empty
+                        Author a = new Author(id, gender, firstName, lastName, dob); //create a new author
+                        ModelHandler.addAuthor(a, MainWindow.getModel()); //add it to the model
+                        authorComboBox.addItem(id); //add the item to the combobox
+                        authorComboBox.setSelectedItem(id); //select the item in the combobox
+                    } else { // if the id is empty don't save the author and reset the selected item in the combobox
                         authorComboBox.setSelectedItem("Please select an author");
                     }
+                } else { //if the user selects cancel reset the selected item in the combobox
+                    authorComboBox.setSelectedItem("Please select an author");
                 }
             }
+
         }
     }
 
+    /**
+     *  Class to allow the user to add a new publisher
+     */
     private class PublisherSelected implements ItemListener {
 
         @Override
         public void itemStateChanged(ItemEvent e) {
-            if (e.getStateChange() == ItemEvent.SELECTED) {
-                if (publisherComboBox.getSelectedItem().toString().equals("New Publisher")) {
-                    String publisher = JOptionPane.showInputDialog(null, "Please enter the publisher name", "New Publisher", JOptionPane.PLAIN_MESSAGE);
-                    if (publisher != null && !publisher.equals("")) {
-                        Publisher p = new Publisher(publisher);
-                        ModelHandler.addPublisher(p, MainWindow.getModel());
-                        publisherComboBox.addItem(publisher);
-                        publisherComboBox.setSelectedItem(publisher);
-                    } else {
-                        publisherComboBox.setSelectedItem("Please select a publisher");
+            if (e.getStateChange() == ItemEvent.SELECTED && //if a new item is selected and it is "New Publisher"
+                    publisherComboBox.getSelectedItem().toString().equals("New Publisher")) {
+
+                // Show a input dialog where the user enters the publisher name, which is also the id
+                String publisher = JOptionPane.showInputDialog(null, "Please enter the publisher name", "New Publisher", JOptionPane.PLAIN_MESSAGE);
+                if (publisher != null && !publisher.equals("")) { //if the entered string is not empty
+                    Publisher p = new Publisher(publisher); //create a new publisher
+                    ModelHandler.addPublisher(p, MainWindow.getModel()); //add the publisher to the model
+                    publisherComboBox.addItem(publisher); //add the publisher to the combobox
+                    publisherComboBox.setSelectedItem(publisher); //select the publisher in the combobox
+                } else {
+                    //if the entered string is empty, reset the combobox to the intial value
+                    publisherComboBox.setSelectedItem("Please select a publisher");
+
+                }
+            }
+        }
+    }
+
+    /**
+     * Class used to allow the user to exit from the dialog
+     */
+        private class MyPropertyChangeListener implements PropertyChangeListener {
+
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                String prop = evt.getPropertyName();
+                if (isVisible() && evt.getSource() == optionPane && prop.equals(JOptionPane.VALUE_PROPERTY)) {
+                    boolean okToClose = true;
+                    if (evt.getNewValue().equals("Save")) { //if the user clicked on save
+
+                        //check the input for correctness and that isbn is not missing
+                        if (isbnTextField.getText().equals("")) {
+                            JOptionPane.showMessageDialog(null, "Please enter the ISBN number!", "Error", JOptionPane.ERROR_MESSAGE);
+                            okToClose = false;
+                        }
+
+                        if (!publicationYearTextField.getText().equals("")) {
+                            try {
+                                Integer.parseInt(publicationYearTextField.getText());
+                            } catch (NumberFormatException nfe) {
+                                JOptionPane.showMessageDialog(null, "Publication Year needs to be a number!", "Error", JOptionPane.ERROR_MESSAGE);
+                                okToClose = false;
+                            }
+                        }
+                    } else if (evt.getNewValue().equals("wait")) { //used to keep the dialog open, if the input was not ok
+                        okToClose = false;
+                    }
+                    if (okToClose) {
+                        setVisible(false);
+                    } else { //if the user clicked on "Save" but the input was not ok
+                        //set the value of the optionPane to an intermediate value,
+                        // so that when the user clicks again on "Save" the listener fires again
+                        optionPane.setValue("wait");
                     }
                 }
             }
         }
     }
-}
