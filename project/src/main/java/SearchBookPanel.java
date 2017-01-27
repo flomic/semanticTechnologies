@@ -94,6 +94,8 @@ public class SearchBookPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             //TODO implement search
+
+            String isbn = getIsbn();
         }
     }
 }
