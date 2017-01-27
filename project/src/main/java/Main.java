@@ -1,11 +1,13 @@
-import org.apache.jena.query.QueryExecution;
+/*import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QueryFactory;
-import org.apache.jena.query.QuerySolution;
+import org.apache.jena.query.QuerySolution;*/
 import org.eclipse.rdf4j.model.Model;
 import org.eclipse.rdf4j.repository.Repository;
+import org.eclipse.rdf4j.repository.sparql.SPARQLRepository;
 
 import java.io.IOException;
+import java.util.LinkedList;
 
 
 /**
@@ -71,13 +73,13 @@ public class Main {
 
         /* author */
         String gender; //TODO gibs net auf dbpedia
-        String firstName; //TODO gibs net auf dbpedia
+        String firstName; //TODO gibs net auf dbpedia ->
         String lastName; //TODO gibs net auf dbpedia
         String dateOfBirth;
 
 
-        String query =  "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" +
-                        "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>" +
+        String query =  /*"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" +
+                        "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>" +*/
                         "PREFIX dbpedia: <http://dbpedia.org/ontology/>" +
                         "select ?isbn ?title ?author ?publisher ?genre ?birthDate " +
                         "where {" +
@@ -98,7 +100,16 @@ public class Main {
                         "FILTER (lang(?publisher) = 'en')" +
                         "}";
 
-        org.apache.jena.query.Query sparqlquery = QueryFactory.create(query);
+        Repository repo2 = new SPARQLRepository("http://dbpedia.org/sparql");
+        repo2.initialize();
+        LinkedList<String> res = RepoHandler.returnQueryResult(repo2, query);
+
+
+        System.out.println("Result:");
+        for(String s : res){
+            System.out.println(s);
+        }
+        /*org.apache.jena.query.Query sparqlquery = QueryFactory.create(query);
         QueryExecution result = QueryExecutionFactory.sparqlService("http://dbpedia.org/sparql", sparqlquery);
         org.apache.jena.query.ResultSet results = result.execSelect();
         QuerySolution book = results.next();
@@ -117,16 +128,16 @@ public class Main {
 
 
 
-
+*/
 
         /* OUTPUT */
-        System.out.println("\n\n\n\n----------------------------------------");
+        /*System.out.println("\n\n\n\n----------------------------------------");
         System.out.println("ISBN: " + isbn);
         System.out.println("Title: " + title);
         System.out.println("Author: " + author);
         System.out.println("Date of birth: " + dateOfBirth);
         System.out.println("Publisher: " + publisher);
         System.out.println("Genre: " + genre);
-        System.out.println("----------------------------------------");
+        System.out.println("----------------------------------------");*/
     }
 }

@@ -22,7 +22,7 @@ public class RepoHandler {
      * @param query
      * @return
      */
-    private static LinkedList<String> returnQueryResult(Repository repo, String query) {
+    public static LinkedList<String> returnQueryResult(Repository repo, String query) {
         LinkedList<String> queryResult = new LinkedList<String>();
         try (RepositoryConnection conn = repo.getConnection()) {
             String queryString =
