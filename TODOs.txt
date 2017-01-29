@@ -14,3 +14,10 @@
 
 - Write report
 
+
+
+
+----------------------------------
+- show list of books - navigate author, publisher etc.
+- delete books/author/publisher
+- add/delete/switch library?
