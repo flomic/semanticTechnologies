@@ -86,15 +86,12 @@ public class ModelHandler {
         addItem("http://www.example.org/"+book.getBookId(), "http://www.example.org/hasAuthor", "http://www.example.org/"+book.getAuthor(), 'I', model);
         addItem("http://www.example.org/"+book.getBookId(), "http://www.example.org/hasTitle", book.getTitle(), 'L', model);
         addItem("http://www.example.org/"+book.getBookId(), "http://www.example.org/hasGenre", book.getGenre(), 'L', model);
-        addItem("http://www.example.org/"+book.getBookId(), "http://www.example.org/hasLanguage", book.getLanguage(), 'L', model);
-        addItem("http://www.example.org/"+book.getBookId(), "http://www.example.org/hasCover", "http://www.example.org/"+book.getCover().getPath(), 'I', model);
 
         if(book.getPublicationYear()!= null){
             addItem("http://www.example.org/"+book.getBookId(), "http://www.example.org/hasPublicationYear", book.getPublicationYear().toString(), 'L', model);
         }
 
         addItem("http://www.example.org/"+book.getBookId(), "http://www.example.org/hasPublisher", "http://www.example.org/"+book.getPublisher(), 'I', model);
-        addItem("http://www.example.org/"+book.getCover().getPath(), RDF.TYPE, "http://www.example.org/Cover", 'I', model);
     }
 
     /**

@@ -5,8 +5,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by christine on 20.01.17.
  */
@@ -19,7 +17,7 @@ public class ModelHandlerTest {
 
     @org.junit.Test
     public void addBook() throws Exception {
-        Book b = new Book("B1", "AB1", "Title1", "de", "P1", "Thriller", 2016, new Cover("https://d30y9cdsu7xlg0.cloudfront.net/png/1009-200.png") );
+        Book b = new Book("B1", "AB1", "Title1", "P1", "Thriller", 2016);
 
         ValueFactory factory = SimpleValueFactory.getInstance();
         Resource subjectPart = factory.createIRI("http://www.example.org/B1");
@@ -61,7 +59,7 @@ public class ModelHandlerTest {
     @org.junit.Test
     public void addBookToLibrary() throws Exception {
         Reader r = new Reader("R1", "f", "C", "L","1993-01-25");
-        Book b = new Book("B1", "AB1", "Title1", "de", "P1", "Thriller", 2016, new Cover("https://d30y9cdsu7xlg0.cloudfront.net/png/1009-200.png") );
+        Book b = new Book("B1", "AB1", "Title1", "P1", "Thriller", 2016);
 
         ValueFactory factory = SimpleValueFactory.getInstance();
         Resource subjectPart = factory.createIRI("http://www.example.org/B1");

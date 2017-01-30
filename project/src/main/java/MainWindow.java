@@ -18,11 +18,13 @@ public class MainWindow {
     private JButton addBookButton;
     private JButton searchBookButton;
     private JPanel mainView;
+    private JButton showBooksButton;
     private static JFrame mainFrame;
     private static Model model;
     private static final String INPUT_FILE_PATH = "src/main/resources/output.ttl";
 
     public MainWindow() {
+        showBooksButton.addActionListener(new ShowBooksClicked());
         addBookButton.addActionListener(new AddBookBtnClicked());
         searchBookButton.addActionListener(new SearchBookButtonClicked());
         model = FileHandler.readModelFromFile(INPUT_FILE_PATH);
@@ -56,7 +58,7 @@ public class MainWindow {
      */
     private void $$$setupUI$$$() {
         mainView = new JPanel();
-        mainView.setLayout(new GridLayoutManager(3, 2, new Insets(0, 0, 0, 0), -1, -1));
+        mainView.setLayout(new GridLayoutManager(4, 2, new Insets(0, 0, 0, 0), -1, -1));
         final JLabel label1 = new JLabel();
         label1.setFont(new Font(label1.getFont().getName(), label1.getFont().getStyle(), 48));
         label1.setHorizontalTextPosition(0);
@@ -64,10 +66,13 @@ public class MainWindow {
         mainView.add(label1, new GridConstraints(0, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         addBookButton = new JButton();
         addBookButton.setText("Add Book");
-        mainView.add(addBookButton, new GridConstraints(1, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        mainView.add(addBookButton, new GridConstraints(2, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         searchBookButton = new JButton();
         searchBookButton.setText("Search Book");
-        mainView.add(searchBookButton, new GridConstraints(2, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        mainView.add(searchBookButton, new GridConstraints(3, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        showBooksButton = new JButton();
+        showBooksButton.setText("Show Books");
+        mainView.add(showBooksButton, new GridConstraints(1, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
@@ -117,11 +122,12 @@ public class MainWindow {
                 try {
                     Book b;
                     if (publicationYear.equals("")) { //if the publicationYear is empty, replace it with null
-                        b = new Book(isbn, author, title, language, publisher, genre, null, new Cover(urlCover));
+                        b = new Book(isbn, author, title, publisher, genre, null);
                     } else { //if the publicationYear is not empty, parse it to an integer
-                        b = new Book(isbn, author, title, language, publisher, genre, Integer.parseInt(publicationYear), new Cover(urlCover));
+                        b = new Book(isbn, author, title, publisher, genre, Integer.parseInt(publicationYear));
                     }
-                    ModelHandler.addBook(b, MainWindow.getModel()); //add the book to the model
+                    ModelHandler.addBook(b, MainWindow.getModel());//add the book to the model
+                    FileHandler.writeModelToFile(INPUT_FILE_PATH, model);
                 } catch (IOException e1) {
                     e1.printStackTrace(); //TODO Handle IOException for Cover Url
                 }
@@ -129,6 +135,12 @@ public class MainWindow {
         }
     }
 
+    private class ShowBooksClicked implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            showBooksDialog sbd = new showBooksDialog();
+        }
+    }
 }
 
 

@@ -271,6 +271,7 @@ public class AddBookDialog extends JDialog {
                 if (publisher != null && !publisher.equals("")) { //if the entered string is not empty
                     Publisher p = new Publisher(publisher); //create a new publisher
                     ModelHandler.addPublisher(p, MainWindow.getModel()); //add the publisher to the model
+
                     publisherComboBox.addItem(publisher); //add the publisher to the combobox
                     publisherComboBox.setSelectedItem(publisher); //select the publisher in the combobox
                 } else {

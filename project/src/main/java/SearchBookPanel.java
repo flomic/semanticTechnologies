@@ -1,5 +1,7 @@
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import org.eclipse.rdf4j.model.Model;
+import org.eclipse.rdf4j.repository.Repository;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,7 +37,6 @@ public class SearchBookPanel {
     }
 
     /**
-     *
      * @return returns the JPanel to show in a JOptionPane
      */
     public JPanel getSearchBookView() {
@@ -90,11 +91,13 @@ public class SearchBookPanel {
      * Listener for the search button
      */
     private class SearchClickedListener implements ActionListener {
+        private static final String INPUT_FILE_PATH = "src/main/resources/output.ttl";
+        Book b;
 
         @Override
         public void actionPerformed(ActionEvent e) {
             //TODO implement search
-
+            Repository repo = FileHandler.readRepositoryFromFile(INPUT_FILE_PATH);
             String isbn = getIsbn();
         }
     }

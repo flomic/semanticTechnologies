@@ -41,7 +41,7 @@
 	<http://www.example.org/hasLastName> "B" ;
 	<http://www.example.org/hasDateOfBirth> "Mon Dec 31 00:00:00 CET 1962" .
 
-<http://www.example.org/B1> a <http://www.example.org/Book> ;
+<http://www.example.org/9780002318525> a <http://www.example.org/Book> ;
 	<http://www.example.org/hasAuthor> <http://www.example.org/AB1> ;
 	<http://www.example.org/hasTitle> "Title1" ;
 	<http://www.example.org/hasGenre> "Thriller" ;
@@ -70,6 +70,6 @@
 
 <http://www.example.org/Lib_R1> a <http://example.org/Library> .
 
-<http://www.example.org/B1> <http://www.example.org/belongsTo> <http://www.example.org/Lib_R1> .
+<http://www.example.org/9780002318525> <http://www.example.org/belongsTo> <http://www.example.org/Lib_R1> .
 
 <http://www.example.org/P1> a <http://www.example.org/Publisher> .
