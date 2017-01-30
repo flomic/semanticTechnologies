@@ -99,6 +99,7 @@ public class SearchBookPanel {
             //TODO implement search
             Repository repo = FileHandler.readRepositoryFromFile(INPUT_FILE_PATH);
             String isbn = getIsbn();
+            showBooksDialog sbd = new showBooksDialog(isbn);
         }
     }
 }

@@ -15,11 +15,17 @@ public class showBooksDialog extends JDialog {
     private JButton buttonAllBooks;
     private LinkedList<String> books;
     private Repository repo;
+    private String isbn;
 
     private static final String FILE_PATH = "src/main/resources/output.ttl";
 
     public showBooksDialog() {
+        new showBooksDialog("");
+    }
 
+    public showBooksDialog(String isbn) {
+
+        this.isbn = isbn;
         $$$setupUI$$$();
         //setSize(getPreferredSize());
         setMinimumSize(new Dimension(400, 400));
@@ -82,12 +88,27 @@ public class showBooksDialog extends JDialog {
 
     private void createUIComponents() {
         repo = FileHandler.readRepositoryFromFile(FILE_PATH);
-        books = RepoHandler.getAllBooks(repo);
-        for (int i = 0; i < books.size(); i++) {
-            JButton b = new JButton(books.get(i));
-            b.addActionListener(new BookClickedListener());
-            contentPanel.add(b);
+        if (isbn.equals("")) {
+            books = RepoHandler.getAllBooks(repo);
+            for (int i = 0; i < books.size(); i++) {
+                JButton b = new JButton(books.get(i));
+                b.addActionListener(new BookClickedListener());
+                contentPanel.add(b);
+            }
+        } else {
+            Book bookDetails = RepoHandler.searchByISBN(repo, isbn);
+            contentPanel.add(new JLabel(bookDetails.getBookId()));
+            contentPanel.add(new JLabel(bookDetails.getTitle()));
+            contentPanel.add(new JButton(bookDetails.getAuthor()));
+
+            JButton publisherButton = new JButton(bookDetails.getPublisher());
+            publisherButton.addActionListener(new PublisherClicked());
+            contentPanel.add(publisherButton);
+
+            contentPanel.add(new JLabel(bookDetails.getGenre()));
+            contentPanel.add(new JLabel(bookDetails.getPublicationYear().toString()));
         }
+
     }
 
     private void resetGUI() {

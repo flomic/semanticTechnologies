@@ -26,12 +26,13 @@ public class AddBookDialog extends JDialog {
     private JComboBox<String> authorComboBox;
     private JComboBox<String> publisherComboBox;
     private JOptionPane optionPane;
+    private Repository repo;
     public JPanel addBookView;
 
 
     public AddBookDialog(Frame aFrame, String filePath) {
         super(aFrame, true);
-        Repository repo = FileHandler.readRepositoryFromFile(filePath);
+        repo = FileHandler.readRepositoryFromFile(filePath);
         LinkedList<String> authors = RepoHandler.getAllAuthors(repo); //get all authors in the repo
         LinkedList<String> publisher = RepoHandler.getAllPublishers(repo); //get all publisher in the repo
 
@@ -63,6 +64,7 @@ public class AddBookDialog extends JDialog {
 
     /**
      * set the dialog to visible and return "Save" or "Cancel" depending on what the user clicks
+     *
      * @return
      */
     public String showDialog() {
@@ -257,7 +259,7 @@ public class AddBookDialog extends JDialog {
     }
 
     /**
-     *  Class to allow the user to add a new publisher
+     * Class to allow the user to add a new publisher
      */
     private class PublisherSelected implements ItemListener {
 
@@ -269,11 +271,17 @@ public class AddBookDialog extends JDialog {
                 // Show a input dialog where the user enters the publisher name, which is also the id
                 String publisher = JOptionPane.showInputDialog(null, "Please enter the publisher name", "New Publisher", JOptionPane.PLAIN_MESSAGE);
                 if (publisher != null && !publisher.equals("")) { //if the entered string is not empty
-                    Publisher p = new Publisher(publisher); //create a new publisher
-                    ModelHandler.addPublisher(p, MainWindow.getModel()); //add the publisher to the model
 
-                    publisherComboBox.addItem(publisher); //add the publisher to the combobox
-                    publisherComboBox.setSelectedItem(publisher); //select the publisher in the combobox
+                    if (RepoHandler.searchByPublisherId(repo, publisher).size() == 0) {
+                        Publisher p = new Publisher(publisher); //create a new publisher
+                        ModelHandler.addPublisher(p, MainWindow.getModel()); //add the publisher to the model
+                        publisherComboBox.addItem(publisher); //add the publisher to the combobox
+                        publisherComboBox.setSelectedItem(publisher); //select the publisher in the combobox
+                    } else {
+                        JOptionPane.showMessageDialog(null, "This publisher ID exists already.", "Error", JOptionPane.ERROR_MESSAGE);
+                        publisherComboBox.setSelectedItem("Please select a publisher");
+                    }
+
                 } else {
                     //if the entered string is empty, reset the combobox to the intial value
                     publisherComboBox.setSelectedItem("Please select a publisher");
@@ -286,40 +294,40 @@ public class AddBookDialog extends JDialog {
     /**
      * Class used to allow the user to exit from the dialog
      */
-        private class MyPropertyChangeListener implements PropertyChangeListener {
+    private class MyPropertyChangeListener implements PropertyChangeListener {
 
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                String prop = evt.getPropertyName();
-                if (isVisible() && evt.getSource() == optionPane && prop.equals(JOptionPane.VALUE_PROPERTY)) {
-                    boolean okToClose = true;
-                    if (evt.getNewValue().equals("Save")) { //if the user clicked on save
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            String prop = evt.getPropertyName();
+            if (isVisible() && evt.getSource() == optionPane && prop.equals(JOptionPane.VALUE_PROPERTY)) {
+                boolean okToClose = true;
+                if (evt.getNewValue().equals("Save")) { //if the user clicked on save
 
-                        //check the input for correctness and that isbn is not missing
-                        if (isbnTextField.getText().equals("")) {
-                            JOptionPane.showMessageDialog(null, "Please enter the ISBN number!", "Error", JOptionPane.ERROR_MESSAGE);
-                            okToClose = false;
-                        }
-
-                        if (!publicationYearTextField.getText().equals("")) {
-                            try {
-                                Integer.parseInt(publicationYearTextField.getText());
-                            } catch (NumberFormatException nfe) {
-                                JOptionPane.showMessageDialog(null, "Publication Year needs to be a number!", "Error", JOptionPane.ERROR_MESSAGE);
-                                okToClose = false;
-                            }
-                        }
-                    } else if (evt.getNewValue().equals("wait")) { //used to keep the dialog open, if the input was not ok
+                    //check the input for correctness and that isbn is not missing
+                    if (isbnTextField.getText().equals("")) {
+                        JOptionPane.showMessageDialog(null, "Please enter the ISBN number!", "Error", JOptionPane.ERROR_MESSAGE);
                         okToClose = false;
                     }
-                    if (okToClose) {
-                        setVisible(false);
-                    } else { //if the user clicked on "Save" but the input was not ok
-                        //set the value of the optionPane to an intermediate value,
-                        // so that when the user clicks again on "Save" the listener fires again
-                        optionPane.setValue("wait");
+
+                    if (!publicationYearTextField.getText().equals("")) {
+                        try {
+                            Integer.parseInt(publicationYearTextField.getText());
+                        } catch (NumberFormatException nfe) {
+                            JOptionPane.showMessageDialog(null, "Publication Year needs to be a number!", "Error", JOptionPane.ERROR_MESSAGE);
+                            okToClose = false;
+                        }
                     }
+                } else if (evt.getNewValue().equals("wait")) { //used to keep the dialog open, if the input was not ok
+                    okToClose = false;
+                }
+                if (okToClose) {
+                    setVisible(false);
+                } else { //if the user clicked on "Save" but the input was not ok
+                    //set the value of the optionPane to an intermediate value,
+                    // so that when the user clicks again on "Save" the listener fires again
+                    optionPane.setValue("wait");
                 }
             }
         }
     }
+}
