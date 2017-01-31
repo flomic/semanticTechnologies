@@ -2,8 +2,6 @@ import org.eclipse.rdf4j.query.BindingSet;
 import org.eclipse.rdf4j.query.QueryLanguage;
 import org.eclipse.rdf4j.query.TupleQuery;
 import org.eclipse.rdf4j.query.TupleQueryResult;
-import org.eclipse.rdf4j.query.algebra.In;
-import org.eclipse.rdf4j.query.algebra.evaluation.function.IntegerCast;
 import org.eclipse.rdf4j.repository.Repository;
 import org.eclipse.rdf4j.repository.RepositoryConnection;
 
@@ -36,17 +34,19 @@ public class RepoHandler {
             //System.out.println(queryString + "\n");
             TupleQuery tupleQuery = conn.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
             try (TupleQueryResult result = tupleQuery.evaluate()) {
-                while (result.hasNext()) {  // iterate over the result
-                    BindingSet bindingSet = result.next();
-                    String resultString = "";
-                    String author = removeBindingNameAndType(bindingSet.getValue("author").toString());
-                    String title = removeBindingNameAndType(bindingSet.getValue("title").toString());
-                    String publisher = removeBindingNameAndType(bindingSet.getValue("publisher").toString());
-                    String genre = removeBindingNameAndType(bindingSet.getValue("genre").toString());
-                    String year = removeBindingNameAndType(bindingSet.getValue("year").toString());
+                if(result.hasNext()) {
+                    while (result.hasNext()) {  // iterate over the result
+                        BindingSet bindingSet = result.next();
+                        String resultString = "";
+                        String author = removeBindingNameAndType(bindingSet.getValue("author").toString());
+                        String title = removeBindingNameAndType(bindingSet.getValue("title").toString());
+                        String publisher = removeBindingNameAndType(bindingSet.getValue("publisher").toString());
+                        String genre = removeBindingNameAndType(bindingSet.getValue("genre").toString());
+                        String year = removeBindingNameAndType(bindingSet.getValue("year").toString());
 
-                    resultBook = new Book(isbn, author,title,publisher,genre,Integer.parseInt(year));
-                }
+                        resultBook = new Book(isbn, author, title, publisher, genre, Integer.parseInt(year));
+                    }
+                } else return null;
             }
         }
         return resultBook;

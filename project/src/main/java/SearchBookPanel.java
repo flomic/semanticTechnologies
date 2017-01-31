@@ -97,7 +97,12 @@ public class SearchBookPanel {
             //TODO implement search
             Repository repo = FileHandler.readRepositoryFromFile(FILE_PATH);
             String isbn = getIsbn();
-            showBooksDialog sbd = new showBooksDialog(isbn);
+
+            if (RepoHandler.searchByISBN(repo, isbn) != null) {
+                showBooksDialog sbd = new showBooksDialog(isbn);
+            } else {
+                JOptionPane.showMessageDialog(null, "No book with this isbn was found.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 }

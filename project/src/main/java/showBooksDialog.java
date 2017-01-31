@@ -88,8 +88,8 @@ public class showBooksDialog extends JDialog {
 
     private void createUIComponents() {
         repo = FileHandler.readRepositoryFromFile(FILE_PATH);
+        books = RepoHandler.getAllBooks(repo);
         if (isbn.equals("")) {
-            books = RepoHandler.getAllBooks(repo);
             for (int i = 0; i < books.size(); i++) {
                 JButton b = new JButton(books.get(i));
                 b.addActionListener(new BookClickedListener());
