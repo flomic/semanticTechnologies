@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.LinkedList;
 
-public class showBooksDialog extends JDialog {
+public class ShowBooksDialog extends JDialog {
     private JPanel contentPane;
     private JButton buttonClose;
     private JPanel contentPanel = new JPanel();
@@ -19,14 +19,14 @@ public class showBooksDialog extends JDialog {
 
     private static final String FILE_PATH = "src/main/resources/project.ttl";
 
-    public showBooksDialog() {
-        new showBooksDialog("");
+    public ShowBooksDialog() {
+        new ShowBooksDialog("");
     }
 
-    public showBooksDialog(String isbn) {
+    public ShowBooksDialog(String isbn) {
         this.isbn = isbn;
         $$$setupUI$$$();
-        setMinimumSize(new Dimension(400, 400));
+        setMinimumSize(new Dimension(800, 400));
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonClose);
@@ -67,7 +67,7 @@ public class showBooksDialog extends JDialog {
     }
 
     public static void main(String[] args) {
-        showBooksDialog dialog = new showBooksDialog();
+        ShowBooksDialog dialog = new ShowBooksDialog();
         dialog.pack();
         dialog.setVisible(true);
         System.exit(0);
@@ -94,33 +94,110 @@ public class showBooksDialog extends JDialog {
 
         LinkedList<Book> books = RepoHandler.searchWithFilter(repo, filter);
 
-        JPanel p = new JPanel();
+        contentPanel.setLayout(new GridLayout(books.size() + 1, 1));
+        JPanel titlePanel = new JPanel();
+        titlePanel.setLayout(new GridLayout(1, 6));
+
+        JLabel isbnLabel = new JLabel("ISBN", SwingConstants.CENTER);
+        isbnLabel.setBorder(BorderFactory.createLineBorder(Color.black));
+        isbnLabel.setBackground(Color.black);
+        isbnLabel.setOpaque(true);
+        isbnLabel.setForeground(Color.white);
+        titlePanel.add(isbnLabel);
+
+        JLabel titleLabel = new JLabel("Title", SwingConstants.CENTER);
+        titleLabel.setBorder(BorderFactory.createLineBorder(Color.black));
+        titleLabel.setBackground(Color.black);
+        titleLabel.setOpaque(true);
+        titleLabel.setForeground(Color.white);
+        titlePanel.add(titleLabel);
+
+        JLabel authorLabel = new JLabel("Author", SwingConstants.CENTER);
+        authorLabel.setBorder(BorderFactory.createLineBorder(Color.black));
+        authorLabel.setBackground(Color.black);
+        authorLabel.setOpaque(true);
+        authorLabel.setForeground(Color.white);
+        titlePanel.add(authorLabel);
+
+        JLabel publisherLabel = new JLabel("Publisher", SwingConstants.CENTER);
+        publisherLabel.setBorder(BorderFactory.createLineBorder(Color.black));
+        publisherLabel.setBackground(Color.black);
+        publisherLabel.setOpaque(true);
+        publisherLabel.setForeground(Color.white);
+        titlePanel.add(publisherLabel);
+
+        JLabel genreLabel = new JLabel("Genre", SwingConstants.CENTER);
+        genreLabel.setBorder(BorderFactory.createLineBorder(Color.black));
+        genreLabel.setBackground(Color.black);
+        genreLabel.setOpaque(true);
+        genreLabel.setForeground(Color.white);
+        titlePanel.add(genreLabel);
+
+        JLabel publicationYearLabel = new JLabel("Publication Year", SwingConstants.CENTER);
+        publicationYearLabel.setBorder(BorderFactory.createLineBorder(Color.black));
+        publicationYearLabel.setBackground(Color.black);
+        publicationYearLabel.setOpaque(true);
+        publicationYearLabel.setForeground(Color.white);
+        titlePanel.add(publicationYearLabel);
+
+        contentPanel.add(titlePanel);
+
         for (Book bookDetails : books) {
-            p = new JPanel();
-            p.add(new JLabel(bookDetails.getIsbn()));
+            JPanel p = new JPanel();
+            p.setLayout(new GridLayout(1, 6));
+
+            JLabel isbnL = new JLabel(bookDetails.getIsbn(), SwingConstants.LEFT);
+            isbnL.setBorder(BorderFactory.createLineBorder(Color.black));
+            p.add(isbnL);
 
             if (bookDetails.getTitle() != null && !bookDetails.getTitle().equals("")) {
-                p.add(new JLabel(bookDetails.getTitle()));
+                JLabel titleL = new JLabel(bookDetails.getTitle(), SwingConstants.LEFT);
+                titleL.setBorder(BorderFactory.createLineBorder(Color.black));
+                p.add(titleL);
+            } else {
+                JLabel emptyLabel1 = new JLabel("");
+                emptyLabel1.setBorder(BorderFactory.createLineBorder(Color.black));
+                p.add(emptyLabel1);
             }
 
             if (bookDetails.getAuthor() != null && !bookDetails.getAuthor().equals("")) {
                 JButton authorButton = new JButton(bookDetails.getAuthor());
                 authorButton.addActionListener(new AuthorClicked());
                 p.add(authorButton);
+            } else {
+                JLabel emptyLabel2 = new JLabel("");
+                emptyLabel2.setBorder(BorderFactory.createLineBorder(Color.black));
+                p.add(emptyLabel2);
             }
 
             if (bookDetails.getPublisher() != null && !bookDetails.getPublisher().equals("")) {
                 JButton publisherButton = new JButton(bookDetails.getPublisher());
                 publisherButton.addActionListener(new PublisherClicked());
                 p.add(publisherButton);
+            } else {
+                JLabel emptyLabel3 = new JLabel("");
+                emptyLabel3.setBorder(BorderFactory.createLineBorder(Color.black));
+                p.add(emptyLabel3);
             }
 
             if (bookDetails.getGenre() != null && !bookDetails.getGenre().equals("")) {
-                p.add(new JLabel(bookDetails.getGenre()));
+                JLabel genreL = new JLabel(bookDetails.getGenre(), SwingConstants.LEFT);
+                genreL.setBorder(BorderFactory.createLineBorder(Color.black));
+                p.add(genreL);
+            } else {
+                JLabel emptyLabel4 = new JLabel("");
+                emptyLabel4.setBorder(BorderFactory.createLineBorder(Color.black));
+                p.add(emptyLabel4);
             }
 
             if (bookDetails.getPublicationYear() != null) {
-                p.add(new JLabel(bookDetails.getPublicationYear().toString()));
+                JLabel publicationYearL = new JLabel(bookDetails.getPublicationYear().toString(), SwingConstants.LEFT);
+                publicationYearL.setBorder(BorderFactory.createLineBorder(Color.black));
+                p.add(publicationYearL);
+            } else {
+                JLabel emptyLabel5 = new JLabel("");
+                emptyLabel5.setBorder(BorderFactory.createLineBorder(Color.black));
+                p.add(emptyLabel5);
             }
 
             contentPanel.add(p);

@@ -136,7 +136,7 @@ public class MainWindow {
     private class ShowBooksClicked implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            showBooksDialog sbd = new showBooksDialog();
+            ShowBooksDialog sbd = new ShowBooksDialog();
         }
     }
 }

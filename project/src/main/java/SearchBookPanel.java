@@ -101,7 +101,7 @@ public class SearchBookPanel {
             } else if (RepoHandler.searchWithFilter(repo, "FILTER(?b = ex:" + isbn + ")").size() == 0) {
                 JOptionPane.showMessageDialog(null, "No book with this ISBN was found.", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
-                showBooksDialog sbd = new showBooksDialog(isbn);
+                ShowBooksDialog sbd = new ShowBooksDialog(isbn);
             }
         }
     }
