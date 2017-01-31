@@ -162,3 +162,35 @@
 	:has_title "Five" ;
 	:has_genre "Ger" ;
 	:has_publisher :P3 .
+
+:fn_lm_ a :Author ;
+	:has_gender "female" ;
+	:has_first_name "fn" ;
+	:has_last_name "lm" .
+
+:hhhh a :Publisher .
+
+:123345 a :Book ;
+	:has_author :fn_lm_ ;
+	:has_title "hallo" ;
+	:has_genre "genre" ;
+	:has_publication_year "2017" ;
+	:has_publisher :hhhh .
+
+:1 a :Book ;
+	:has_author :AB2 ;
+	:has_title "dd" ;
+	:has_genre "" ;
+	:has_publisher :hhhh .
+
+:A_A_ a :Author ;
+	:has_gender "male" ;
+	:has_first_name "A" ;
+	:has_last_name "A" .
+
+:C_C_ a :Author ;
+	:has_gender "male" ;
+	:has_first_name "C" ;
+	:has_last_name "C" .
+
+:123 a :Book .

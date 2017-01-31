@@ -25,12 +25,12 @@ public class RepoHandler {
                             "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
                             "PREFIX ex: <urn:absolute:www.example.com/ontologies/project-ontology#>\n" +
                             "SELECT * WHERE { " +
-                            "?b rdf:type ex:Book." +
-                            "?b ex:has_author ?author. " +
-                            "?b ex:has_title ?title. " +
-                            "?b ex:has_publisher ?publisher. " +
-                            "?b ex:has_genre ?genre. " +
-                            "?b ex:has_publication_year ?year. " +
+                            "?b rdf:type ex:Book " +
+                            "OPTIONAL{?b ex:has_author ?author } " +
+                            "OPTIONAL{?b ex:has_title ?title } " +
+                            "OPTIONAL{?b ex:has_publisher ?publisher } " +
+                            "OPTIONAL{?b ex:has_genre ?genre } " +
+                            "OPTIONAL{?b ex:has_publication_year ?year } " +
                             filter +
                             "}";
 
@@ -41,12 +41,33 @@ public class RepoHandler {
                     BindingSet bindingSet = result.next();
                     String resultString = "";
                     String isbn = cleanString(bindingSet.getValue("b").toString());
-                    String author = cleanString(bindingSet.getValue("author").toString());
-                    String title = cleanString(bindingSet.getValue("title").toString());
-                    String publisher = cleanString(bindingSet.getValue("publisher").toString());
-                    String genre = cleanString(bindingSet.getValue("genre").toString());
-                    String year = cleanString(bindingSet.getValue("year").toString());
-                    books.add(new Book(isbn, author, title, publisher, genre, Integer.parseInt(year)));
+
+                    String author = null;
+                    if(bindingSet.hasBinding("author")){
+                        author =cleanString(bindingSet.getValue("author").toString());
+                    }
+
+                    String title = null;
+                    if(bindingSet.hasBinding("title")){
+                        title = cleanString(bindingSet.getValue("title").toString());
+                    }
+
+                    String publisher = null;
+                    if(bindingSet.hasBinding("publisher")){
+                        publisher = cleanString(bindingSet.getValue("publisher").toString());
+                    }
+
+                    String genre = null;
+                    if(bindingSet.hasBinding("genre")){
+                        genre = cleanString(bindingSet.getValue("genre").toString());
+                    }
+
+                    if(bindingSet.hasBinding("year")){
+                        String year = cleanString(bindingSet.getValue("year").toString());
+                        books.add(new Book(isbn, author, title, publisher, genre, Integer.parseInt(year)));
+                    } else {
+                        books.add(new Book(isbn, author, title, publisher, genre, null));
+                    }
                 }
             }
         }

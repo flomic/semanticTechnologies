@@ -33,7 +33,7 @@ public class showBooksDialog extends JDialog {
 
         buttonAllBooks.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                showBooks("",  false);
+                showBooks("", false);
             }
         });
 
@@ -77,9 +77,9 @@ public class showBooksDialog extends JDialog {
         repo = FileHandler.readRepositoryFromFile(FILE_PATH);
         books = RepoHandler.getAll(repo, "Book");
         if (isbn.equals("")) {
-            showBooks("",  true);
+            showBooks("", true);
         } else {
-            showBooks("FILTER(?b = ex:" + isbn + ")",  true);
+            showBooks("FILTER(?b = ex:" + isbn + ")", true);
         }
     }
 
@@ -98,18 +98,31 @@ public class showBooksDialog extends JDialog {
         for (Book bookDetails : books) {
             p = new JPanel();
             p.add(new JLabel(bookDetails.getIsbn()));
-            p.add(new JLabel(bookDetails.getTitle()));
 
-            JButton authorButton = new JButton(bookDetails.getAuthor());
-            authorButton.addActionListener(new AuthorClicked());
-            p.add(authorButton);
+            if (bookDetails.getTitle() != null && !bookDetails.getTitle().equals("")) {
+                p.add(new JLabel(bookDetails.getTitle()));
+            }
 
-            JButton publisherButton = new JButton(bookDetails.getPublisher());
-            publisherButton.addActionListener(new PublisherClicked());
-            p.add(publisherButton);
+            if (bookDetails.getAuthor() != null && !bookDetails.getAuthor().equals("")) {
+                JButton authorButton = new JButton(bookDetails.getAuthor());
+                authorButton.addActionListener(new AuthorClicked());
+                p.add(authorButton);
+            }
 
-            p.add(new JLabel(bookDetails.getGenre()));
-            p.add(new JLabel(bookDetails.getPublicationYear().toString()));
+            if (bookDetails.getPublisher() != null && !bookDetails.getPublisher().equals("")) {
+                JButton publisherButton = new JButton(bookDetails.getPublisher());
+                publisherButton.addActionListener(new PublisherClicked());
+                p.add(publisherButton);
+            }
+
+            if (bookDetails.getGenre() != null && !bookDetails.getGenre().equals("")) {
+                p.add(new JLabel(bookDetails.getGenre()));
+            }
+
+            if (bookDetails.getPublicationYear() != null) {
+                p.add(new JLabel(bookDetails.getPublicationYear().toString()));
+            }
+
             contentPanel.add(p);
         }
 
@@ -154,21 +167,21 @@ public class showBooksDialog extends JDialog {
     private class BookClickedListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            showBooks("FILTER(?b = ex:" + e.getActionCommand() + ")",  false);
+            showBooks("FILTER(?b = ex:" + e.getActionCommand() + ")", false);
         }
     }
 
     private class PublisherClicked implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            showBooks("FILTER(?publisher = ex:" + e.getActionCommand() + ")",  false);
+            showBooks("FILTER(?publisher = ex:" + e.getActionCommand() + ")", false);
         }
     }
 
     private class AuthorClicked implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            showBooks("FILTER(?author = ex:" + e.getActionCommand() + ")",  false);
+            showBooks("FILTER(?author = ex:" + e.getActionCommand() + ")", false);
         }
     }
 }

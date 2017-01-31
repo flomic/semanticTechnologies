@@ -1,5 +1,7 @@
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import org.eclipse.rdf4j.model.Model;
+import org.eclipse.rdf4j.model.vocabulary.RDF;
 import org.eclipse.rdf4j.repository.Repository;
 
 import javax.swing.*;
@@ -214,7 +216,7 @@ public class AddBookDialog extends JDialog {
                     String id = firstName + "_" + lastName + "_" + dob;
 
                     if (id.length() > 2) { //if the id is not empty
-                        if (!RepoHandler.getAll(repo, "Author").contains(id)) {
+                        if (!RepoHandler.getAll(repo, "Author").contains(id) && !ModelHandler.contains(MainWindow.getModel(), id, RDF.TYPE, "Author", 'I')) {
                             Author a = new Author(id, gender, firstName, lastName, dob); //create a new author
                             ModelHandler.addAuthor(a, MainWindow.getModel()); //add it to the model
                             authorComboBox.addItem(id); //add the item to the combobox
@@ -247,12 +249,12 @@ public class AddBookDialog extends JDialog {
                 // Show a input dialog where the user enters the publisher name, which is also the id
                 String publisher = JOptionPane.showInputDialog(null, "Please enter the publisher name", "New Publisher", JOptionPane.PLAIN_MESSAGE);
                 if (publisher != null && !publisher.equals("")) { //if the entered string is not empty
-
-                    if (!RepoHandler.getAll(repo, "Publisher").contains(publisher)) {
+                    if (!RepoHandler.getAll(repo, "Publisher").contains(publisher) && !ModelHandler.contains(MainWindow.getModel(), publisher, RDF.TYPE, "Publisher", 'I')) {
                         Publisher p = new Publisher(publisher); //create a new publisher
                         ModelHandler.addPublisher(p, MainWindow.getModel()); //add the publisher to the model
                         publisherComboBox.addItem(publisher); //add the publisher to the combobox
                         publisherComboBox.setSelectedItem(publisher); //select the publisher in the combobox
+
                     } else {
                         JOptionPane.showMessageDialog(null, "This publisher ID exists already.", "Error", JOptionPane.ERROR_MESSAGE);
                         publisherComboBox.setSelectedItem("Please select a publisher");
