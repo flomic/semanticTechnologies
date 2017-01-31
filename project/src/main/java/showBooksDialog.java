@@ -79,7 +79,7 @@ public class showBooksDialog extends JDialog {
         if (isbn.equals("")) {
             showBooks("",  true);
         } else {
-            showBooks("FILTER(?b = ex:" + isbn + ")",  false);
+            showBooks("FILTER(?b = ex:" + isbn + ")",  true);
         }
     }
 
