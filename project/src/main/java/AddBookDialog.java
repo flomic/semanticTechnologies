@@ -239,7 +239,7 @@ public class AddBookDialog extends JDialog {
                     String lastName = aap.getLastName();
                     String gender = aap.getGender();
                     String dob = aap.getDateOfBirth();
-                    String id = firstName + " " + lastName + " " + dob;
+                    String id = firstName + "_" + lastName + "_" + dob;
 
 
                     if (!id.equals("  ")) { //if the id is not empty
