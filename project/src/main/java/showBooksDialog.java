@@ -88,7 +88,7 @@ public class showBooksDialog extends JDialog {
 
     private void createUIComponents() {
         repo = FileHandler.readRepositoryFromFile(FILE_PATH);
-        books = RepoHandler.getAllBooks(repo);
+        books = RepoHandler.getAll(repo, "Book");
         if (isbn.equals("")) {
             for (int i = 0; i < books.size(); i++) {
                 JButton b = new JButton(books.get(i));
@@ -96,8 +96,8 @@ public class showBooksDialog extends JDialog {
                 contentPanel.add(b);
             }
         } else {
-            Book bookDetails = RepoHandler.searchByISBN(repo, isbn);
-            contentPanel.add(new JLabel(bookDetails.getBookId()));
+            Book bookDetails = (RepoHandler.searchWithFilter(repo, "FILTER(?b = ex:" + isbn + ")")).getFirst();
+            contentPanel.add(new JLabel(bookDetails.getIsbn()));
             contentPanel.add(new JLabel(bookDetails.getTitle()));
             contentPanel.add(new JButton(bookDetails.getAuthor()));
 
@@ -119,8 +119,8 @@ public class showBooksDialog extends JDialog {
 
     private void showBookDetails(String isbn) {
         contentPanel.removeAll();
-        Book bookDetails = RepoHandler.searchByISBN(repo, isbn);
-        contentPanel.add(new JLabel(bookDetails.getBookId()));
+        Book bookDetails = (RepoHandler.searchWithFilter(repo, "FILTER(?b = ex:" + isbn + ")")).getFirst();
+        contentPanel.add(new JLabel(bookDetails.getIsbn()));
         contentPanel.add(new JLabel(bookDetails.getTitle()));
         contentPanel.add(new JButton(bookDetails.getAuthor()));
 
@@ -135,12 +135,12 @@ public class showBooksDialog extends JDialog {
 
     private void showBooksForPublisher(String publisherId) {
         contentPanel.removeAll();
-        LinkedList<Book> books = RepoHandler.searchByPublisherId(repo, publisherId);
+        LinkedList<Book> books = RepoHandler.searchWithFilter(repo, "FILTER(?publisher = ex:" + publisherId + ")");
         contentPanel.add(new JLabel(publisherId));
         JPanel p = new JPanel();
         for (Book bookDetails : books) {
             p = new JPanel();
-            p.add(new JLabel(bookDetails.getBookId()));
+            p.add(new JLabel(bookDetails.getIsbn()));
             p.add(new JLabel(bookDetails.getTitle()));
             p.add(new JButton(bookDetails.getAuthor()));
             p.add(new JLabel(bookDetails.getGenre()));

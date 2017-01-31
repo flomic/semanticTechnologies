@@ -66,7 +66,7 @@ public class ModelHandlerTest {
         IRI predicatePart = factory.createIRI("http://www.example.org/belongsTo");
         Value objectPart = factory.createIRI("http://www.example.org/Lib_R1");
 
-        ModelHandler.addBookToLibrary(b.getBookId(), r.getLibrary().getId(),m);
+        ModelHandler.addBookToLibrary(b.getIsbn(), r.getLibrary().getId(),m);
 
         Assert.assertTrue(m.contains(subjectPart, predicatePart, objectPart));
     }

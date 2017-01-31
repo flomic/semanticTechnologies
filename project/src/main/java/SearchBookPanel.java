@@ -18,7 +18,6 @@ public class SearchBookPanel {
     private JTextField isbnTextField;
     private JButton searchButton;
     public JPanel searchBookView;
-    private JScrollPane ResultsScrollPane;
 
     /**
      * Constructer do add an action listener to the search button
@@ -57,7 +56,7 @@ public class SearchBookPanel {
      */
     private void $$$setupUI$$$() {
         searchBookView = new JPanel();
-        searchBookView.setLayout(new GridLayoutManager(3, 1, new Insets(0, 0, 0, 0), -1, -1));
+        searchBookView.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
         final JLabel label1 = new JLabel();
         label1.setFont(new Font(label1.getFont().getName(), label1.getFont().getStyle(), 48));
         label1.setHorizontalTextPosition(0);
@@ -72,10 +71,9 @@ public class SearchBookPanel {
         isbnTextField = new JTextField();
         panel1.add(isbnTextField, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         searchButton = new JButton();
+        searchButton.setSelected(true);
         searchButton.setText("Search");
         panel1.add(searchButton, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        ResultsScrollPane = new JScrollPane();
-        searchBookView.add(ResultsScrollPane, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
     }
 
     /**
@@ -98,10 +96,12 @@ public class SearchBookPanel {
             Repository repo = FileHandler.readRepositoryFromFile(FILE_PATH);
             String isbn = getIsbn();
 
-            if (RepoHandler.searchByISBN(repo, isbn) != null) {
-                showBooksDialog sbd = new showBooksDialog(isbn);
+            if (isbn.length() == 0) {
+                JOptionPane.showMessageDialog(null, "Please insert an ISBN.", "Error", JOptionPane.ERROR_MESSAGE);
+            } else if (RepoHandler.searchWithFilter(repo, "FILTER(?b = ex:" + isbn + ")").size() == 0) {
+                JOptionPane.showMessageDialog(null, "No book with this ISBN was found.", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(null, "No book with this isbn was found.", "Error", JOptionPane.ERROR_MESSAGE);
+                showBooksDialog sbd = new showBooksDialog(isbn);
             }
         }
     }

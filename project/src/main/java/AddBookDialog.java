@@ -33,8 +33,8 @@ public class AddBookDialog extends JDialog {
     public AddBookDialog(Frame aFrame, String filePath) {
         super(aFrame, true);
         repo = FileHandler.readRepositoryFromFile(filePath);
-        LinkedList<String> authors = RepoHandler.getAllAuthors(repo); //get all authors in the repo
-        LinkedList<String> publisher = RepoHandler.getAllPublishers(repo); //get all publisher in the repo
+        LinkedList<String> authors = RepoHandler.getAll(repo, "Author"); //get all authors in the repo
+        LinkedList<String> publisher = RepoHandler.getAll(repo, "Publisher"); //get all publisher in the repo
 
         authorComboBox.addItem("Please select an author"); //First item that should be shown in the comboBox
         authorComboBox.addItem("New Author"); //Used to allow the user to add a new author
@@ -272,7 +272,7 @@ public class AddBookDialog extends JDialog {
                 String publisher = JOptionPane.showInputDialog(null, "Please enter the publisher name", "New Publisher", JOptionPane.PLAIN_MESSAGE);
                 if (publisher != null && !publisher.equals("")) { //if the entered string is not empty
 
-                    if (RepoHandler.searchByPublisherId(repo, publisher).size() == 0) {
+                    if (RepoHandler.searchWithFilter(repo, "FILTER(?publisher = ex:" + publisher + ")").size() == 0) {
                         Publisher p = new Publisher(publisher); //create a new publisher
                         ModelHandler.addPublisher(p, MainWindow.getModel()); //add the publisher to the model
                         publisherComboBox.addItem(publisher); //add the publisher to the combobox

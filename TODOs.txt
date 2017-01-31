@@ -1,9 +1,4 @@
-- Search for books in repo
-
 - Automatical insertion of data
-
-- Decide when to store data and add it in the source code
-- Find out how to get data of model into repo
 
 - Decide where to get the different ids from (User input? Generation out of other values?)
 
@@ -12,16 +7,18 @@
 
 
 
-- Write report
-
 
 - author navigation
 - author is already existing
 - do not output if field empty
 
 
-
-----------------------------------
 - show list of books - navigate author, publisher etc.
 - delete books/author/publisher
 - add/delete/switch library?
+
+
+
+
+----------------------------------
+- Write report

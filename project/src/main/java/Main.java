@@ -25,12 +25,12 @@ public class Main {
 
         System.out.println("\n\n");*/
 
-        for(String s : RepoHandler.getAllAuthors(repo)){
+        for(String s : RepoHandler.getAll(repo, "Author")){
             System.out.println(s);
         }
 
         System.out.println("\n\n");
-        for(String p : RepoHandler.getAllPublishers(repo)){
+        for(String p : RepoHandler.getAll(repo, "Publisher")){
             System.out.println(p);
         }
 
@@ -50,7 +50,7 @@ public class Main {
             ModelHandler.addBook(b,m);
             ModelHandler.addBook(b2,m);
             ModelHandler.addReader(r, m);
-            ModelHandler.addBookToLibrary(b.getBookId(), r.getLibrary().getId(),m);
+            ModelHandler.addBookToLibrary(b.getIsbn(), r.getLibrary().getId(),m);
             ModelHandler.addPublisher(p,m);
             FileHandler.writeModelToFile("src/main/resources/project.ttl", m);
 
@@ -107,7 +107,6 @@ public class Main {
             System.out.println(s);
         }*/
 
-        RepoHandler.searchByISBN(repo, isbn);
         /*org.apache.jena.query.Query sparqlquery = QueryFactory.create(query);
         QueryExecution result = QueryExecutionFactory.sparqlService("http://dbpedia.org/sparql", sparqlquery);
         org.apache.jena.query.ResultSet results = result.execSelect();

@@ -6,7 +6,7 @@
  * Class to represent a book object.
  */
 public class Book {
-    private String bookId;
+    private String isbn;
     private String authorId;
     private String title;
     private String publisherId;
@@ -15,15 +15,15 @@ public class Book {
 
     /**
      * Constructor of a book object
-     * @param bookId
+     * @param isbn
      * @param authorId
      * @param title
      * @param publisherId
      * @param genre
      * @param publicationYear
      */
-    public Book(String bookId, String authorId, String title, String publisherId, String genre, Integer publicationYear) {
-    	this.bookId = bookId;
+    public Book(String isbn, String authorId, String title, String publisherId, String genre, Integer publicationYear) {
+    	this.isbn = isbn;
     	this.authorId = authorId;
     	this.title = title;
     	this.publisherId = publisherId;
@@ -31,12 +31,12 @@ public class Book {
     	this.publicationYear = publicationYear;
     }
 
-    public String getBookId() {
-        return bookId;
+    public String getIsbn() {
+        return isbn;
     }
 
-    public void setBookId(String bookId) {
-        this.bookId = bookId;
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
 
     public String getAuthor() {

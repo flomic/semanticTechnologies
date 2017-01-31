@@ -85,16 +85,16 @@ public class ModelHandler {
     //TODO check if book already exists
     //TODO don't add line if the value is missing
     public static void addBook(Book book, Model model){
-        addItem(book.getBookId(), RDF.TYPE, "Book", 'I', model);
-        addItem(book.getBookId(), "has_author", book.getAuthor(), 'I', model);
-        addItem(book.getBookId(), "has_title", book.getTitle(), 'L', model);
-        addItem(book.getBookId(), "has_genre", book.getGenre(), 'L', model);
+        addItem(book.getIsbn(), RDF.TYPE, "Book", 'I', model);
+        addItem(book.getIsbn(), "has_author", book.getAuthor(), 'I', model);
+        addItem(book.getIsbn(), "has_title", book.getTitle(), 'L', model);
+        addItem(book.getIsbn(), "has_genre", book.getGenre(), 'L', model);
 
         if(book.getPublicationYear()!= null){
-            addItem(book.getBookId(), "has_publication_year", book.getPublicationYear().toString(), 'L', model);
+            addItem(book.getIsbn(), "has_publication_year", book.getPublicationYear().toString(), 'L', model);
         }
 
-        addItem(book.getBookId(), "has_publisher", book.getPublisher(), 'I', model);
+        addItem(book.getIsbn(), "has_publisher", book.getPublisher(), 'I', model);
     }
 
     /**
@@ -132,15 +132,15 @@ public class ModelHandler {
     }
 
     /**
-     * Takes a bookId and a libraryId and adds them to the model.
-     * @param bookId
+     * Takes a isbn and a libraryId and adds them to the model.
+     * @param isbn
      * @param libId
      * @param model
      */
     //TODO check if book is already in the library
     //TODO don't add line if one value is missing
-    public static void addBookToLibrary(String bookId, String libId, Model model){
-        addItem(bookId, "belongs_to", libId, 'I', model);
+    public static void addBookToLibrary(String isbn, String libId, Model model){
+        addItem(isbn, "belongs_to", libId, 'I', model);
     }
 
     /**
