@@ -2,6 +2,7 @@
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QueryFactory;
 import org.apache.jena.query.QuerySolution;*/
+
 import org.eclipse.rdf4j.model.Model;
 import org.eclipse.rdf4j.repository.Repository;
 
@@ -18,6 +19,7 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) throws IOException {
         Repository repo = FileHandler.readRepositoryFromFile("src/main/resources/output.ttl");
+        Repository repo2 = FileHandler.readRepositoryFromFile("src/main/resources/project.ttl");
         /*System.out.println(RepoHandler.returnQueryResult(repo,
                         "SELECT * WHERE {\n" +
                         "?x rdf:type ?y.\n" +
@@ -25,6 +27,8 @@ public class Main {
 
         System.out.println("\n\n");*/
 
+
+        /*
         for(String s : RepoHandler.getAll(repo, "Author")){
             System.out.println(s);
         }
@@ -32,7 +36,7 @@ public class Main {
         System.out.println("\n\n");
         for(String p : RepoHandler.getAll(repo, "Publisher")){
             System.out.println(p);
-        }
+        }*/
 
 
             Model m = FileHandler.readModelFromFile("src/main/resources/project.ttl");
@@ -54,9 +58,6 @@ public class Main {
             ModelHandler.addPublisher(p,m);
             FileHandler.writeModelToFile("src/main/resources/project.ttl", m);
 
-
-
-
         /* ----------------------------------------- GET BOOK FROM DBPEDIA ----------------------------------------- */
 
         String isbn = "9780002318525";
@@ -64,7 +65,6 @@ public class Main {
         /* book */
         String author;
         String title;
-        String language; //TODO konn verschiedene hobn
         String publisher;
         String genre;
         Integer publicationYear; //TODO gibs net auf dbpedia

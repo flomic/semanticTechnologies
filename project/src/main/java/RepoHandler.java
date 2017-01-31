@@ -23,7 +23,8 @@ public class RepoHandler {
             String queryString =
                     "PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>\n" +
                             "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
-                            "PREFIX ex: <urn:absolute:www.example.com/ontologies/project-ontology#>\n" + "SELECT * WHERE { " +
+                            "PREFIX ex: <urn:absolute:www.example.com/ontologies/project-ontology#>\n" +
+                            "SELECT * WHERE { " +
                             "?b rdf:type ex:Book." +
                             "?b ex:has_author ?author. " +
                             "?b ex:has_title ?title. " +

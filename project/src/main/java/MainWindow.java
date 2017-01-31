@@ -111,11 +111,9 @@ public class MainWindow {
                 //get all the information for the AddBookDialog
                 String isbn = abp.getIsbn();
                 String title = abp.getTitle();
-                String urlCover = abp.getUrlCover();
                 String publicationYear = abp.getPublicationYear();
                 String genre = abp.getGenre();
                 String publisher = abp.getPublisher();
-                String language = abp.getLanguage();
                 String author = abp.getAuthor();
 
 
@@ -129,7 +127,7 @@ public class MainWindow {
                     ModelHandler.addBook(b, MainWindow.getModel());//add the book to the model
                     FileHandler.writeModelToFile(FILE_PATH, model);
                 } catch (IOException e1) {
-                    e1.printStackTrace(); //TODO Handle IOException for Cover Url
+                    e1.printStackTrace();
                 }
             }
         }

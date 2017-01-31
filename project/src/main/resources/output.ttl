@@ -23,10 +23,6 @@
 	rdfs:domain :Book ;
 	rdfs:range :Author .
 
-:has_cover a owl:ObjectProperty , owl:FunctionalProperty ;
-	rdfs:domain :Book ;
-	rdfs:range :Cover .
-
 :has_gender a owl:ObjectProperty , owl:FunctionalProperty ;
 	rdfs:domain :Person ;
 	rdfs:range :Gender .
@@ -79,8 +75,6 @@
 	rdfs:subClassOf :Person .
 
 :Book a owl:Class .
-
-:Cover a owl:Class .
 
 :Gender a owl:Class .
 

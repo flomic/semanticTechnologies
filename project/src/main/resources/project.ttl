@@ -23,10 +23,6 @@
 	rdfs:domain :Book ;
 	rdfs:range :Author .
 
-:has_cover a owl:ObjectProperty , owl:FunctionalProperty ;
-	rdfs:domain :Book ;
-	rdfs:range :Cover .
-
 :has_gender a owl:ObjectProperty , owl:FunctionalProperty ;
 	rdfs:domain :Person ;
 	rdfs:range :Gender .
@@ -79,8 +75,6 @@
 	rdfs:subClassOf :Person .
 
 :Book a owl:Class .
-
-:Cover a owl:Class .
 
 :Gender a owl:Class .
 
@@ -140,3 +134,31 @@
 	:has_genre "asdf" ;
 	:has_publication_year "2123" ;
 	:has_publisher :P1 .
+
+:F_L_ a :Author ;
+	:has_gender "male" ;
+	:has_first_name "F" ;
+	:has_last_name "L" .
+
+:P2 a :Publisher .
+
+:3214 a :Book ;
+	:has_author :F_L_ ;
+	:has_title "afsd" ;
+	:has_genre "asdfas" ;
+	:has_publisher :P2 ;
+	:has_title "aaaaaaaaaa" ;
+	:has_genre "dfsa" .
+
+:B_C_ a :Author ;
+	:has_gender "male" ;
+	:has_first_name "B" ;
+	:has_last_name "C" .
+
+:P3 a :Publisher .
+
+:555 a :Book ;
+	:has_author :B_C_ ;
+	:has_title "Five" ;
+	:has_genre "Ger" ;
+	:has_publisher :P3 .

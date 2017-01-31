@@ -18,10 +18,8 @@ import java.util.LinkedList;
  */
 public class AddBookDialog extends JDialog {
     private JTextField titleTextField;
-    private JTextField urlCoverTextField;
     private JTextField publicationYearTextField;
     private JTextField genreTextField;
-    private JTextField languageTextField;
     private JTextField isbnTextField;
     private JComboBox<String> authorComboBox;
     private JComboBox<String> publisherComboBox;
@@ -80,20 +78,12 @@ public class AddBookDialog extends JDialog {
         return titleTextField.getText();
     }
 
-    public String getUrlCover() {
-        return urlCoverTextField.getText();
-    }
-
     public String getPublicationYear() {
         return publicationYearTextField.getText();
     }
 
     public String getGenre() {
         return genreTextField.getText();
-    }
-
-    public String getLanguage() {
-        return languageTextField.getText();
     }
 
     public String getIsbn() {
@@ -223,12 +213,16 @@ public class AddBookDialog extends JDialog {
                     String dob = aap.getDateOfBirth();
                     String id = firstName + "_" + lastName + "_" + dob;
 
-
-                    if (!id.equals("  ")) { //if the id is not empty
-                        Author a = new Author(id, gender, firstName, lastName, dob); //create a new author
-                        ModelHandler.addAuthor(a, MainWindow.getModel()); //add it to the model
-                        authorComboBox.addItem(id); //add the item to the combobox
-                        authorComboBox.setSelectedItem(id); //select the item in the combobox
+                    if (id.length() > 2) { //if the id is not empty
+                        if (!RepoHandler.getAll(repo, "Author").contains(id)) {
+                            Author a = new Author(id, gender, firstName, lastName, dob); //create a new author
+                            ModelHandler.addAuthor(a, MainWindow.getModel()); //add it to the model
+                            authorComboBox.addItem(id); //add the item to the combobox
+                            authorComboBox.setSelectedItem(id); //select the item in the combobox
+                        } else {
+                            JOptionPane.showMessageDialog(null, "This author exists already.", "Error", JOptionPane.ERROR_MESSAGE);
+                            authorComboBox.setSelectedItem("Please select an author");
+                        }
                     } else { // if the id is empty don't save the author and reset the selected item in the combobox
                         authorComboBox.setSelectedItem("Please select an author");
                     }
@@ -254,7 +248,7 @@ public class AddBookDialog extends JDialog {
                 String publisher = JOptionPane.showInputDialog(null, "Please enter the publisher name", "New Publisher", JOptionPane.PLAIN_MESSAGE);
                 if (publisher != null && !publisher.equals("")) { //if the entered string is not empty
 
-                    if (RepoHandler.searchWithFilter(repo, "FILTER(?publisher = ex:" + publisher + ")").size() == 0) {
+                    if (!RepoHandler.getAll(repo, "Publisher").contains(publisher)) {
                         Publisher p = new Publisher(publisher); //create a new publisher
                         ModelHandler.addPublisher(p, MainWindow.getModel()); //add the publisher to the model
                         publisherComboBox.addItem(publisher); //add the publisher to the combobox
