@@ -15,6 +15,10 @@
 - Write report
 
 
+- author navigation
+- author is already existing
+- do not output if field empty
+
 
 
 ----------------------------------
