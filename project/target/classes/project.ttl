@@ -134,3 +134,9 @@
 
 :P1 a :Publisher .
 
+:asdfsfa a :Book ;
+	:has_author :AB1 ;
+	:has_title "title" ;
+	:has_genre "asdf" ;
+	:has_publication_year "2123" ;
+	:has_publisher :P1 .

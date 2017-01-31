@@ -24,7 +24,6 @@ public class showBooksDialog extends JDialog {
     }
 
     public showBooksDialog(String isbn) {
-
         this.isbn = isbn;
         $$$setupUI$$$();
         //setSize(getPreferredSize());
@@ -99,7 +98,10 @@ public class showBooksDialog extends JDialog {
             Book bookDetails = (RepoHandler.searchWithFilter(repo, "FILTER(?b = ex:" + isbn + ")")).getFirst();
             contentPanel.add(new JLabel(bookDetails.getIsbn()));
             contentPanel.add(new JLabel(bookDetails.getTitle()));
-            contentPanel.add(new JButton(bookDetails.getAuthor()));
+
+            JButton authorButton = new JButton(bookDetails.getAuthor());
+            authorButton.addActionListener(new AuthorClicked());
+            contentPanel.add(authorButton);
 
             JButton publisherButton = new JButton(bookDetails.getPublisher());
             publisherButton.addActionListener(new PublisherClicked());
@@ -122,7 +124,10 @@ public class showBooksDialog extends JDialog {
         Book bookDetails = (RepoHandler.searchWithFilter(repo, "FILTER(?b = ex:" + isbn + ")")).getFirst();
         contentPanel.add(new JLabel(bookDetails.getIsbn()));
         contentPanel.add(new JLabel(bookDetails.getTitle()));
-        contentPanel.add(new JButton(bookDetails.getAuthor()));
+
+        JButton authorButton = new JButton(bookDetails.getAuthor());
+        authorButton.addActionListener(new AuthorClicked());
+        contentPanel.add(authorButton);
 
         JButton publisherButton = new JButton(bookDetails.getPublisher());
         publisherButton.addActionListener(new PublisherClicked());
@@ -136,17 +141,50 @@ public class showBooksDialog extends JDialog {
     private void showBooksForPublisher(String publisherId) {
         contentPanel.removeAll();
         LinkedList<Book> books = RepoHandler.searchWithFilter(repo, "FILTER(?publisher = ex:" + publisherId + ")");
-        contentPanel.add(new JLabel(publisherId));
+
         JPanel p = new JPanel();
         for (Book bookDetails : books) {
             p = new JPanel();
             p.add(new JLabel(bookDetails.getIsbn()));
             p.add(new JLabel(bookDetails.getTitle()));
-            p.add(new JButton(bookDetails.getAuthor()));
+
+            JButton authorButton = new JButton(bookDetails.getAuthor());
+            authorButton.addActionListener(new AuthorClicked());
+            p.add(authorButton);
+
+            JButton publisherButton = new JButton(bookDetails.getPublisher());
+            publisherButton.addActionListener(new PublisherClicked());
+            p.add(publisherButton);
+
             p.add(new JLabel(bookDetails.getGenre()));
             p.add(new JLabel(bookDetails.getPublicationYear().toString()));
+            contentPanel.add(p);
         }
-        contentPanel.add(p);
+        resetGUI();
+    }
+
+    private void showBooksForAuthor(String authorId) {
+        contentPanel.removeAll();
+        LinkedList<Book> books = RepoHandler.searchWithFilter(repo, "FILTER(?author = ex:" + authorId + ")");
+
+        JPanel p = new JPanel();
+        for (Book bookDetails : books) {
+            p = new JPanel();
+            p.add(new JLabel(bookDetails.getIsbn()));
+            p.add(new JLabel(bookDetails.getTitle()));
+
+            JButton authorButton = new JButton(bookDetails.getAuthor());
+            authorButton.addActionListener(new AuthorClicked());
+            p.add(authorButton);
+
+            JButton publisherButton = new JButton(bookDetails.getPublisher());
+            publisherButton.addActionListener(new PublisherClicked());
+            p.add(publisherButton);
+
+            p.add(new JLabel(bookDetails.getGenre()));
+            p.add(new JLabel(bookDetails.getPublicationYear().toString()));
+            contentPanel.add(p);
+        }
         resetGUI();
     }
 
@@ -188,6 +226,7 @@ public class showBooksDialog extends JDialog {
     private class BookClickedListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            System.out.println("Books: " + e.getActionCommand());
             showBookDetails(e.getActionCommand());
         }
     }
@@ -195,7 +234,16 @@ public class showBooksDialog extends JDialog {
     private class PublisherClicked implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            System.out.println("Publisher: " + e.getActionCommand());
             showBooksForPublisher(e.getActionCommand());
+        }
+    }
+
+    private class AuthorClicked implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Author: " + e.getActionCommand());
+            showBooksForAuthor(e.getActionCommand());
         }
     }
 }
