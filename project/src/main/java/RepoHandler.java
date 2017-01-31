@@ -25,13 +25,13 @@ public class RepoHandler {
             String queryString =
                     "PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>\n" +
                             "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
-                            "PREFIX ex: <http://www.example.org/>\n" + "SELECT * WHERE { " +
+                            "PREFIX ex: <urn:absolute:www.example.com/ontologies/project-ontology#>\n" + "SELECT * WHERE { " +
                             "?b rdf:type ex:Book." +
-                            "?b ex:hasAuthor ?author. " +
-                            "?b ex:hasTitle ?title. " +
-                            "?b ex:hasPublisher ?publisher. " +
-                            "?b ex:hasGenre ?genre. " +
-                            "?b ex:hasPublicationYear ?year. " +
+                            "?b ex:has_author ?author. " +
+                            "?b ex:has_title ?title. " +
+                            "?b ex:has_publisher ?publisher. " +
+                            "?b ex:has_genre ?genre. " +
+                            "?b ex:has_publication_year ?year. " +
                             "FILTER(?b = ex:"+isbn+")}";
             //System.out.println(queryString + "\n");
             TupleQuery tupleQuery = conn.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
@@ -60,13 +60,13 @@ public class RepoHandler {
             String queryString =
                     "PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>\n" +
                             "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
-                            "PREFIX ex: <http://www.example.org/>\n" + "SELECT * WHERE { " +
+                            "PREFIX ex: <urn:absolute:www.example.com/ontologies/project-ontology#>\n" + "SELECT * WHERE { " +
                             "?b rdf:type ex:Book." +
-                            "?b ex:hasAuthor ?author. " +
-                            "?b ex:hasTitle ?title. " +
-                            "?b ex:hasPublisher ?publisher. " +
-                            "?b ex:hasGenre ?genre. " +
-                            "?b ex:hasPublicationYear ?year. " +
+                            "?b ex:has_author ?author. " +
+                            "?b ex:has_title ?title. " +
+                            "?b ex:has_publisher ?publisher. " +
+                            "?b ex:has_genre ?genre. " +
+                            "?b ex:has_publication_year ?year. " +
                             "FILTER(?publisher = ex:"+publisherId+")}";
             //System.out.println(queryString + "\n");
             TupleQuery tupleQuery = conn.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
@@ -96,7 +96,7 @@ public class RepoHandler {
             String queryString =
                     "PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>\n" +
                             "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
-                            "PREFIX ex: <http://www.example.org/>\n" + "SELECT ?b WHERE { " +
+                            "PREFIX ex: <urn:absolute:www.example.com/ontologies/project-ontology#>\n" + "SELECT ?b WHERE { " +
                             "?b rdf:type ex:Book }";
             //System.out.println(queryString + "\n");
             TupleQuery tupleQuery = conn.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
@@ -123,7 +123,7 @@ public class RepoHandler {
             String queryString =
                     "PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>\n" +
                             "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
-                            "PREFIX ex: <http://www.example.org/>\n" +
+                            "PREFIX ex: <urn:absolute:www.example.com/ontologies/project-ontology#>\n" +
                             "SELECT * WHERE {\n" + "?x rdf:type ex:Author.}";
             TupleQuery tupleQuery = conn.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
             try (TupleQueryResult result = tupleQuery.evaluate()) {
@@ -132,7 +132,7 @@ public class RepoHandler {
                     String resultString = "";
 
                     String id = bindingSet.getBinding("x")+"";
-                    id = id.replace("x=http://www.example.org/","");
+                    id = id.replace("x=urn:absolute:www.example.com/ontologies/project-ontology#","");
 
                     queryResult.add(id);
                 }
@@ -152,7 +152,7 @@ public class RepoHandler {
             String queryString =
                     "PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>\n" +
                             "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
-                            "PREFIX ex: <http://www.example.org/>\n" +
+                            "PREFIX ex: <urn:absolute:www.example.com/ontologies/project-ontology#>\n" +
                             "SELECT * WHERE {\n" + "?p rdf:type ex:Publisher.\n }";
             TupleQuery tupleQuery = conn.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
             try (TupleQueryResult result = tupleQuery.evaluate()) {
@@ -160,7 +160,7 @@ public class RepoHandler {
                     BindingSet bindingSet = result.next();
 
                     String publisher = bindingSet.getBinding("p")+"";
-                    publisher = publisher.replace("p=http://www.example.org/","");
+                    publisher = publisher.replace("p=urn:absolute:www.example.com/ontologies/project-ontology#","");
 
                     if(!queryResult.contains(publisher)){
                         queryResult.add(publisher);
@@ -180,7 +180,7 @@ public class RepoHandler {
                         result = result.substring(0, result.indexOf("^^"));
                     }
                     result = result.replace("\"", "");
-                result = result.replace("http://www.example.org/","");
+                result = result.replace("urn:absolute:www.example.com/ontologies/project-ontology#","");
                 return result;
             }
 }

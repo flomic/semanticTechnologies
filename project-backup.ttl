@@ -1,0 +1,171 @@
+@prefix : <urn:absolute:www.example.com/ontologies/project-ontology#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <urn:absolute:www.example.com/> .
+
+<urn:absolute:www.example.com/> rdf:type owl:Ontology ;
+                                 owl:versionIRI <urn:absolute:BookCollection> .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  urn:absolute:www.example.com/ontologies/project-ontology#belongs_to
+:belongs_to rdf:type owl:ObjectProperty ,
+                     owl:FunctionalProperty ;
+            rdfs:domain :Library ;
+            rdfs:range :Reader .
+
+
+###  urn:absolute:www.example.com/ontologies/project-ontology#contains
+:contains rdf:type owl:ObjectProperty ;
+          owl:inverseOf :is_contained_in ;
+          rdfs:domain :Library ;
+          rdfs:range :Book .
+
+
+###  urn:absolute:www.example.com/ontologies/project-ontology#has_author
+:has_author rdf:type owl:ObjectProperty ;
+            owl:inverseOf :is_written_by ;
+            rdfs:domain :Book ;
+            rdfs:range :Author .
+
+
+###  urn:absolute:www.example.com/ontologies/project-ontology#has_cover
+:has_cover rdf:type owl:ObjectProperty ,
+                    owl:FunctionalProperty ;
+           rdfs:domain :Book ;
+           rdfs:range :Cover .
+
+
+###  urn:absolute:www.example.com/ontologies/project-ontology#has_gender
+:has_gender rdf:type owl:ObjectProperty ,
+                     owl:FunctionalProperty ;
+            rdfs:domain :Person ;
+            rdfs:range :Gender .
+
+
+###  urn:absolute:www.example.com/ontologies/project-ontology#has_genre
+:has_genre rdf:type owl:ObjectProperty ;
+           rdfs:domain :Book ;
+           rdfs:range :Genre .
+
+
+###  urn:absolute:www.example.com/ontologies/project-ontology#has_publisher
+:has_publisher rdf:type owl:ObjectProperty ,
+                        owl:FunctionalProperty ;
+               rdfs:domain :Book ;
+               rdfs:range :Publisher .
+
+
+###  urn:absolute:www.example.com/ontologies/project-ontology#is_contained_in
+:is_contained_in rdf:type owl:ObjectProperty ;
+                 rdfs:domain :Library ;
+                 rdfs:range :Book .
+
+
+###  urn:absolute:www.example.com/ontologies/project-ontology#is_written_by
+:is_written_by rdf:type owl:ObjectProperty ;
+               rdfs:domain :Book ;
+               rdfs:range :Author .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  urn:absolute:www.example.com/ontologies/project-ontology#has_date_of_birth
+:has_date_of_birth rdf:type owl:DatatypeProperty ,
+                            owl:FunctionalProperty ;
+                   rdfs:domain :Person ;
+                   rdfs:range xsd:int .
+
+
+###  urn:absolute:www.example.com/ontologies/project-ontology#has_first_name
+:has_first_name rdf:type owl:DatatypeProperty ,
+                         owl:FunctionalProperty ;
+                rdfs:domain :Person ;
+                rdfs:range xsd:string .
+
+
+###  urn:absolute:www.example.com/ontologies/project-ontology#has_isbn
+:has_isbn rdf:type owl:DatatypeProperty ,
+                   owl:FunctionalProperty ;
+          rdfs:domain :Book ;
+          rdfs:range xsd:string .
+
+
+###  urn:absolute:www.example.com/ontologies/project-ontology#has_language
+:has_language rdf:type owl:DatatypeProperty ,
+                       owl:FunctionalProperty ;
+              rdfs:domain :Book ;
+              rdfs:range xsd:language .
+
+
+###  urn:absolute:www.example.com/ontologies/project-ontology#has_last_name
+:has_last_name rdf:type owl:DatatypeProperty ,
+                        owl:FunctionalProperty ;
+               rdfs:domain :Person ;
+               rdfs:range xsd:string .
+
+
+###  urn:absolute:www.example.com/ontologies/project-ontology#has_publication_year
+:has_publication_year rdf:type owl:DatatypeProperty ,
+                               owl:FunctionalProperty ;
+                      rdfs:domain :Book ;
+                      rdfs:range xsd:integer .
+
+
+###  urn:absolute:www.example.com/ontologies/project-ontology#has_title
+:has_title rdf:type owl:DatatypeProperty ,
+                    owl:FunctionalProperty ;
+           rdfs:domain :Book ;
+           rdfs:range xsd:string .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  urn:absolute:www.example.com/ontologies/project-ontology#Author
+:Author rdf:type owl:Class ;
+        rdfs:subClassOf :Person .
+
+
+###  urn:absolute:www.example.com/ontologies/project-ontology#Book
+:Book rdf:type owl:Class .
+
+
+###  urn:absolute:www.example.com/ontologies/project-ontology#Cover
+:Cover rdf:type owl:Class .
+
+
+###  urn:absolute:www.example.com/ontologies/project-ontology#Gender
+:Gender rdf:type owl:Class .
+
+
+###  urn:absolute:www.example.com/ontologies/project-ontology#Genre
+:Genre rdf:type owl:Class .
+
+
+###  urn:absolute:www.example.com/ontologies/project-ontology#Library
+:Library rdf:type owl:Class .
+
+
+###  urn:absolute:www.example.com/ontologies/project-ontology#Person
+:Person rdf:type owl:Class .
+
+
+###  urn:absolute:www.example.com/ontologies/project-ontology#Publisher
+:Publisher rdf:type owl:Class .
+
+
+###  urn:absolute:www.example.com/ontologies/project-ontology#Reader
+:Reader rdf:type owl:Class ;
+        rdfs:subClassOf :Person .
+
+
+###  Generated by the OWL API (version 4.2.6.20160910-2108) https://github.com/owlcs/owlapi

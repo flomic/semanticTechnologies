@@ -1,76 +1,135 @@
+@prefix : <urn:absolute:www.example.com/ontologies/project-ontology#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
-<http://www.example.org/Museum> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.example.org/TourismAttraction> .
 
-<http://www.example.org/ArtMuseum> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.example.org/Museum> .
+<urn:absolute:www.example.com/> a owl:Ontology ;
+	owl:versionIRI <urn:absolute:BookCollection> .
 
-<http://www.example.org/ModernArtMuseum> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.example.org/ArtMuseum> .
+:belongs_to a owl:ObjectProperty , owl:FunctionalProperty ;
+	rdfs:domain :Library ;
+	rdfs:range :Reader .
 
-<http://www.example.org/HistoryMuseum> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.example.org/Museum> .
+:contains a owl:ObjectProperty ;
+	owl:inverseOf :is_contained_in ;
+	rdfs:domain :Library ;
+	rdfs:range :Book .
 
-<http://www.example.org/Landmark> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.example.org/TourismAttraction> .
+:has_author a owl:ObjectProperty ;
+	owl:inverseOf :is_written_by ;
+	rdfs:domain :Book ;
+	rdfs:range :Author .
 
-<http://www.example.org/OutdoorSport> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.example.org/TourismAttraction> .
+:has_cover a owl:ObjectProperty , owl:FunctionalProperty ;
+	rdfs:domain :Book ;
+	rdfs:range :Cover .
 
-<http://www.example.org/AmusementPark> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.example.org/TourismAttraction> .
+:has_gender a owl:ObjectProperty , owl:FunctionalProperty ;
+	rdfs:domain :Person ;
+	rdfs:range :Gender .
 
-<http://www.example.org/Restaurant> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.example.org/TourismObject> .
+:has_genre a owl:ObjectProperty ;
+	rdfs:domain :Book ;
+	rdfs:range :Genre .
 
-<http://www.example.org/Hotel> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.example.org/TourismObject> .
+:has_publisher a owl:ObjectProperty , owl:FunctionalProperty ;
+	rdfs:domain :Book ;
+	rdfs:range :Publisher .
 
-<http://www.example.org/TourismAttraction> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.example.org/TourismObject> .
+:is_contained_in a owl:ObjectProperty ;
+	rdfs:domain :Library ;
+	rdfs:range :Book .
 
-<http://www.example.org/hasTripAdvisorRating> <http://www.w3.org/2000/01/rdf-schema#domain> <http://www.example.org/TourismObject> ;
-	<http://www.w3.org/2000/01/rdf-schema#subPropertyOf> <http://www.example.org/hasRating> .
+:is_written_by a owl:ObjectProperty ;
+	rdfs:domain :Book ;
+	rdfs:range :Author .
 
-<http://www.example.org/hasHotel> <http://www.w3.org/2000/01/rdf-schema#range> <http://www.example.org/Hotel> .
+:has_date_of_birth a owl:DatatypeProperty , owl:FunctionalProperty ;
+	rdfs:domain :Person ;
+	rdfs:range xsd:int .
 
-<http://www.example.org/Museion> a <http://www.example.org/ModernArtMuseum> ;
-	<http://www.example.org/locatedIn> <http://www.example.org/Bolzano> .
+:has_first_name a owl:DatatypeProperty , owl:FunctionalProperty ;
+	rdfs:domain :Person ;
+	rdfs:range xsd:string .
 
-<http://www.example.org/ChickenHut> <http://www.example.org/hasTripAdvisorRating> "3.5"^^<http://www.w3.org/2001/XMLSchema#float> .
+:has_isbn a owl:DatatypeProperty , owl:FunctionalProperty ;
+	rdfs:domain :Book ;
+	rdfs:range xsd:string .
 
-<http://www.example.org/AB1> a <http://www.example.org/Author> ;
-	<http://www.example.org/hasGender> "m" ;
-	<http://www.example.org/hasFirstName> "A" ;
-	<http://www.example.org/hasLastName> "B" ;
-	<http://www.example.org/hasDateOfBirth> "Sat Dec 31 00:00:00 CET 1960" .
+:has_language a owl:DatatypeProperty , owl:FunctionalProperty ;
+	rdfs:domain :Book ;
+	rdfs:range xsd:language .
 
-<http://www.example.org/AB2> a <http://www.example.org/Author> ;
-	<http://www.example.org/hasGender> "m" ;
-	<http://www.example.org/hasFirstName> "A" ;
-	<http://www.example.org/hasLastName> "B" ;
-	<http://www.example.org/hasDateOfBirth> "Mon Dec 31 00:00:00 CET 1962" .
+:has_last_name a owl:DatatypeProperty , owl:FunctionalProperty ;
+	rdfs:domain :Person ;
+	rdfs:range xsd:string .
 
-<http://www.example.org/9780002318525> a <http://www.example.org/Book> ;
-	<http://www.example.org/hasAuthor> <http://www.example.org/AB1> ;
-	<http://www.example.org/hasTitle> "Title1" ;
-	<http://www.example.org/hasGenre> "Thriller" ;
-	<http://www.example.org/hasLanguage> "de" ;
-	<http://www.example.org/hasCover> <http://www.example.org/https://d30y9cdsu7xlg0.cloudfront.net/png/1009-200.png> ;
-	<http://www.example.org/hasPublicationYear> "2016" ;
-	<http://www.example.org/hasPublisher> <http://www.example.org/P1> .
+:has_publication_year a owl:DatatypeProperty , owl:FunctionalProperty ;
+	rdfs:domain :Book ;
+	rdfs:range xsd:integer .
 
-<http://www.example.org/https://d30y9cdsu7xlg0.cloudfront.net/png/1009-200.png> a <http://www.example.org/Cover> .
+:has_title a owl:DatatypeProperty , owl:FunctionalProperty ;
+	rdfs:domain :Book ;
+	rdfs:range xsd:string .
 
-<http://www.example.org/B2> a <http://www.example.org/Book> ;
-	<http://www.example.org/hasAuthor> <http://www.example.org/AB2> ;
-	<http://www.example.org/hasTitle> "Title2" ;
-	<http://www.example.org/hasGenre> "Thriller" ;
-	<http://www.example.org/hasLanguage> "de" ;
-	<http://www.example.org/hasCover> <http://www.example.org/https://d30y9cdsu7xlg0.cloudfront.net/png/1009-200.png> ;
-	<http://www.example.org/hasPublicationYear> "2016" ;
-	<http://www.example.org/hasPublisher> <http://www.example.org/P1> .
+:Author a owl:Class ;
+	rdfs:subClassOf :Person .
 
-<http://www.example.org/R1> a <http://www.example.org/Reader> ;
-	<http://www.example.org/hasGender> "f" ;
-	<http://www.example.org/hasFirstName> "C" ;
-	<http://www.example.org/hasLastName> "L" ;
-	<http://www.example.org/hasDateOfBirth> "Mon Jan 25 00:00:00 CET 1993" ;
-	<http://www.example.org/hasLibrary> <http://www.example.org/Lib_R1> .
+:Book a owl:Class .
 
-<http://www.example.org/Lib_R1> a <http://example.org/Library> .
+:Cover a owl:Class .
 
-<http://www.example.org/9780002318525> <http://www.example.org/belongsTo> <http://www.example.org/Lib_R1> .
+:Gender a owl:Class .
 
-<http://www.example.org/P1> a <http://www.example.org/Publisher> .
+:Genre a owl:Class .
 
+:Library a owl:Class .
+
+:Person a owl:Class .
+
+:Publisher a owl:Class .
+
+:Reader a owl:Class ;
+	rdfs:subClassOf :Person .
+
+:AB1 a :Author ;
+	:has_gender "m" ;
+	:has_first_name "A" ;
+	:has_last_name "B" ;
+	:has_Date_of_birth "Sat Dec 31 00:00:00 CET 1960" .
+
+:AB2 a :Author ;
+	:has_gender "m" ;
+	:has_first_name "A" ;
+	:has_last_name "B" ;
+	:has_Date_of_birth "Mon Dec 31 00:00:00 CET 1962" .
+
+:9780002318525 a :Book ;
+	:has_author :AB1 ;
+	:has_title "Title1" ;
+	:has_genre "Thriller" ;
+	:has_publication_year "2016" ;
+	:has_publisher :P1 .
+
+:B2 a :Book ;
+	:has_author :AB2 ;
+	:has_title "Title2" ;
+	:has_genre "Thriller" ;
+	:has_publication_year "2016" ;
+	:has_publisher :P1 .
+
+:R1 a :Reader ;
+	:has_gender "f" ;
+	:has_first_name "C" ;
+	:has_last_name "L" ;
+	:has_date_of_birth "Mon Jan 25 00:00:00 CET 1993" ;
+	:has_library :Lib_R1 .
+
+:Lib_R1 a :Library .
+
+:9780002318525 :belongs_to :Lib_R1 .
+
+:P1 a :Publisher .

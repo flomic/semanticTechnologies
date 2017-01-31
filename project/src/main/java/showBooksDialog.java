@@ -17,7 +17,7 @@ public class showBooksDialog extends JDialog {
     private Repository repo;
     private String isbn;
 
-    private static final String FILE_PATH = "src/main/resources/output.ttl";
+    private static final String FILE_PATH = "src/main/resources/project.ttl";
 
     public showBooksDialog() {
         new showBooksDialog("");

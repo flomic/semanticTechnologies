@@ -10,6 +10,9 @@ import org.eclipse.rdf4j.model.vocabulary.RDF;
  * Helper class to handle the addition of items to the model
  */
 public class ModelHandler {
+    private static final String EX_PREFIX = "urn:absolute:www.example.com/ontologies/project-ontology#";
+
+
     /**
      * Adds an item to the given model
      * @param subject
@@ -21,14 +24,14 @@ public class ModelHandler {
     private static void addItem(String subject, String predicate, String object, char objectType, Model model) {
 
         ValueFactory factory = SimpleValueFactory.getInstance();
-        Resource subjectPart = factory.createIRI(subject);
-        IRI predicatePart = factory.createIRI(predicate);
+        Resource subjectPart = factory.createIRI(EX_PREFIX, subject);
+        IRI predicatePart = factory.createIRI(EX_PREFIX, predicate);
         Value objectPart = null;
 
         switch (objectType) {
             case 'I':
             case 'i':
-                objectPart = factory.createIRI(object);
+                objectPart = factory.createIRI(EX_PREFIX, object);
                 break;
             case 'L':
             case 'l':
@@ -53,14 +56,14 @@ public class ModelHandler {
     private static void addItem(String subject, IRI predicate, String object, char objectType, Model model) {
 
         ValueFactory factory = SimpleValueFactory.getInstance();
-        Resource subjectPart = factory.createIRI(subject);
+        Resource subjectPart = factory.createIRI(EX_PREFIX,subject);
         IRI predicatePart = predicate;
         Value objectPart = null;
 
         switch (objectType) {
             case 'I':
             case 'i':
-                objectPart = factory.createIRI(object);
+                objectPart = factory.createIRI(EX_PREFIX,object);
                 break;
             case 'L':
             case 'l':
@@ -82,16 +85,16 @@ public class ModelHandler {
     //TODO check if book already exists
     //TODO don't add line if the value is missing
     public static void addBook(Book book, Model model){
-        addItem("http://www.example.org/"+book.getBookId(), RDF.TYPE, "http://www.example.org/Book", 'I', model);
-        addItem("http://www.example.org/"+book.getBookId(), "http://www.example.org/hasAuthor", "http://www.example.org/"+book.getAuthor(), 'I', model);
-        addItem("http://www.example.org/"+book.getBookId(), "http://www.example.org/hasTitle", book.getTitle(), 'L', model);
-        addItem("http://www.example.org/"+book.getBookId(), "http://www.example.org/hasGenre", book.getGenre(), 'L', model);
+        addItem(book.getBookId(), RDF.TYPE, "Book", 'I', model);
+        addItem(book.getBookId(), "has_author", book.getAuthor(), 'I', model);
+        addItem(book.getBookId(), "has_title", book.getTitle(), 'L', model);
+        addItem(book.getBookId(), "has_genre", book.getGenre(), 'L', model);
 
         if(book.getPublicationYear()!= null){
-            addItem("http://www.example.org/"+book.getBookId(), "http://www.example.org/hasPublicationYear", book.getPublicationYear().toString(), 'L', model);
+            addItem(book.getBookId(), "has_publication_year", book.getPublicationYear().toString(), 'L', model);
         }
 
-        addItem("http://www.example.org/"+book.getBookId(), "http://www.example.org/hasPublisher", "http://www.example.org/"+book.getPublisher(), 'I', model);
+        addItem(book.getBookId(), "has_publisher", book.getPublisher(), 'I', model);
     }
 
     /**
@@ -102,12 +105,12 @@ public class ModelHandler {
     //TODO check if author already exists
     //TODO don't add line if the value is missing
     public static void addAuthor(Author author, Model model) {
-        addItem("http://www.example.org/" + author.getId(), RDF.TYPE, "http://www.example.org/Author", 'I', model);
-        addItem("http://www.example.org/" + author.getId(), "http://www.example.org/hasGender", author.getGender(), 'L', model);
-        addItem("http://www.example.org/" + author.getId(), "http://www.example.org/hasFirstName", author.getFirstName(), 'L', model);
-        addItem("http://www.example.org/" + author.getId(), "http://www.example.org/hasLastName", author.getLastName(), 'L', model);
+        addItem(author.getId(), RDF.TYPE, "Author", 'I', model);
+        addItem(author.getId(), "has_gender", author.getGender(), 'L', model);
+        addItem(author.getId(), "has_first_name", author.getFirstName(), 'L', model);
+        addItem(author.getId(), "has_last_name", author.getLastName(), 'L', model);
         if(author.getDateOfBirth()!= null){
-            addItem("http://www.example.org/" + author.getId(), "http://www.example.org/hasDateOfBirth", author.getDateOfBirth().toString(), 'L', model);
+            addItem(author.getId(), "has_Date_of_birth", author.getDateOfBirth().toString(), 'L', model);
         }
     }
 
@@ -119,13 +122,13 @@ public class ModelHandler {
     //TODO check if reader already exists
     //TODO don't add line if the value is missing
     public static void addReader(Reader reader, Model model) {
-        addItem("http://www.example.org/" + reader.getId(), RDF.TYPE, "http://www.example.org/Reader", 'I', model);
-        addItem("http://www.example.org/" + reader.getId(), "http://www.example.org/hasGender", reader.getGender(), 'L', model);
-        addItem("http://www.example.org/" + reader.getId(), "http://www.example.org/hasFirstName", reader.getFirstName(), 'L', model);
-        addItem("http://www.example.org/" + reader.getId(), "http://www.example.org/hasLastName", reader.getLastName(), 'L', model);
-        addItem("http://www.example.org/" + reader.getId(), "http://www.example.org/hasDateOfBirth", reader.getDateOfBirth().toString(), 'L', model); //TODO dateOfBirth must be added as date and not as string
-        addItem("http://www.example.org/" + reader.getId(), "http://www.example.org/hasLibrary", "http://www.example.org/" + reader.getLibrary().getId(), 'I', model);
-        addItem("http://www.example.org/" + reader.getLibrary().getId(), RDF.TYPE, "http://example.org/Library", 'I', model);
+        addItem(reader.getId(), RDF.TYPE, "Reader", 'I', model);
+        addItem(reader.getId(), "has_gender", reader.getGender(), 'L', model);
+        addItem(reader.getId(), "has_first_name", reader.getFirstName(), 'L', model);
+        addItem(reader.getId(), "has_last_name", reader.getLastName(), 'L', model);
+        addItem(reader.getId(), "has_date_of_birth", reader.getDateOfBirth().toString(), 'L', model); //TODO dateOfBirth must be added as date and not as string
+        addItem(reader.getId(), "has_library",  reader.getLibrary().getId(), 'I', model);
+        addItem(reader.getLibrary().getId(), RDF.TYPE, "Library", 'I', model);
     }
 
     /**
@@ -137,7 +140,7 @@ public class ModelHandler {
     //TODO check if book is already in the library
     //TODO don't add line if one value is missing
     public static void addBookToLibrary(String bookId, String libId, Model model){
-        addItem("http://www.example.org/" + bookId, "http://www.example.org/belongsTo", "http://www.example.org/" +libId, 'I', model);
+        addItem(bookId, "belongs_to", libId, 'I', model);
     }
 
     /**
@@ -148,7 +151,7 @@ public class ModelHandler {
     //TODO check if publisher already exists
     //TODO don't add line if the value is missing
     public static void addPublisher(Publisher publisher, Model model){
-        addItem("http://www.example.org/" + publisher.getId(), RDF.TYPE, "http://www.example.org/Publisher", 'I', model);
+        addItem(publisher.getId(), RDF.TYPE, "Publisher", 'I', model);
     }
 
 }

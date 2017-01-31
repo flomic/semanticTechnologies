@@ -35,7 +35,7 @@ public class Main {
         }
 
 
-            Model m = FileHandler.readModelFromFile("src/main/resources/input.ttl");
+            Model m = FileHandler.readModelFromFile("src/main/resources/project.ttl");
             Author a = new Author("AB1", "m", "A", "B", "1960-12-31");
             Author a2 = new Author("AB2", "m", "A", "B", "1962-12-31");
             Reader r = new Reader("R1", "f", "C", "L","1993-01-25");
@@ -52,7 +52,8 @@ public class Main {
             ModelHandler.addReader(r, m);
             ModelHandler.addBookToLibrary(b.getBookId(), r.getLibrary().getId(),m);
             ModelHandler.addPublisher(p,m);
-            FileHandler.writeModelToFile("src/main/resources/output.ttl", m);
+            FileHandler.writeModelToFile("src/main/resources/project.ttl", m);
+
 
 
 

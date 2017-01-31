@@ -1,13 +1,11 @@
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
-import org.eclipse.rdf4j.model.Model;
 import org.eclipse.rdf4j.repository.Repository;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 
 /**
  * Created by christine on 19.01.17.
@@ -91,13 +89,13 @@ public class SearchBookPanel {
      * Listener for the search button
      */
     private class SearchClickedListener implements ActionListener {
-        private static final String INPUT_FILE_PATH = "src/main/resources/output.ttl";
+        private static final String FILE_PATH = "src/main/resources/project.ttl";
         Book b;
 
         @Override
         public void actionPerformed(ActionEvent e) {
             //TODO implement search
-            Repository repo = FileHandler.readRepositoryFromFile(INPUT_FILE_PATH);
+            Repository repo = FileHandler.readRepositoryFromFile(FILE_PATH);
             String isbn = getIsbn();
             showBooksDialog sbd = new showBooksDialog(isbn);
         }

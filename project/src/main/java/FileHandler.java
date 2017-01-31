@@ -54,7 +54,7 @@ public class FileHandler {
         Model results = null;
         try {
             inputStream = new FileInputStream(file);
-            results = Rio.parse(inputStream, file.toURL().toString(), RDFFormat.TURTLE); //TODO allow also other formats
+            results = Rio.parse(inputStream, "urn:absolute:www.example.com/ontologies/project-ontology#", RDFFormat.TURTLE); //TODO allow also other formats
         } catch (Exception e) {
             e.printStackTrace(); //TODO handle this exception better
         }
@@ -71,6 +71,12 @@ public class FileHandler {
     public static void writeModelToFile (String filePath, Model model) throws FileNotFoundException {
         FileOutputStream out = new FileOutputStream(filePath);
         RDFWriter writer = Rio.createWriter(RDFFormat.TURTLE, out); //TODO allow also other formats
+        writer.handleNamespace("", "urn:absolute:www.example.com/ontologies/project-ontology#");
+        writer.handleNamespace("owl","http://www.w3.org/2002/07/owl#");
+        writer.handleNamespace("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+        writer.handleNamespace("xml", "http://www.w3.org/XML/1998/namespace");
+        writer.handleNamespace("xsd", "http://www.w3.org/2001/XMLSchema#");
+        writer.handleNamespace("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
 
         try {
             writer.startRDF();

@@ -21,13 +21,13 @@ public class MainWindow {
     private JButton showBooksButton;
     private static JFrame mainFrame;
     private static Model model;
-    private static final String INPUT_FILE_PATH = "src/main/resources/output.ttl";
+    private static final String FILE_PATH = "src/main/resources/project.ttl";
 
     public MainWindow() {
         showBooksButton.addActionListener(new ShowBooksClicked());
         addBookButton.addActionListener(new AddBookBtnClicked());
         searchBookButton.addActionListener(new SearchBookButtonClicked());
-        model = FileHandler.readModelFromFile(INPUT_FILE_PATH);
+        model = FileHandler.readModelFromFile(FILE_PATH);
     }
 
     public static void main(String[] args) {
@@ -103,7 +103,7 @@ public class MainWindow {
         public void actionPerformed(ActionEvent e) {
 
             //show the AddBookDialog, which returns the value of the button clicked
-            AddBookDialog abp = new AddBookDialog(null, INPUT_FILE_PATH);
+            AddBookDialog abp = new AddBookDialog(null, FILE_PATH);
             String o = abp.showDialog();
 
             if (o.equals("Save")) { // if the user wanted to save the book
@@ -127,7 +127,7 @@ public class MainWindow {
                         b = new Book(isbn, author, title, publisher, genre, Integer.parseInt(publicationYear));
                     }
                     ModelHandler.addBook(b, MainWindow.getModel());//add the book to the model
-                    FileHandler.writeModelToFile(INPUT_FILE_PATH, model);
+                    FileHandler.writeModelToFile(FILE_PATH, model);
                 } catch (IOException e1) {
                     e1.printStackTrace(); //TODO Handle IOException for Cover Url
                 }
