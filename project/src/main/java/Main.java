@@ -5,7 +5,10 @@ import org.apache.jena.query.QuerySolution;*/
 
 import org.eclipse.rdf4j.model.Model;
 import org.eclipse.rdf4j.model.vocabulary.RDF;
+import org.eclipse.rdf4j.query.BindingSet;
+import org.eclipse.rdf4j.query.TupleQueryResult;
 import org.eclipse.rdf4j.repository.Repository;
+import org.eclipse.rdf4j.repository.sparql.SPARQLRepository;
 
 import java.io.IOException;
 
@@ -41,9 +44,9 @@ public class Main {
 
 
             Model m = FileHandler.readModelFromFile("src/main/resources/output.ttl");
-            Author a = new Author("AB1", "m", "A", "B", "1960-12-31");
-            Author a2 = new Author("AB2", "m", "A", "B", "1962-12-31");
-            Reader r = new Reader("R1", "f", "C", "L","1993-01-25");
+            Author a = new Author("AB1", "A", "m", "1960-12-31");
+            Author a2 = new Author("AB2", "B", "m", "1962-12-31");
+            Reader r = new Reader("R1", "C", "f", "1993-01-25");
             Book b = new Book("9780002318525", "AB1", "Title1", "P1", "Thriller", 2016);
             Book b2 = new Book("B2", "AB2", "Title2", "P1", "Thriller", 2016);
             Publisher p = new Publisher("P1");
@@ -65,24 +68,13 @@ public class Main {
         /* ----------------------------------------- GET BOOK FROM DBPEDIA ----------------------------------------- */
 
         String isbn = "9780002318525";
+        String author = null;
+        String title = null;
+        String publisher = null;
+        String genre = null;
+        //id, name, gender, dob
 
-        /* book */
-        String author;
-        String title;
-        String publisher;
-        String genre;
-        Integer publicationYear; //TODO gibs net auf dbpedia
-
-        /* author */
-        String gender; //TODO gibs net auf dbpedia
-        String firstName; //TODO gibs net auf dbpedia ->
-        String lastName; //TODO gibs net auf dbpedia
-        String dateOfBirth;
-
-
-        String query =  /*"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" +
-                        "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>" +*/
-                        "PREFIX dbpedia: <http://dbpedia.org/ontology/>" +
+        String query =  "PREFIX dbpedia: <http://dbpedia.org/ontology/>" +
                         "select * " +
                         "where {" +
                         "?book_uri rdf:type dbpedia:Book ." +
@@ -95,21 +87,38 @@ public class Main {
                         "?book_uri dbpedia:isbn ?isbn." +
                         "?author_uri dbpedia:birthName ?author." +
                         "?author_uri dbpedia:birthDate ?birthDate." +
-                        "FILTER (regex(?isbn, '9780002318525'))" +
+                        "FILTER (regex(?isbn, '" + isbn + "'))" +
                         "FILTER (lang(?author) = 'en')" +
                         "FILTER (lang(?genre) = 'en')" +
                         "FILTER (lang(?title) = 'en')" +
                         "FILTER (lang(?publisher) = 'en')" +
                         "}";
 
-      /*  Repository repo2 = new SPARQLRepository("http://dbpedia.org/sparql");
-        repo2.initialize();
-        LinkedList<String> res = RepoHandler.returnQueryResult(repo2, query);
+        Repository repos = new SPARQLRepository("http://dbpedia.org/sparql");
+        repos.initialize();
+        TupleQueryResult result = RepoHandler.query(repos, query);
 
+        BindingSet bindingSet = result.next();
+        if(bindingSet.hasBinding("author"))  author = RepoHandler.cleanString(bindingSet.getValue("author").toString());
+        if(bindingSet.hasBinding("title")) title = RepoHandler.cleanString(bindingSet.getValue("title").toString());
+        if(bindingSet.hasBinding("publisher")) publisher = RepoHandler.cleanString(bindingSet.getValue("publisher").toString());
+        if(bindingSet.hasBinding("genre")) genre = RepoHandler.cleanString(bindingSet.getValue("genre").toString());
+
+
+        if(bindingSet.hasBinding("birthName"))  author = RepoHandler.cleanString(bindingSet.getValue("author").toString());
+
+        System.out.println("ISBN: " + isbn);
+        System.out.println("Title: " + title);
+        System.out.println("Author: " + author);
+        System.out.println("Publisher: " + publisher);
+        System.out.println("Genre: " + genre);
+
+
+        /*
         System.out.println("Result:");
-        for(String s : res){
+        for(String s : repos){
             System.out.println(s);
-        }*/
+        }
 
         /*org.apache.jena.query.Query sparqlquery = QueryFactory.create(query);
         QueryExecution result = QueryExecutionFactory.sparqlService("http://dbpedia.org/sparql", sparqlquery);

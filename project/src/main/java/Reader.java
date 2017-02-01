@@ -1,6 +1,3 @@
-import java.util.Date;
-import java.util.LinkedList;
-
 /**
  * Created by christine on 17.01.17.
  */
@@ -15,14 +12,13 @@ public class Reader extends Person {
     /**
      * Constructor for a reader. Creates also the library for the reader.
      * @param id
+     * @param name
      * @param gender
-     * @param firstName
-     * @param lastName
      * @param dateOfBirth
      */
     //TODO Should the id really be handed over in the constructor??
-    public Reader(String id, String gender, String firstName, String lastName, String dateOfBirth) {
-    	super(id, gender, firstName, lastName, dateOfBirth);
+    public Reader(String id, String name, String gender, String dateOfBirth) {
+    	super(id, name, gender, dateOfBirth);
         library = new Library("Lib_"+this.getId());
     }
 

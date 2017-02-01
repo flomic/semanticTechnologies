@@ -136,11 +136,8 @@ public class ModelHandler {
         if(author.getGender()!=null && !author.getGender().equals("")){
             addItem(author.getId(), "has_gender", author.getGender(), 'L', model);
         }
-        if(author.getFirstName()!=null && !author.getFirstName().equals("")){
-            addItem(author.getId(), "has_first_name", author.getFirstName(), 'L', model);
-        }
-        if(author.getLastName()!=null && !author.getLastName().equals("")){
-            addItem(author.getId(), "has_last_name", author.getLastName(), 'L', model);
+        if(author.getName()!=null && !author.getName().equals("")){
+            addItem(author.getId(), "has_name", author.getName(), 'L', model);
         }
         if(author.getDateOfBirth()!= null){
             addItem(author.getId(), "has_date_of_birth", author.getDateOfBirth().toString(), 'L', model);
@@ -159,11 +156,8 @@ public class ModelHandler {
         if(reader.getGender()!=null && !reader.getGender().equals("")){
             addItem(reader.getId(), "has_gender", reader.getGender(), 'L', model);
         }
-        if(reader.getFirstName()!=null && !reader.getFirstName().equals("")){
-            addItem(reader.getId(), "has_first_name", reader.getFirstName(), 'L', model);
-        }
-        if(reader.getLastName()!=null && !reader.getLastName().equals("")){
-            addItem(reader.getId(), "has_last_name", reader.getLastName(), 'L', model);
+        if(reader.getName()!=null && !reader.getName().equals("")){
+            addItem(reader.getId(), "has_name", reader.getName(), 'L', model);
         }
         if(reader.getDateOfBirth()!=null){
             addItem(reader.getId(), "has_date_of_birth", reader.getDateOfBirth().toString(), 'L', model); //TODO dateOfBirth must be added as date and not as string

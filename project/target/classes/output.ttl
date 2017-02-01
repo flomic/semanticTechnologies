@@ -47,7 +47,7 @@
 	rdfs:domain :Person ;
 	rdfs:range xsd:int .
 
-:has_first_name a owl:DatatypeProperty , owl:FunctionalProperty ;
+:has_name a owl:DatatypeProperty , owl:FunctionalProperty ;
 	rdfs:domain :Person ;
 	rdfs:range xsd:string .
 
@@ -58,10 +58,6 @@
 :has_language a owl:DatatypeProperty , owl:FunctionalProperty ;
 	rdfs:domain :Book ;
 	rdfs:range xsd:language .
-
-:has_last_name a owl:DatatypeProperty , owl:FunctionalProperty ;
-	rdfs:domain :Person ;
-	rdfs:range xsd:string .
 
 :has_publication_year a owl:DatatypeProperty , owl:FunctionalProperty ;
 	rdfs:domain :Book ;
@@ -91,14 +87,12 @@
 
 :AB1 a :Author ;
 	:has_gender "m" ;
-	:has_first_name "A" ;
-	:has_last_name "B" ;
+	:has_name "A" ;
 	:has_Date_of_birth "Sat Dec 31 00:00:00 CET 1960" .
 
 :AB2 a :Author ;
 	:has_gender "m" ;
-	:has_first_name "A" ;
-	:has_last_name "B" ;
+	:has_name "A" ;
 	:has_Date_of_birth "Mon Dec 31 00:00:00 CET 1962" .
 
 :9780002318525 a :Book ;
@@ -110,8 +104,7 @@
 
 :R1 a :Reader ;
 	:has_gender "f" ;
-	:has_first_name "C" ;
-	:has_last_name "L" ;
+	:has_name "C" ;
 	:has_date_of_birth "Mon Jan 25 00:00:00 CET 1993" ;
 	:has_library :Lib_R1 .
 
@@ -120,3 +113,7 @@
 :9780002318525 :belongs_to :Lib_R1 .
 
 :P1 a :Publisher .
+
+:AB1 :has_date_of_birth "Sat Dec 31 00:00:00 CET 1960" .
+
+:AB2 :has_date_of_birth "Mon Dec 31 00:00:00 CET 1962" .

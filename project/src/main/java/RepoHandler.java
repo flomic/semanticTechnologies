@@ -15,6 +15,14 @@ import java.util.LinkedList;
  * Helper class to handle the quering of the repository
  */
 public class RepoHandler {
+    public static TupleQueryResult query(Repository repo, String query) {
+        TupleQueryResult result;
+        try (RepositoryConnection conn = repo.getConnection()) {
+            TupleQuery tupleQuery = conn.prepareTupleQuery(QueryLanguage.SPARQL, query);
+            result = tupleQuery.evaluate();
+        }
+        return result;
+    }
 
     public static LinkedList<Book> searchBookWithFilter(Repository repo, String filter) {
         LinkedList<Book> books = new LinkedList<Book>();
@@ -83,8 +91,7 @@ public class RepoHandler {
                             "PREFIX ex: <urn:absolute:www.example.com/ontologies/project-ontology#>\n" +
                             "SELECT * WHERE { " +
                             "?a rdf:type ex:Author " +
-                            "OPTIONAL{?a ex:has_first_name ?first_name } " +
-                            "OPTIONAL{?a ex:has_last_name ?last_name } " +
+                            "OPTIONAL{?a ex:has_name ?name } " +
                             "OPTIONAL{?a ex:has_gender ?gender } " +
                             "OPTIONAL{?a ex:has_date_of_birth ?date_of_birth} " +
                             "FILTER(?a = ex:" + authorId + ")" + "}";
@@ -97,14 +104,9 @@ public class RepoHandler {
                     String resultString = "";
                     String id = cleanString(bindingSet.getValue("a").toString());
 
-                    String firstName = null;
-                    if(bindingSet.hasBinding("first_name")){
-                        firstName =cleanString(bindingSet.getValue("first_name").toString());
-                    }
-
-                    String lastName = null;
-                    if(bindingSet.hasBinding("last_name")){
-                        lastName = cleanString(bindingSet.getValue("last_name").toString());
+                    String name = null;
+                    if(bindingSet.hasBinding("name")){
+                        name =cleanString(bindingSet.getValue("name").toString());
                     }
 
                     String gender = null;
@@ -117,7 +119,7 @@ public class RepoHandler {
                         dateOfBirth = cleanString(bindingSet.getValue("date_of_birth").toString());
                     }
 
-                    author = new Author(id, gender, firstName, lastName, dateOfBirth);
+                    author = new Author(id, name, gender, dateOfBirth);
 
                 }
             }
@@ -147,11 +149,12 @@ public class RepoHandler {
         return queryResult;
     }
 
-    private static String cleanString(String s) {
+    static String cleanString(String s) {
         String result = s;
         if (s.contains("=")) result = result.substring(s.indexOf("=") + 1);
         if (result.contains("^^")) result = result.substring(0, result.indexOf("^^"));
         result = result.replace("\"", "");
+        result = result.replace("@en", "");
         result = result.replace("urn:absolute:www.example.com/ontologies/project-ontology#", "");
         return result;
     }

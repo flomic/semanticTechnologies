@@ -8,11 +8,9 @@
 
 
 - error: if you add publisher/author twice in a row without saving in the middle
-- author is already existing
 - do not output if field empty
 
 
-- show list of books - navigate author, publisher etc.
 - delete books/author/publisher
 - add/delete/switch library?
 

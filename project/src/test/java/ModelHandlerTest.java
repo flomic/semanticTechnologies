@@ -31,7 +31,7 @@ public class ModelHandlerTest {
 
     @org.junit.Test
     public void addAuthor() throws Exception {
-        Author a = new Author("AB1", "m", "A", "B", "1960-12-31");
+        Author a = new Author("AB1", "A", "f", "1960-12-31");
 
         ValueFactory factory = SimpleValueFactory.getInstance();
         Resource subjectPart = factory.createIRI("http://www.example.org/AB1");
@@ -45,7 +45,7 @@ public class ModelHandlerTest {
     @org.junit.Test
     public void addReader() throws Exception {
 
-        Reader r = new Reader("R1", "f", "C", "L","1993-01-25");
+        Reader r = new Reader("R1", "C", "f", "1993-01-25");
 
         ValueFactory factory = SimpleValueFactory.getInstance();
         Resource subjectPart = factory.createIRI("http://www.example.org/R1");
@@ -58,7 +58,7 @@ public class ModelHandlerTest {
 
     @org.junit.Test
     public void addBookToLibrary() throws Exception {
-        Reader r = new Reader("R1", "f", "C", "L","1993-01-25");
+        Reader r = new Reader("R1", "C", "f", "1993-01-25");
         Book b = new Book("B1", "AB1", "Title1", "P1", "Thriller", 2016);
 
         ValueFactory factory = SimpleValueFactory.getInstance();

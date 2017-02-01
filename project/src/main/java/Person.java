@@ -10,23 +10,20 @@ import java.util.Date;
 public class Person {
     private String id;
     private String gender;
-    private String firstName;
-    private String lastName;
+    private String name;
     private Date dateOfBirth;
 
     /**
      * Constructor
       * @param id
+     * @param name
      * @param gender
-     * @param firstName
-     * @param lastName
      * @param dateOfBirthString
      */
-    public Person(String id, String gender, String firstName, String lastName, String dateOfBirthString) {
-        this.id = id; //TODO Generate id automatically??? Like firstName + lastName + dateOfBirth
+    public Person(String id, String name, String gender,  String dateOfBirthString) {
+        this.id = id; //TODO Generate id automatically??? LName + dateOfBirth
         this.gender = gender;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.name = name;
         if(dateOfBirthString != null && !dateOfBirthString.equals("")){ //TODO check if date format is correct
             this.dateOfBirth = new Date(Integer.parseInt(dateOfBirthString.substring(0,4))-1900, Integer.parseInt(dateOfBirthString.substring(5,7))-1, Integer.parseInt(dateOfBirthString.substring(8,10)));
         }
@@ -48,21 +45,12 @@ public class Person {
         this.gender = gender;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+    public void setName(String name) { this.name = name; }
 
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
 
     public Date getDateOfBirth() {
         return dateOfBirth;
