@@ -98,7 +98,7 @@ public class SearchBookPanel {
 
             if (isbn.length() == 0) {
                 JOptionPane.showMessageDialog(null, "Please insert an ISBN.", "Error", JOptionPane.ERROR_MESSAGE);
-            } else if (RepoHandler.searchWithFilter(repo, "FILTER(?b = ex:" + isbn + ")").size() == 0) {
+            } else if (RepoHandler.searchBookWithFilter(repo, "FILTER(?b = ex:" + isbn + ")").size() == 0) {
                 JOptionPane.showMessageDialog(null, "No book with this ISBN was found.", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 ShowBooksDialog sbd = new ShowBooksDialog(isbn);

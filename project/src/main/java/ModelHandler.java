@@ -143,7 +143,7 @@ public class ModelHandler {
             addItem(author.getId(), "has_last_name", author.getLastName(), 'L', model);
         }
         if(author.getDateOfBirth()!= null){
-            addItem(author.getId(), "has_Date_of_birth", author.getDateOfBirth().toString(), 'L', model);
+            addItem(author.getId(), "has_date_of_birth", author.getDateOfBirth().toString(), 'L', model);
         }
     }
 

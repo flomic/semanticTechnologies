@@ -16,7 +16,7 @@ import java.util.LinkedList;
  */
 public class RepoHandler {
 
-    public static LinkedList<Book> searchWithFilter(Repository repo, String filter) {
+    public static LinkedList<Book> searchBookWithFilter(Repository repo, String filter) {
         LinkedList<Book> books = new LinkedList<Book>();
 
         try (RepositoryConnection conn = repo.getConnection()) {
@@ -72,6 +72,57 @@ public class RepoHandler {
             }
         }
         return books;
+    }
+
+    public static Author searchAuthor(Repository repo, String authorId) {
+        Author author = null;
+        try (RepositoryConnection conn = repo.getConnection()) {
+            String queryString =
+                    "PREFIX rdfs:  <http://www.w3.org/2000/01/rdf-schema#>\n" +
+                            "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
+                            "PREFIX ex: <urn:absolute:www.example.com/ontologies/project-ontology#>\n" +
+                            "SELECT * WHERE { " +
+                            "?a rdf:type ex:Author " +
+                            "OPTIONAL{?a ex:has_first_name ?first_name } " +
+                            "OPTIONAL{?a ex:has_last_name ?last_name } " +
+                            "OPTIONAL{?a ex:has_gender ?gender } " +
+                            "OPTIONAL{?a ex:has_date_of_birth ?date_of_birth} " +
+                            "FILTER(?a = ex:" + authorId + ")" + "}";
+
+            //System.out.println(queryString + "\n");
+            TupleQuery tupleQuery = conn.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
+            try (TupleQueryResult result = tupleQuery.evaluate()) {
+                while (result.hasNext()) {  // iterate over the result
+                    BindingSet bindingSet = result.next();
+                    String resultString = "";
+                    String id = cleanString(bindingSet.getValue("a").toString());
+
+                    String firstName = null;
+                    if(bindingSet.hasBinding("first_name")){
+                        firstName =cleanString(bindingSet.getValue("first_name").toString());
+                    }
+
+                    String lastName = null;
+                    if(bindingSet.hasBinding("last_name")){
+                        lastName = cleanString(bindingSet.getValue("last_name").toString());
+                    }
+
+                    String gender = null;
+                    if(bindingSet.hasBinding("gender")){
+                        gender = cleanString(bindingSet.getValue("gender").toString());
+                    }
+
+                    String dateOfBirth = null;
+                    if(bindingSet.hasBinding("date_of_birth")){
+                        dateOfBirth = cleanString(bindingSet.getValue("date_of_birth").toString());
+                    }
+
+                    author = new Author(id, gender, firstName, lastName, dateOfBirth);
+
+                }
+            }
+        }
+        return author;
     }
 
     public static LinkedList<String> getAll(Repository repo, String type) {

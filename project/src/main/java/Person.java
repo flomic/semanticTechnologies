@@ -27,7 +27,7 @@ public class Person {
         this.gender = gender;
         this.firstName = firstName;
         this.lastName = lastName;
-        if(!dateOfBirthString.equals("")){ //TODO check if date format is correct
+        if(dateOfBirthString != null && !dateOfBirthString.equals("")){ //TODO check if date format is correct
             this.dateOfBirth = new Date(Integer.parseInt(dateOfBirthString.substring(0,4))-1900, Integer.parseInt(dateOfBirthString.substring(5,7))-1, Integer.parseInt(dateOfBirthString.substring(8,10)));
         }
     }

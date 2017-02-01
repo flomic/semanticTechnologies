@@ -17,7 +17,7 @@
 - add/delete/switch library?
 
 
-
+- check if isbn already exists and don't add it
 
 ----------------------------------
 - Write report

@@ -1,7 +1,6 @@
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
-import jdk.nashorn.internal.scripts.JO;
 import org.eclipse.rdf4j.repository.Repository;
 
 import javax.swing.*;
@@ -16,6 +15,7 @@ public class ShowBooksDialog extends JDialog {
     private JPanel contentPanel = new JPanel();
     private JButton buttonAllBooks;
     private JButton buttonDeleteBook;
+    private JPanel titlePanel;
     private LinkedList<String> books;
     private Repository repo;
     private String isbn;
@@ -75,7 +75,7 @@ public class ShowBooksDialog extends JDialog {
     private void onBookDelete() {
         String isbn = JOptionPane.showInputDialog(null, "Please insert an ISBN.", "Delete Book", JOptionPane.QUESTION_MESSAGE);
 
-        Book b = RepoHandler.searchWithFilter(repo, "FILTER(?b = ex:" + isbn + ")").getFirst();
+        Book b = RepoHandler.searchBookWithFilter(repo, "FILTER(?b = ex:" + isbn + ")").getFirst();
         int answer = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete book " + isbn + "?", "Delete Book", JOptionPane.YES_NO_OPTION);
         if (answer == JOptionPane.YES_OPTION) {
             ModelHandler.removeBook(b, MainWindow.getModel());
@@ -105,6 +105,7 @@ public class ShowBooksDialog extends JDialog {
     private void createUIComponents() {
         repo = FileHandler.readRepositoryFromFile(FILE_PATH);
         books = RepoHandler.getAll(repo, "Book");
+        titlePanel = new JPanel();
 
         if (isbn.equals("")) {
             filter = "";
@@ -123,11 +124,34 @@ public class ShowBooksDialog extends JDialog {
 
     private void showBooks(String filter, boolean first) {
         this.filter = filter;
-        if (!first) contentPanel.removeAll();
+        if (!first) {
+            contentPanel.removeAll();
+            titlePanel.removeAll();
+        }
+        JLabel dialogTitleLabel = null;
+        if (filter.startsWith("FILTER(?publisher = ex:")) {
+            String f = filter.substring(filter.indexOf(":") + 1, filter.length() - 1);
+            dialogTitleLabel = new JLabel("Publisher " + f);
+            titlePanel.add(dialogTitleLabel);
 
-        LinkedList<Book> books = RepoHandler.searchWithFilter(repo, filter);
+        } else if (filter.startsWith("FILTER(?author = ex:")) {
+            String f = filter.substring(filter.indexOf(":") + 1, filter.length() - 1);
+            Author a = RepoHandler.searchAuthor(repo, f);
+            dialogTitleLabel = new JLabel("Author " + f);
+            titlePanel.add(dialogTitleLabel);
+            //TODO add author info to titlePanel
+        } else {
+            dialogTitleLabel = new JLabel("All Books");
+            titlePanel.add(dialogTitleLabel);
+        }
 
-        contentPanel.setLayout(new GridLayout(books.size() + 1, 1));
+        dialogTitleLabel.setFont(new Font(dialogTitleLabel.getFont().getName(), dialogTitleLabel.getFont().getStyle(), 32));
+        dialogTitleLabel.setSize(contentPanel.getWidth(), dialogTitleLabel.getHeight());
+
+
+        LinkedList<Book> books = RepoHandler.searchBookWithFilter(repo, filter);
+
+        contentPanel.setLayout(new GridLayout(books.size() + 2, 1));
         JPanel titlePanel = new JPanel();
         titlePanel.setLayout(new GridLayout(1, 6));
 
@@ -249,10 +273,10 @@ public class ShowBooksDialog extends JDialog {
     private void $$$setupUI$$$() {
         createUIComponents();
         contentPane = new JPanel();
-        contentPane.setLayout(new GridLayoutManager(2, 1, new Insets(10, 10, 10, 10), -1, -1));
+        contentPane.setLayout(new GridLayoutManager(3, 1, new Insets(10, 10, 10, 10), -1, -1));
         final JPanel panel1 = new JPanel();
         panel1.setLayout(new GridLayoutManager(1, 4, new Insets(0, 0, 0, 0), -1, -1));
-        contentPane.add(panel1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, 1, null, null, null, 0, false));
+        contentPane.add(panel1, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, 1, null, null, null, 0, false));
         final Spacer spacer1 = new Spacer();
         panel1.add(spacer1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         final JPanel panel2 = new JPanel();
@@ -267,7 +291,8 @@ public class ShowBooksDialog extends JDialog {
         buttonDeleteBook = new JButton();
         buttonDeleteBook.setText("Delete Book");
         panel1.add(buttonDeleteBook, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        contentPane.add(contentPanel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, new Dimension(100, 100), new Dimension(400, 400), null, 0, false));
+        contentPane.add(contentPanel, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, new Dimension(100, 100), new Dimension(400, 400), null, 0, false));
+        contentPane.add(titlePanel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
     }
 
     /**
