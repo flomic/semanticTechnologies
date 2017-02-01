@@ -92,13 +92,11 @@ public class SearchBookPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            //TODO implement search
-            Repository repo = FileHandler.readRepositoryFromFile(FILE_PATH);
             String isbn = getIsbn();
 
             if (isbn.length() == 0) {
                 JOptionPane.showMessageDialog(null, "Please insert an ISBN.", "Error", JOptionPane.ERROR_MESSAGE);
-            } else if (RepoHandler.searchBookWithFilter(repo, "FILTER(?b = ex:" + isbn + ")").size() == 0) {
+            } else if (RepoHandler.searchBookWithFilter(MainWindow.getRepo(), "FILTER(?b = ex:" + isbn + ")").size() == 0) {
                 JOptionPane.showMessageDialog(null, "No book with this ISBN was found.", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 ShowBooksDialog sbd = new ShowBooksDialog(isbn);

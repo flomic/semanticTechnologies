@@ -55,10 +55,6 @@
 	rdfs:domain :Book ;
 	rdfs:range xsd:string .
 
-:has_language a owl:DatatypeProperty , owl:FunctionalProperty ;
-	rdfs:domain :Book ;
-	rdfs:range xsd:language .
-
 :has_publication_year a owl:DatatypeProperty , owl:FunctionalProperty ;
 	rdfs:domain :Book ;
 	rdfs:range xsd:integer .
@@ -85,16 +81,6 @@
 :Reader a owl:Class ;
 	rdfs:subClassOf :Person .
 
-:AB1 a :Author ;
-	:has_gender "m" ;
-	:has_name "A" ;
-	:has_Date_of_birth "Sat Dec 31 00:00:00 CET 1960" .
-
-:AB2 a :Author ;
-	:has_gender "m" ;
-	:has_name "A" ;
-	:has_Date_of_birth "Mon Dec 31 00:00:00 CET 1962" .
-
 :9780002318525 a :Book ;
 	:has_author :AB1 ;
 	:has_title "Title1" ;
@@ -108,12 +94,6 @@
 	:has_genre "Thriller" ;
 	:has_publication_year "2016" ;
 	:has_publisher :P1 .
-
-:R1 a :Reader ;
-	:has_gender "f" ;
-	:has_name "C" ;
-	:has_date_of_birth "Mon Jan 25 00:00:00 CET 1993" ;
-	:has_library :Lib_R1 .
 
 :Lib_R1 a :Library .
 
@@ -188,5 +168,19 @@
 	:has_gender "male" ;
 	:has_name "hellohello" .
 
-:23466887 a :Book ;
-	:has_author :hellohello_ .
+:2222222222222 a :Book ;
+	:has_title "hhj" .
+
+:3333333333333 a :Book ;
+	:has_title "hhh" .
+
+:Christine_1993-01-25 a :Author ;
+	:has_gender "female" ;
+	:has_name "Christine" ;
+	:has_date_of_birth "1993-01-25T00:00:00.000+01:00"^^xsd:dateTime .
+
+:CL a :Publisher .
+
+:1234567891011 a :Book ;
+	:has_author :Christine_1993-01-25 ;
+	:has_publisher :CL .

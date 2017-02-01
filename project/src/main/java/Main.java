@@ -74,7 +74,7 @@ public class Main {
         String genre = null;
         //id, name, gender, dob
 
-        String query =  "PREFIX dbpedia: <http://dbpedia.org/ontology/>" +
+      /*  String query =  "PREFIX dbpedia: <http://dbpedia.org/ontology/>" +
                         "select * " +
                         "where {" +
                         "?book_uri rdf:type dbpedia:Book ." +
@@ -114,7 +114,7 @@ public class Main {
         System.out.println("Genre: " + genre);
 
 
-        /*
+
         System.out.println("Result:");
         for(String s : repos){
             System.out.println(s);

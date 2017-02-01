@@ -114,6 +114,7 @@
 
 :P1 a :Publisher .
 
-:AB1 :has_date_of_birth "Sat Dec 31 00:00:00 CET 1960" .
+:AB1 :has_date_of_birth "1960-12-31T00:00:00.000+01:00"^^xsd:dateTime .
 
-:AB2 :has_date_of_birth "Mon Dec 31 00:00:00 CET 1962" .
+:AB2 :has_name "B" ;
+	:has_date_of_birth "1962-12-31T00:00:00.000+01:00"^^xsd:dateTime .

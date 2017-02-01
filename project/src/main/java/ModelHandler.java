@@ -2,6 +2,8 @@ import org.eclipse.rdf4j.model.*;
 import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
 import org.eclipse.rdf4j.model.vocabulary.RDF;
 
+import java.util.Date;
+
 /**
  * Created by christine on 13.01.17.
  */
@@ -56,6 +58,14 @@ public class ModelHandler {
                 break;
         }
 
+        return factory.createStatement(subjectPart,predicatePart, objectPart);
+    }
+
+    private static Statement makeStatementWithDate(String subject, String predicate, Date object){
+        ValueFactory factory = SimpleValueFactory.getInstance();
+        Resource subjectPart = factory.createIRI(EX_PREFIX, subject);
+        IRI predicatePart = factory.createIRI(EX_PREFIX, predicate);
+        Value objectPart = factory.createLiteral(object);
         return factory.createStatement(subjectPart,predicatePart, objectPart);
     }
 
@@ -140,7 +150,7 @@ public class ModelHandler {
             addItem(author.getId(), "has_name", author.getName(), 'L', model);
         }
         if(author.getDateOfBirth()!= null){
-            addItem(author.getId(), "has_date_of_birth", author.getDateOfBirth().toString(), 'L', model);
+            model.add(makeStatementWithDate(author.getId(), "has_date_of_birth", author.getDateOfBirth()));
         }
     }
 

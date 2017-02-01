@@ -17,7 +17,6 @@ public class ShowBooksDialog extends JDialog {
     private JButton buttonDeleteBook;
     private JPanel titlePanel;
     private LinkedList<String> books;
-    private Repository repo;
     private String isbn;
     private String filter;
 
@@ -75,14 +74,14 @@ public class ShowBooksDialog extends JDialog {
     private void onBookDelete() {
         String isbn = JOptionPane.showInputDialog(null, "Please insert an ISBN.", "Delete Book", JOptionPane.QUESTION_MESSAGE);
 
-        Book b = RepoHandler.searchBookWithFilter(repo, "FILTER(?b = ex:" + isbn + ")").getFirst();
+        Book b = RepoHandler.searchBookWithFilter(MainWindow.getRepo(), "FILTER(?b = ex:" + isbn + ")").getFirst();
         int answer = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete book " + isbn + "?", "Delete Book", JOptionPane.YES_NO_OPTION);
         if (answer == JOptionPane.YES_OPTION) {
             ModelHandler.removeBook(b, MainWindow.getModel());
             try {
                 FileHandler.writeModelToFile(FILE_PATH, MainWindow.getModel());
-                repo = FileHandler.readRepositoryFromFile(FILE_PATH);
-                books = RepoHandler.getAll(repo, "Book");
+                MainWindow.reloadRepo();
+                books = RepoHandler.getAll(MainWindow.getRepo(), "Book");
                 showBooks(filter, false);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -103,8 +102,7 @@ public class ShowBooksDialog extends JDialog {
     }
 
     private void createUIComponents() {
-        repo = FileHandler.readRepositoryFromFile(FILE_PATH);
-        books = RepoHandler.getAll(repo, "Book");
+        books = RepoHandler.getAll(MainWindow.getRepo(), "Book");
         titlePanel = new JPanel();
 
         if (isbn.equals("")) {
@@ -136,7 +134,7 @@ public class ShowBooksDialog extends JDialog {
 
         } else if (filter.startsWith("FILTER(?author = ex:")) {
             String f = filter.substring(filter.indexOf(":") + 1, filter.length() - 1);
-            Author a = RepoHandler.searchAuthor(repo, f);
+            Author a = RepoHandler.searchAuthor(MainWindow.getRepo(), f);
             dialogTitleLabel = new JLabel("Author " + f);
 
             titlePanel.setLayout(new BorderLayout());
@@ -168,7 +166,7 @@ public class ShowBooksDialog extends JDialog {
         dialogTitleLabel.setSize(contentPanel.getWidth(), dialogTitleLabel.getHeight());
 
 
-        LinkedList<Book> books = RepoHandler.searchBookWithFilter(repo, filter);
+        LinkedList<Book> books = RepoHandler.searchBookWithFilter(MainWindow.getRepo(), filter);
 
         contentPanel.setLayout(new GridLayout(books.size() + 2, 1));
         JPanel titlePanel = new JPanel();

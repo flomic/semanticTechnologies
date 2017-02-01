@@ -1,5 +1,6 @@
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import jdk.nashorn.internal.scripts.JO;
 import org.eclipse.rdf4j.model.vocabulary.RDF;
 import org.eclipse.rdf4j.query.BindingSet;
 import org.eclipse.rdf4j.query.TupleQueryResult;
@@ -31,16 +32,15 @@ public class AddBookDialog extends JDialog {
     private JComboBox<String> authorComboBox;
     private JComboBox<String> publisherComboBox;
     private JOptionPane optionPane;
-    private Repository repo;
     public JPanel addBookView;
     private JButton buttonSearch;
 
 
     public AddBookDialog(Frame aFrame, String filePath) {
         super(aFrame, true);
-        repo = FileHandler.readRepositoryFromFile(filePath);
-        LinkedList<String> authors = RepoHandler.getAll(repo, "Author"); //get all authors in the repo
-        LinkedList<String> publisher = RepoHandler.getAll(repo, "Publisher"); //get all publisher in the repo
+        MainWindow.reloadRepo();
+        LinkedList<String> authors = RepoHandler.getAll(MainWindow.getRepo(), "Author"); //get all authors in the repo
+        LinkedList<String> publisher = RepoHandler.getAll(MainWindow.getRepo(), "Publisher"); //get all publisher in the repo
 
 
         buttonSearch.addActionListener(new ActionListener() {
@@ -237,8 +237,8 @@ public class AddBookDialog extends JDialog {
                     String dob = aap.getDateOfBirth();
                     String id = name.replaceAll(" ", "") + "_" + dob;
 
-                    if (id.length() > 2) { //if the id is not empty
-                        if (!RepoHandler.getAll(repo, "Author").contains(id) && !ModelHandler.contains(MainWindow.getModel(), id, RDF.TYPE, "Author", 'I')) {
+                    if (id.length() > 1) { //if the id is not empty
+                        if (!RepoHandler.getAll(MainWindow.getRepo(), "Author").contains(id) && !ModelHandler.contains(MainWindow.getModel(), id, RDF.TYPE, "Author", 'I')) {
                             Author a = new Author(id, name, gender, dob); //create a new author
                             ModelHandler.addAuthor(a, MainWindow.getModel()); //add it to the model
                             authorComboBox.addItem(id); //add the item to the combobox
@@ -271,7 +271,7 @@ public class AddBookDialog extends JDialog {
                 // Show a input dialog where the user enters the publisher name, which is also the id
                 String publisher = JOptionPane.showInputDialog(null, "Please enter the publisher name", "New Publisher", JOptionPane.PLAIN_MESSAGE);
                 if (publisher != null && !publisher.equals("")) { //if the entered string is not empty
-                    if (!RepoHandler.getAll(repo, "Publisher").contains(publisher) && !ModelHandler.contains(MainWindow.getModel(), publisher, RDF.TYPE, "Publisher", 'I')) {
+                    if (!RepoHandler.getAll(MainWindow.getRepo(), "Publisher").contains(publisher) && !ModelHandler.contains(MainWindow.getModel(), publisher, RDF.TYPE, "Publisher", 'I')) {
                         Publisher p = new Publisher(publisher); //create a new publisher
                         ModelHandler.addPublisher(p, MainWindow.getModel()); //add the publisher to the model
                         publisherComboBox.addItem(publisher); //add the publisher to the combobox
@@ -304,8 +304,11 @@ public class AddBookDialog extends JDialog {
                 if (evt.getNewValue().equals("Save")) { //if the user clicked on save
 
                     //check the input for correctness and that isbn is not missing
-                    if (isbnTextField.getText().equals("")) {
-                        JOptionPane.showMessageDialog(null, "Please enter the ISBN number!", "Error", JOptionPane.ERROR_MESSAGE);
+                    if (isbnTextField.getText().length() != 13) {
+                        JOptionPane.showMessageDialog(null, "Please enter a correct ISBN number!", "Error", JOptionPane.ERROR_MESSAGE);
+                        okToClose = false;
+                    } else if (RepoHandler.searchBookWithFilter(MainWindow.getRepo(), "FILTER(?b = ex:" + isbnTextField.getText() + ")").size() > 0) {
+                        JOptionPane.showMessageDialog(null, "There is already a book with this ISBN number! \n Please check if the one you entered is correct!", "Error", JOptionPane.ERROR_MESSAGE);
                         okToClose = false;
                     }
 

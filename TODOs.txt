@@ -1,13 +1,9 @@
-- Automatical insertion of data
 
 - Decide where to get the different ids from (User input? Generation out of other values?)
 
 - Exception handling
 - More checks if input is correct
 
-
-
-- error: if you add publisher/author twice in a row without saving in the middle
 - do not output if field empty
 
 

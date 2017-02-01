@@ -1,6 +1,7 @@
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import org.eclipse.rdf4j.model.Model;
+import org.eclipse.rdf4j.repository.Repository;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,6 +22,7 @@ public class MainWindow {
     private JButton showBooksButton;
     private static JFrame mainFrame;
     private static Model model;
+    private static Repository repo;
     private static final String FILE_PATH = "src/main/resources/project.ttl";
 
     public MainWindow() {
@@ -28,6 +30,7 @@ public class MainWindow {
         addBookButton.addActionListener(new AddBookBtnClicked());
         searchBookButton.addActionListener(new SearchBookButtonClicked());
         model = FileHandler.readModelFromFile(FILE_PATH);
+        repo = FileHandler.readRepositoryFromFile(FILE_PATH);
     }
 
     public static void main(String[] args) {
@@ -40,6 +43,14 @@ public class MainWindow {
 
     public static Model getModel() {
         return model;
+    }
+
+    public static Repository getRepo() {
+        return repo;
+    }
+
+    public static void reloadRepo() {
+        repo = FileHandler.readRepositoryFromFile(FILE_PATH);
     }
 
     {
@@ -116,7 +127,6 @@ public class MainWindow {
                 String publisher = abp.getPublisher();
                 String author = abp.getAuthor();
 
-
                 try {
                     Book b;
                     if (publicationYear.equals("")) { //if the publicationYear is empty, replace it with null
@@ -126,6 +136,7 @@ public class MainWindow {
                     }
                     ModelHandler.addBook(b, MainWindow.getModel());//add the book to the model
                     FileHandler.writeModelToFile(FILE_PATH, model);
+                    reloadRepo();
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
