@@ -138,8 +138,27 @@ public class ShowBooksDialog extends JDialog {
             String f = filter.substring(filter.indexOf(":") + 1, filter.length() - 1);
             Author a = RepoHandler.searchAuthor(repo, f);
             dialogTitleLabel = new JLabel("Author " + f);
-            titlePanel.add(dialogTitleLabel);
-            //TODO add author info to titlePanel
+
+            titlePanel.setLayout(new BorderLayout());
+            titlePanel.add(dialogTitleLabel, BorderLayout.NORTH);
+
+            JPanel authorInfoPanel = new JPanel();
+            authorInfoPanel.setLayout(new GridLayout(3, 2));
+
+            authorInfoPanel.add(new JLabel("Name:"));
+            authorInfoPanel.add(new JLabel(a.getName()));
+
+            authorInfoPanel.add(new JLabel("Gender:"));
+            authorInfoPanel.add(new JLabel(a.getGender()));
+
+            authorInfoPanel.add(new JLabel("Date of Birth:"));
+            if (a.getDateOfBirth() != null) {
+                authorInfoPanel.add(new JLabel(a.getDateOfBirth().toString()));
+            }
+
+            titlePanel.add(authorInfoPanel, BorderLayout.CENTER);
+
+
         } else {
             dialogTitleLabel = new JLabel("All Books");
             titlePanel.add(dialogTitleLabel);

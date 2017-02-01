@@ -183,3 +183,10 @@
 
 :34 a :Book ;
 	:has_author :AB1 .
+
+:hellohello_ a :Author ;
+	:has_gender "male" ;
+	:has_name "hellohello" .
+
+:23466887 a :Book ;
+	:has_author :hellohello_ .
