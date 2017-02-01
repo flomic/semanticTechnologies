@@ -94,6 +94,8 @@ public class ShowBooksDialog extends JDialog {
         dispose();
     }
 
+
+
     public static void main(String[] args) {
         ShowBooksDialog dialog = new ShowBooksDialog();
         dialog.pack();

@@ -18,11 +18,13 @@ public class SearchBookPanel {
     private JTextField isbnTextField;
     private JButton searchButton;
     public JPanel searchBookView;
+    private String scope;
 
     /**
      * Constructer do add an action listener to the search button
      */
-    public SearchBookPanel() {
+    public SearchBookPanel(String scope) {
+        this.scope = scope;
         searchButton.addActionListener(new SearchClickedListener());
     }
 
@@ -99,7 +101,13 @@ public class SearchBookPanel {
             } else if (RepoHandler.searchBookWithFilter(MainWindow.getRepo(), "FILTER(?b = ex:" + isbn + ")").size() == 0) {
                 JOptionPane.showMessageDialog(null, "No book with this ISBN was found.", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
-                ShowBooksDialog sbd = new ShowBooksDialog(isbn);
+                if (scope.equals("Show")) {
+                    ShowBooksDialog sbd = new ShowBooksDialog(isbn);
+                } else {
+                    ChangeBookDetailsDialog cbdd = new ChangeBookDetailsDialog(isbn);
+                    cbdd.showDialog();
+                }
+
             }
         }
     }

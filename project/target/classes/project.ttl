@@ -147,11 +147,7 @@
 	:has_publication_year "2017" ;
 	:has_publisher :hhhh .
 
-:1 a :Book ;
-	:has_author :AB2 ;
-	:has_title "dd" ;
-	:has_genre "" ;
-	:has_publisher :hhhh .
+:1 :has_genre "" .
 
 :A_A_ a :Author ;
 	:has_gender "male" ;
@@ -195,3 +191,9 @@
 
 :1234567812345 a :Book ;
 	:has_author :kkk_ .
+
+:1 :has_genre "fff" .
+
+:1234567898765 a :Book ;
+	:has_author :A_A_ ;
+	:has_title "C_C_" .
