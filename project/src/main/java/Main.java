@@ -4,6 +4,7 @@ import org.apache.jena.query.QueryFactory;
 import org.apache.jena.query.QuerySolution;*/
 
 import org.eclipse.rdf4j.model.Model;
+import org.eclipse.rdf4j.model.vocabulary.RDF;
 import org.eclipse.rdf4j.repository.Repository;
 
 import java.io.IOException;
@@ -39,13 +40,14 @@ public class Main {
         }*/
 
 
-            Model m = FileHandler.readModelFromFile("src/main/resources/project.ttl");
+            Model m = FileHandler.readModelFromFile("src/main/resources/output.ttl");
             Author a = new Author("AB1", "m", "A", "B", "1960-12-31");
             Author a2 = new Author("AB2", "m", "A", "B", "1962-12-31");
             Reader r = new Reader("R1", "f", "C", "L","1993-01-25");
             Book b = new Book("9780002318525", "AB1", "Title1", "P1", "Thriller", 2016);
             Book b2 = new Book("B2", "AB2", "Title2", "P1", "Thriller", 2016);
             Publisher p = new Publisher("P1");
+
 
 
             //m = ModelHandler.addItem("http://www.example.org/Book","http://www.example.org/isWrittenBy", "Author",'L', m);
@@ -56,7 +58,9 @@ public class Main {
             ModelHandler.addReader(r, m);
             ModelHandler.addBookToLibrary(b.getIsbn(), r.getLibrary().getId(),m);
             ModelHandler.addPublisher(p,m);
-            FileHandler.writeModelToFile("src/main/resources/project.ttl", m);
+            ModelHandler.removeItem("P3", RDF.TYPE, "Publisher", 'I',m);
+            ModelHandler.removeBook(b2, m);
+            FileHandler.writeModelToFile("src/main/resources/output.ttl", m);
 
         /* ----------------------------------------- GET BOOK FROM DBPEDIA ----------------------------------------- */
 

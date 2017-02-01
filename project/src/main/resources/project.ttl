@@ -193,7 +193,5 @@
 	:has_first_name "C" ;
 	:has_last_name "C" .
 
-:123 a :Book .
-
 :34 a :Book ;
 	:has_author :AB1 .
