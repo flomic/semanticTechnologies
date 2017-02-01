@@ -1,8 +1,14 @@
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import org.eclipse.rdf4j.model.vocabulary.RDF;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.Date;
 
 /**
  * Created by christine on 20.01.17.
@@ -11,21 +17,38 @@ import java.awt.*;
 /**
  * Used in a JOptionDialog to add a new author.
  */
-public class AddAuthorPanel {
+public class AddAuthorDialog extends JDialog {
     private JTextField nameTextField;
     private JRadioButton maleRadioButton;
     private JRadioButton femaleRadioButton;
     private JPanel addAuthorView;
     private JTextField dateOfBirthTextField;
+    private JOptionPane optionPane;
 
-    public JPanel getAuthorView() {
-        return addAuthorView;
+
+    public AddAuthorDialog(Frame aFrame) {
+        super(aFrame, true);
+
+        Object[] options = {"Save", "Cancel"}; // the two options the user can select in the optionPane
+        optionPane = new JOptionPane(addAuthorView, JOptionPane.PLAIN_MESSAGE, JOptionPane.OK_CANCEL_OPTION, null, options, options[0]);
+        setContentPane(optionPane);
+        optionPane.addPropertyChangeListener(new MyPropertyChangeListener());
+        pack();
+    }
+
+    /**
+     * set the dialog to visible and return "Save" or "Cancel" depending on what the user clicks
+     *
+     * @return
+     */
+    public String showDialog() {
+        setVisible(true);
+        return optionPane.getValue().toString();
     }
 
     public String getName() {
         return nameTextField.getText();
     }
-
 
     public String getGender() {
         String gender = "";
@@ -107,5 +130,46 @@ public class AddAuthorPanel {
      */
     public JComponent $$$getRootComponent$$$() {
         return addAuthorView;
+    }
+
+    private class MyPropertyChangeListener implements PropertyChangeListener {
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            String prop = evt.getPropertyName();
+            if (isVisible() && evt.getSource() == optionPane && prop.equals(JOptionPane.VALUE_PROPERTY)) {
+                boolean okToClose = true;
+                if (evt.getNewValue().equals("Save")) {
+                    String dateOfBirthString = dateOfBirthTextField.getText();
+                    if (!dateOfBirthTextField.getText().equals("")) {
+                        try {
+                            Date d = new Date(Integer.parseInt(dateOfBirthString.substring(0, 4)) - 1900, Integer.parseInt(dateOfBirthString.substring(5, 7)) - 1, Integer.parseInt(dateOfBirthString.substring(8, 10)));
+                        } catch (Exception e1) {
+                            JOptionPane.showMessageDialog(null, "Your date format seams to be wrong. It should be YYYY-MM-DD.", "Error", JOptionPane.ERROR_MESSAGE);
+                            okToClose = false;
+                        }
+                    }
+                    String id = getName().replaceAll(" ", "") + "_" + getDateOfBirth();
+                    if (id.length() > 1) { //if the id is not empty
+                        if (RepoHandler.getAll(MainWindow.getRepo(), "Author").contains(id) || ModelHandler.contains(MainWindow.getModel(), id, RDF.TYPE, "Author", 'I')) {
+                            JOptionPane.showMessageDialog(null, "This author exists already.", "Error", JOptionPane.ERROR_MESSAGE);
+                            okToClose = false;
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Please enter some information about the author.", "Error", JOptionPane.ERROR_MESSAGE);
+                        okToClose = false;
+                    }
+                } else if (evt.getNewValue().equals("wait")) { //used to keep the dialog open, if the input was not ok
+                    okToClose = false;
+                }
+                if (okToClose) {
+                    setVisible(false);
+                } else { //if the user clicked on "Save" but the input was not ok
+                    //set the value of the optionPane to an intermediate value,
+                    // so that when the user clicks again on "Save" the listener fires again
+                    optionPane.setValue("wait");
+                }
+
+            }
+        }
     }
 }

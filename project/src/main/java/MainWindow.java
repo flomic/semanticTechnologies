@@ -114,7 +114,7 @@ public class MainWindow {
         public void actionPerformed(ActionEvent e) {
 
             //show the AddBookDialog, which returns the value of the button clicked
-            AddBookDialog abp = new AddBookDialog(null, FILE_PATH);
+            AddBookDialog abp = new AddBookDialog(null);
             String o = abp.showDialog();
 
             if (o.equals("Save")) { // if the user wanted to save the book

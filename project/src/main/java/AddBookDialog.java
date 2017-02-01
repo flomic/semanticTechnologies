@@ -1,6 +1,5 @@
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
-import jdk.nashorn.internal.scripts.JO;
 import org.eclipse.rdf4j.model.vocabulary.RDF;
 import org.eclipse.rdf4j.query.BindingSet;
 import org.eclipse.rdf4j.query.TupleQueryResult;
@@ -25,6 +24,7 @@ import java.util.LinkedList;
  * Dialog to manually add a book
  */
 public class AddBookDialog extends JDialog {
+    public JPanel addBookView;
     private JTextField titleTextField;
     private JTextField publicationYearTextField;
     private JTextField genreTextField;
@@ -32,11 +32,9 @@ public class AddBookDialog extends JDialog {
     private JComboBox<String> authorComboBox;
     private JComboBox<String> publisherComboBox;
     private JOptionPane optionPane;
-    public JPanel addBookView;
     private JButton buttonSearch;
 
-
-    public AddBookDialog(Frame aFrame, String filePath) {
+    public AddBookDialog(Frame aFrame) {
         super(aFrame, true);
         MainWindow.reloadRepo();
         LinkedList<String> authors = RepoHandler.getAll(MainWindow.getRepo(), "Author"); //get all authors in the repo
@@ -118,6 +116,80 @@ public class AddBookDialog extends JDialog {
 
     public String getPublisher() {
         return publisherComboBox.getSelectedItem().toString();
+    }
+
+    private void downloadInfo(String isbn) {
+        String dbpAuthor = null;
+        String dbpTitle = null;
+        String dbpPublisher = null;
+        String dbpGenre = null;
+
+        String dbpQuery = "PREFIX dbpedia: <http://dbpedia.org/ontology/>" +
+                "select * " +
+                "where {" +
+                "?book_uri rdf:type dbpedia:Book ." +
+                "?book_uri rdfs:label ?title ." +
+                "?book_uri dbpedia:publisher ?publisher_uri ." +
+                "?publisher_uri rdfs:label ?publisher ." +
+                "?book_uri dbpedia:literaryGenre ?genre_uri ." +
+                "?genre_uri rdfs:label ?genre ." +
+                "?book_uri dbpedia:author ?author_uri ." +
+                "?book_uri dbpedia:isbn ?isbn." +
+                "?author_uri dbpedia:birthName ?author." +
+                "?author_uri dbpedia:birthDate ?birthDate." +
+                "FILTER (regex(?isbn, '" + isbn + "'))" +
+                "FILTER (lang(?author) = 'en')" +
+                "FILTER (lang(?genre) = 'en')" +
+                "FILTER (lang(?title) = 'en')" +
+                "FILTER (lang(?publisher) = 'en')" +
+                "}";
+
+        Repository dbpRepo = new SPARQLRepository("http://dbpedia.org/sparql");
+        dbpRepo.initialize();
+        TupleQueryResult result = RepoHandler.query(dbpRepo, dbpQuery);
+
+        if (result.hasNext()) {
+            BindingSet bindingSet = result.next();
+            if (bindingSet.hasBinding("author")) {
+                dbpAuthor = RepoHandler.cleanString(bindingSet.getValue("author").toString());
+                //if author does not exist yet - create it
+                String id = "";
+                if (!ModelHandler.contains(MainWindow.getModel(), dbpAuthor, RDF.TYPE, "Author", 'I')) {
+                    id = dbpAuthor.replaceAll(" ", "") + "_";
+                    Author a = new Author(id, dbpAuthor, "", ""); //create a new author
+                    ModelHandler.addAuthor(a, MainWindow.getModel()); //add it to the model
+                    authorComboBox.addItem(id); //add the item to the combobox
+                }
+                authorComboBox.setSelectedItem(id); //select the author in the combobox
+            }
+            if (bindingSet.hasBinding("title")) {
+                dbpTitle = RepoHandler.cleanString(bindingSet.getValue("title").toString());
+                titleTextField.setText(dbpTitle);
+            }
+            if (bindingSet.hasBinding("publisher")) {
+                dbpPublisher = RepoHandler.cleanString(bindingSet.getValue("publisher").toString());
+                //if publisher does not exist yet - create it
+                if (!ModelHandler.contains(MainWindow.getModel(), dbpPublisher, RDF.TYPE, "Publisher", 'I')) {
+                    Publisher p = new Publisher(dbpPublisher); //create a new publisher
+                    ModelHandler.addPublisher(p, MainWindow.getModel()); //add the publisher to the model
+                    publisherComboBox.addItem(dbpPublisher); //add the publisher to the combobox
+                }
+                publisherComboBox.setSelectedItem(dbpPublisher); //select the publisher in the combobox
+            }
+            if (bindingSet.hasBinding("genre")) {
+                dbpGenre = RepoHandler.cleanString(bindingSet.getValue("genre").toString());
+                genreTextField.setText(dbpGenre);
+            }
+
+
+            System.out.println("ISBN: " + isbn);
+            System.out.println("Title: " + dbpTitle);
+            System.out.println("Author: " + dbpAuthor);
+            System.out.println("Publisher: " + dbpPublisher);
+            System.out.println("Genre: " + dbpGenre);
+        } else {
+            JOptionPane.showMessageDialog(null, "ISBN was not found on dbpedia.org", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     {
@@ -226,10 +298,10 @@ public class AddBookDialog extends JDialog {
 
                 //Create an new Dialog to enter the information about the author
                 Object[] options = {"Save", "Cancel"};
-                AddAuthorPanel aap = new AddAuthorPanel();
-                int o = JOptionPane.showOptionDialog(null, aap.getAuthorView(), "Add Author", JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+                AddAuthorDialog aap = new AddAuthorDialog(null);
+                String o = aap.showDialog();
 
-                if (o == JOptionPane.YES_OPTION) { //if the user wants to save the author
+                if (o.equals("Save")) { //if the user wants to save the author
 
                     //get all the information and construct an id
                     String name = aap.getName();
@@ -237,19 +309,11 @@ public class AddBookDialog extends JDialog {
                     String dob = aap.getDateOfBirth();
                     String id = name.replaceAll(" ", "") + "_" + dob;
 
-                    if (id.length() > 1) { //if the id is not empty
-                        if (!RepoHandler.getAll(MainWindow.getRepo(), "Author").contains(id) && !ModelHandler.contains(MainWindow.getModel(), id, RDF.TYPE, "Author", 'I')) {
-                            Author a = new Author(id, name, gender, dob); //create a new author
-                            ModelHandler.addAuthor(a, MainWindow.getModel()); //add it to the model
-                            authorComboBox.addItem(id); //add the item to the combobox
-                            authorComboBox.setSelectedItem(id); //select the item in the combobox
-                        } else {
-                            JOptionPane.showMessageDialog(null, "This author exists already.", "Error", JOptionPane.ERROR_MESSAGE);
-                            authorComboBox.setSelectedItem("Please select an author");
-                        }
-                    } else { // if the id is empty don't save the author and reset the selected item in the combobox
-                        authorComboBox.setSelectedItem("Please select an author");
-                    }
+                    Author a = new Author(id, name, gender, dob); //create a new author
+                    ModelHandler.addAuthor(a, MainWindow.getModel()); //add it to the model
+                    authorComboBox.addItem(id); //add the item to the combobox
+                    authorComboBox.setSelectedItem(id); //select the item in the combobox
+
                 } else { //if the user selects cancel reset the selected item in the combobox
                     authorComboBox.setSelectedItem("Please select an author");
                 }
@@ -331,81 +395,6 @@ public class AddBookDialog extends JDialog {
                     optionPane.setValue("wait");
                 }
             }
-        }
-    }
-
-
-    private void downloadInfo(String isbn) {
-        String dbpAuthor = null;
-        String dbpTitle = null;
-        String dbpPublisher = null;
-        String dbpGenre = null;
-
-        String dbpQuery = "PREFIX dbpedia: <http://dbpedia.org/ontology/>" +
-                "select * " +
-                "where {" +
-                "?book_uri rdf:type dbpedia:Book ." +
-                "?book_uri rdfs:label ?title ." +
-                "?book_uri dbpedia:publisher ?publisher_uri ." +
-                "?publisher_uri rdfs:label ?publisher ." +
-                "?book_uri dbpedia:literaryGenre ?genre_uri ." +
-                "?genre_uri rdfs:label ?genre ." +
-                "?book_uri dbpedia:author ?author_uri ." +
-                "?book_uri dbpedia:isbn ?isbn." +
-                "?author_uri dbpedia:birthName ?author." +
-                "?author_uri dbpedia:birthDate ?birthDate." +
-                "FILTER (regex(?isbn, '" + isbn + "'))" +
-                "FILTER (lang(?author) = 'en')" +
-                "FILTER (lang(?genre) = 'en')" +
-                "FILTER (lang(?title) = 'en')" +
-                "FILTER (lang(?publisher) = 'en')" +
-                "}";
-
-        Repository dbpRepo = new SPARQLRepository("http://dbpedia.org/sparql");
-        dbpRepo.initialize();
-        TupleQueryResult result = RepoHandler.query(dbpRepo, dbpQuery);
-
-        if (result.hasNext()) {
-            BindingSet bindingSet = result.next();
-            if (bindingSet.hasBinding("author")) {
-                dbpAuthor = RepoHandler.cleanString(bindingSet.getValue("author").toString());
-                //if author does not exist yet - create it
-                String id = "";
-                if (!ModelHandler.contains(MainWindow.getModel(), dbpAuthor, RDF.TYPE, "Author", 'I')) {
-                    id = dbpAuthor.replaceAll(" ", "") + "_";
-                    Author a = new Author(id, dbpAuthor, "", ""); //create a new author
-                    ModelHandler.addAuthor(a, MainWindow.getModel()); //add it to the model
-                    authorComboBox.addItem(id); //add the item to the combobox
-                }
-                authorComboBox.setSelectedItem(id); //select the author in the combobox
-            }
-            if (bindingSet.hasBinding("title")) {
-                dbpTitle = RepoHandler.cleanString(bindingSet.getValue("title").toString());
-                titleTextField.setText(dbpTitle);
-            }
-            if (bindingSet.hasBinding("publisher")) {
-                dbpPublisher = RepoHandler.cleanString(bindingSet.getValue("publisher").toString());
-                //if publisher does not exist yet - create it
-                if (!ModelHandler.contains(MainWindow.getModel(), dbpPublisher, RDF.TYPE, "Publisher", 'I')) {
-                    Publisher p = new Publisher(dbpPublisher); //create a new publisher
-                    ModelHandler.addPublisher(p, MainWindow.getModel()); //add the publisher to the model
-                    publisherComboBox.addItem(dbpPublisher); //add the publisher to the combobox
-                }
-                publisherComboBox.setSelectedItem(dbpPublisher); //select the publisher in the combobox
-            }
-            if (bindingSet.hasBinding("genre")) {
-                dbpGenre = RepoHandler.cleanString(bindingSet.getValue("genre").toString());
-                genreTextField.setText(dbpGenre);
-            }
-
-
-            System.out.println("ISBN: " + isbn);
-            System.out.println("Title: " + dbpTitle);
-            System.out.println("Author: " + dbpAuthor);
-            System.out.println("Publisher: " + dbpPublisher);
-            System.out.println("Genre: " + dbpGenre);
-        } else {
-            JOptionPane.showMessageDialog(null, "ISBN was not found on dbpedia.org", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

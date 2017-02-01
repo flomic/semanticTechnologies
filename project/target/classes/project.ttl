@@ -184,3 +184,14 @@
 :1234567891011 a :Book ;
 	:has_author :Christine_1993-01-25 ;
 	:has_publisher :CL .
+
+:hhh_ a :Author ;
+	:has_gender "male" ;
+	:has_name "hhh" .
+
+:kkk_ a :Author ;
+	:has_gender "male" ;
+	:has_name "kkk" .
+
+:1234567812345 a :Book ;
+	:has_author :kkk_ .
