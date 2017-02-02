@@ -15,7 +15,6 @@ public class Author extends Person {
      * @param gender
      * @param dateOfBirthString
      */
-    //TODO Should the id really be handed over in the constructor??
     public Author(String id, String name, String gender, String dateOfBirthString){
         super(id, name, gender, dateOfBirthString);
     }

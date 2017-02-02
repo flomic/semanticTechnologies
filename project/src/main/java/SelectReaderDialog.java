@@ -1,14 +1,10 @@
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
-import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.beans.PropertyChangeListener;
 import java.util.LinkedList;
 
 public class SelectReaderDialog extends JDialog {
@@ -16,9 +12,6 @@ public class SelectReaderDialog extends JDialog {
     private JComboBox readerComboBox;
 
     public SelectReaderDialog() {
-        //setContentPane(contentPane);
-        //setModal(true);
-
         LinkedList<String> readers = RepoHandler.getAll(MainWindow.getRepo(), "Reader");
         for (String reader : readers) {
             readerComboBox.addItem(reader);

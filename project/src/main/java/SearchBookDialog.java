@@ -1,11 +1,8 @@
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
-import org.eclipse.rdf4j.repository.Repository;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -18,7 +15,6 @@ import java.beans.PropertyChangeListener;
  */
 public class SearchBookDialog extends JDialog {
     private JTextField isbnTextField;
-    //private JButton searchButton;
     public JPanel searchBookView;
     private String scope;
     private JOptionPane optionPane;
@@ -28,7 +24,6 @@ public class SearchBookDialog extends JDialog {
      */
     public SearchBookDialog(String scope) {
         this.scope = scope;
-        //searchButton.addActionListener(new SearchClickedListener());
 
         Object[] options = {"Search", "Back"}; // the two options the user can select in the optionPane
         optionPane = new JOptionPane(searchBookView, JOptionPane.PLAIN_MESSAGE, JOptionPane.OK_CANCEL_OPTION, null, options, options[0]);

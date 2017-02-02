@@ -136,7 +136,6 @@ public class MainWindow {
             //shows a dialog which contains the search book panel
             Object[] options = {"Back"}; //Button to return to the main window
             SearchBookDialog sbp = new SearchBookDialog("Show");
-            //JOptionPane.showOptionDialog(null, sbp.getSearchBookView(), "Search Book", JOptionPane.CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
         }
     }
 

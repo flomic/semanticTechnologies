@@ -181,13 +181,6 @@ public class AddBookDialog extends JDialog {
                 dbpGenre = RepoHandler.cleanString(bindingSet.getValue("genre").toString());
                 genreTextField.setText(dbpGenre);
             }
-
-
-            System.out.println("ISBN: " + isbn);
-            System.out.println("Title: " + dbpTitle);
-            System.out.println("Author: " + dbpAuthor);
-            System.out.println("Publisher: " + dbpPublisher);
-            System.out.println("Genre: " + dbpGenre);
         } else {
             JOptionPane.showMessageDialog(null, "ISBN was not found on dbpedia.org", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -335,7 +328,7 @@ public class AddBookDialog extends JDialog {
 
                 // Show a input dialog where the user enters the publisher name, which is also the id
                 String publisher = JOptionPane.showInputDialog(null, "Please enter the publisher name", "New Publisher", JOptionPane.PLAIN_MESSAGE);
-//TODO clean publisher id
+
                 publisher = publisher.replaceAll("[\\W+]", "_");
                 if (publisher != null && !publisher.equals("")) { //if the entered string is not empty
                     if (!RepoHandler.getAll(MainWindow.getRepo(), "Publisher").contains(publisher) && !ModelHandler.contains(MainWindow.getModel(), publisher, RDF.TYPE, "Publisher", 'I')) {

@@ -16,7 +16,6 @@ public class Reader extends Person {
      * @param gender
      * @param dateOfBirth
      */
-    //TODO Should the id really be handed over in the constructor??
     public Reader(String id, String name, String gender, String dateOfBirth) {
     	super(id, name, gender, dateOfBirth);
         library = new Library("Lib_"+this.getId());

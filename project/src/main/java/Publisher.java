@@ -6,7 +6,7 @@
  * Class to represent a publisher
  */
 public class Publisher{
-    private String id; //TODO id == publisher name??
+    private String id;
 
     public Publisher(String publisherId) {
     	this.id = publisherId;

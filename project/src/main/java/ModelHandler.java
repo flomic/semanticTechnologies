@@ -109,8 +109,6 @@ public class ModelHandler {
      * @param book
      * @param model
      */
-    //TODO check if book already exists
-    //TODO don't add line if the value is missing
     public static void addBook(Book book, String reader, Model model){
         addItem(book.getIsbn(), RDF.TYPE, "Book", 'I', model);
 
@@ -145,8 +143,6 @@ public class ModelHandler {
      * @param author
      * @param model
      */
-    //TODO check if author already exists
-    //TODO don't add line if the value is missing
     public static void addAuthor(Author author, Model model) {
         addItem(author.getId(), RDF.TYPE, "Author", 'I', model);
         if(author.getGender()!=null && !author.getGender().equals("")){
@@ -165,8 +161,6 @@ public class ModelHandler {
      * @param reader
      * @param model
      */
-    //TODO check if reader already exists
-    //TODO don't add line if the value is missing
     public static void addReader(Reader reader, Model model) {
         addItem(reader.getId(), RDF.TYPE, "Reader", 'I', model);
         if(reader.getGender()!=null && !reader.getGender().equals("")){
@@ -176,7 +170,7 @@ public class ModelHandler {
             addItem(reader.getId(), "has_name", reader.getName(), 'L', model);
         }
         if(reader.getDateOfBirth()!=null){
-            addItem(reader.getId(), "has_date_of_birth", reader.getDateOfBirth().toString(), 'L', model); //TODO dateOfBirth must be added as date and not as string
+            addItem(reader.getId(), "has_date_of_birth", reader.getDateOfBirth().toString(), 'L', model);
         }
 
         addItem(reader.getId(), "has_library",  reader.getLibrary().getId(), 'I', model);
@@ -190,8 +184,6 @@ public class ModelHandler {
      * @param libId
      * @param model
      */
-    //TODO check if book is already in the library
-    //TODO don't add line if one value is missing
     public static void addBookToLibrary(String isbn, String libId, Model model){
         addItem(isbn, "is_contained_in", libId, 'I', model);
     }
@@ -201,37 +193,11 @@ public class ModelHandler {
      * @param publisher
      * @param model
      */
-    //TODO check if publisher already exists
-    //TODO don't add line if the value is missing
     public static void addPublisher(Publisher publisher, Model model){
         addItem(publisher.getId(), RDF.TYPE, "Publisher", 'I', model);
     }
 
     public static void removeBook(Book book, String reader, Model model){
-        /*removeItem(book.getIsbn(), RDF.TYPE, "Book", 'I', model);
-
-        if(book.getIsbn()!=null && !book.getIsbn().equals("") ){
-            removeItem(book.getIsbn(), "has_isbn", book.getIsbn(), 'L', model);
-        }
-
-        if(book.getAuthor()!=null && !book.getAuthor().equals("") && !book.getAuthor().equals("Please select an author")){
-            removeItem(book.getIsbn(), "has_author", book.getAuthor(), 'I', model);
-        }
-
-        if(book.getTitle()!=null && !book.getTitle().equals("") ){
-            removeItem(book.getIsbn(), "has_title", book.getTitle(), 'L', model);
-        }
-        if(book.getGenre()!=null && !book.getGenre().equals("")){
-            removeItem(book.getIsbn(), "has_genre", book.getGenre(), 'L', model);
-        }
-
-        if(book.getPublicationYear()!= null){
-            removeItem(book.getIsbn(), "has_publication_year", book.getPublicationYear().toString(), 'L', model);
-        }
-
-        if(book.getPublisher()!=null && !book.getPublisher().equals("") && !book.getPublisher().equals("Please select a publisher")){
-            removeItem(book.getIsbn(), "has_publisher", book.getPublisher(), 'I', model);
-        }*/
         removeItem(book.getIsbn(), "is_contained_in", "Lib_"+reader, 'I', model);
     }
 

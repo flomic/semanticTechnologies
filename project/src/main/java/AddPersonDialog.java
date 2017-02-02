@@ -63,7 +63,7 @@ public class AddPersonDialog extends JDialog {
     }
 
     public String getDateOfBirth() {
-        return dateOfBirthTextField.getText(); //TODO parse input and check if correct date
+        return dateOfBirthTextField.getText();
     }
 
     {

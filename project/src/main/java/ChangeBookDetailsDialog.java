@@ -354,13 +354,5 @@ public class ChangeBookDetailsDialog extends JDialog {
                 }
             }
         }
-
     }
-
-    /*public static void main(String[] args) {
-        ChangeBookDetailsDialog dialog = new ChangeBookDetailsDialog();
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
-    }*/
 }

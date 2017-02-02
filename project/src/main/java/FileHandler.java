@@ -36,9 +36,9 @@ public class FileHandler {
         final RepositoryConnection connection = repo.getConnection();
 
         try {
-            connection.add(new File(filePath), null, RDFFormat.TURTLE); //TODO allow also other formats
+            connection.add(new File(filePath), null, RDFFormat.TURTLE);
         } catch (IOException e) {
-            e.printStackTrace(); //TODO handle this exception better
+            e.printStackTrace();
         }
         return repo;
     }
@@ -54,9 +54,9 @@ public class FileHandler {
         Model results = null;
         try {
             inputStream = new FileInputStream(file);
-            results = Rio.parse(inputStream, "urn:absolute:www.example.com/ontologies/project-ontology#", RDFFormat.TURTLE); //TODO allow also other formats
+            results = Rio.parse(inputStream, "urn:absolute:www.example.com/ontologies/project-ontology#", RDFFormat.TURTLE);
         } catch (Exception e) {
-            e.printStackTrace(); //TODO handle this exception better
+            e.printStackTrace();
         }
         return results;
 
@@ -66,11 +66,11 @@ public class FileHandler {
      * Takes a model and writes it to the specified file.
      * @param filePath
      * @param model
-     * @throws FileNotFoundException //TODO handle the exception here
+     * @throws FileNotFoundException
      */
     public static void writeModelToFile (String filePath, Model model) throws FileNotFoundException {
         FileOutputStream out = new FileOutputStream(filePath);
-        RDFWriter writer = Rio.createWriter(RDFFormat.TURTLE, out); //TODO allow also other formats
+        RDFWriter writer = Rio.createWriter(RDFFormat.TURTLE, out);
         writer.handleNamespace("", "urn:absolute:www.example.com/ontologies/project-ontology#");
         writer.handleNamespace("owl","http://www.w3.org/2002/07/owl#");
         writer.handleNamespace("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
@@ -86,8 +86,6 @@ public class FileHandler {
             writer.endRDF();
         }
         catch (RDFHandlerException e) {
-            // oh no, do something! //TODO handle this exception better
-            System.err.println("Error");
         }
     }
 }

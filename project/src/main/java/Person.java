@@ -21,10 +21,10 @@ public class Person {
      * @param dateOfBirthString
      */
     public Person(String id, String name, String gender,  String dateOfBirthString) {
-        this.id = id; //TODO Generate id automatically??? LName + dateOfBirth
+        this.id = id;
         this.gender = gender;
         this.name = name;
-        if(dateOfBirthString != null && !dateOfBirthString.equals("")){ //TODO check if date format is correct
+        if(dateOfBirthString != null && !dateOfBirthString.equals("")){
             this.dateOfBirth = new Date(Integer.parseInt(dateOfBirthString.substring(0,4))-1900, Integer.parseInt(dateOfBirthString.substring(5,7))-1, Integer.parseInt(dateOfBirthString.substring(8,10)));
         }
     }
@@ -61,7 +61,6 @@ public class Person {
     }
 
     public void setDateOfBirth(String dateOfBirthString) {
-        //TODO Check for correctness of the format of the string
         this.dateOfBirth = new Date(Integer.parseInt(dateOfBirthString.substring(0,4))-1900, Integer.parseInt(dateOfBirthString.substring(5,7))-1, Integer.parseInt(dateOfBirthString.substring(9,11)));
     }
 }

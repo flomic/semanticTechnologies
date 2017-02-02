@@ -43,7 +43,6 @@ public class RepoHandler {
                             filter +
                             "}";
 
-            //System.out.println(queryString + "\n");
             TupleQuery tupleQuery = conn.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
             try (TupleQueryResult result = tupleQuery.evaluate()) {
                 while (result.hasNext()) {  // iterate over the result
@@ -97,7 +96,6 @@ public class RepoHandler {
                             "OPTIONAL{?a ex:has_date_of_birth ?date_of_birth} " +
                             "FILTER(?a = ex:" + authorId + ")" + "}";
 
-            //System.out.println(queryString + "\n");
             TupleQuery tupleQuery = conn.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
             try (TupleQueryResult result = tupleQuery.evaluate()) {
                 while (result.hasNext()) {  // iterate over the result
@@ -137,7 +135,6 @@ public class RepoHandler {
                             "PREFIX ex: <urn:absolute:www.example.com/ontologies/project-ontology#>\n" +
                             "SELECT ?result WHERE { " +
                             "?result rdf:type ex:" + type + " }";
-            //System.out.println(queryString + "\n");
             TupleQuery tupleQuery = conn.prepareTupleQuery(QueryLanguage.SPARQL, queryString);
             try (TupleQueryResult result = tupleQuery.evaluate()) {
                 while (result.hasNext()) {  // iterate over the result
