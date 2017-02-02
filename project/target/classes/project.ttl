@@ -267,3 +267,56 @@
 	:has_genre "Horror fiction" ;
 	:has_publisher :Viking_Press ;
 	:is_contained_in :Lib_FlorianMichaeler_1987-07-25 .
+
+:JoanneRowling_1965-07-31 a :Author ;
+	:has_name "Joanne Rowling" ;
+	:has_date_of_birth "1965-07-31T00:00:00.000+01:00"^^xsd:dateTime .
+
+:978-1-4087-0402-8 :has_author :JoanneRowling_1965-07-31 ;
+	:has_publication_year "2014" ;
+	:is_contained_in :Lib_R1 .
+
+:PhilipMichaelOndaatje_1943-09-12 a :Author ;
+	:has_name "Philip Michael Ondaatje" ;
+	:has_date_of_birth "1943-09-12T00:00:00.000+02:00"^^xsd:dateTime .
+
+:McClelland___Stewart a :Publisher .
+
+:978-0-224-09361-3 a :Book ;
+	:has_isbn "978-0-224-09361-3" ;
+	:has_author :PhilipMichaelOndaatje_1943-09-12 ;
+	:has_title "The Cat's Table" ;
+	:has_genre "Bildungsroman" ;
+	:has_publication_year "2011" ;
+	:has_publisher :McClelland___Stewart ;
+	:is_contained_in :Lib_R1 .
+
+:EricMatthewSchlosser_1959-08-17 a :Author ;
+	:has_name "Eric Matthew Schlosser" ;
+	:has_date_of_birth "1959-08-17T00:00:00.000+01:00"^^xsd:dateTime .
+
+:Houghton_Mifflin_Harcourt a :Publisher .
+
+:0-395-97789-4 a :Book ;
+	:has_isbn "0-395-97789-4" ;
+	:has_author :EricMatthewSchlosser_1959-08-17 ;
+	:has_title "Fast Food Nation" ;
+	:has_genre "Non-fiction" ;
+	:has_publication_year "2001" ;
+	:has_publisher :Houghton_Mifflin_Harcourt ;
+	:is_contained_in :Lib_R1 .
+
+:JanetSchneider_1943-04-22 a :Author ;
+	:has_name "Janet Schneider" ;
+	:has_date_of_birth "1943-04-22T00:00:00.000+02:00"^^xsd:dateTime .
+
+:St__Martin_s_Press a :Publisher .
+
+:978-0-312-37763-2 a :Book ;
+	:has_isbn "978-0-312-37763-2" ;
+	:has_author :JanetSchneider_1943-04-22 ;
+	:has_title "Plum Lucky" ;
+	:has_genre "Crime fiction" ;
+	:has_publication_year "2008" ;
+	:has_publisher :St__Martin_s_Press ;
+	:is_contained_in :Lib_R1 .

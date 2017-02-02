@@ -267,3 +267,127 @@
 	:has_genre "Horror fiction" ;
 	:has_publisher :Viking_Press ;
 	:is_contained_in :Lib_FlorianMichaeler_1987-07-25 .
+
+:JoanneRowling_1965-07-31 a :Author ;
+	:has_name "Joanne Rowling" ;
+	:has_date_of_birth "1965-07-31T00:00:00.000+01:00"^^xsd:dateTime .
+
+:978-1-4087-0402-8 :has_author :JoanneRowling_1965-07-31 ;
+	:has_publication_year "2014" ;
+	:is_contained_in :Lib_R1 .
+
+:PhilipMichaelOndaatje_1943-09-12 a :Author ;
+	:has_name "Philip Michael Ondaatje" ;
+	:has_date_of_birth "1943-09-12T00:00:00.000+02:00"^^xsd:dateTime .
+
+:McClelland___Stewart a :Publisher .
+
+:978-0-224-09361-3 a :Book ;
+	:has_isbn "978-0-224-09361-3" ;
+	:has_author :PhilipMichaelOndaatje_1943-09-12 ;
+	:has_title "The Cat's Table" ;
+	:has_genre "Bildungsroman" ;
+	:has_publication_year "2011" ;
+	:has_publisher :McClelland___Stewart ;
+	:is_contained_in :Lib_R1 .
+
+:EricMatthewSchlosser_1959-08-17 a :Author ;
+	:has_name "Eric Matthew Schlosser" ;
+	:has_date_of_birth "1959-08-17T00:00:00.000+01:00"^^xsd:dateTime .
+
+:Houghton_Mifflin_Harcourt a :Publisher .
+
+:0-395-97789-4 a :Book ;
+	:has_isbn "0-395-97789-4" ;
+	:has_author :EricMatthewSchlosser_1959-08-17 ;
+	:has_title "Fast Food Nation" ;
+	:has_genre "Non-fiction" ;
+	:has_publication_year "2001" ;
+	:has_publisher :Houghton_Mifflin_Harcourt ;
+	:is_contained_in :Lib_R1 .
+
+:JanetSchneider_1943-04-22 a :Author ;
+	:has_name "Janet Schneider" ;
+	:has_date_of_birth "1943-04-22T00:00:00.000+02:00"^^xsd:dateTime .
+
+:St__Martin_s_Press a :Publisher .
+
+:978-0-312-37763-2 a :Book ;
+	:has_isbn "978-0-312-37763-2" ;
+	:has_author :JanetSchneider_1943-04-22 ;
+	:has_title "Plum Lucky" ;
+	:has_genre "Crime fiction" ;
+	:has_publication_year "2008" ;
+	:has_publisher :St__Martin_s_Press ;
+	:is_contained_in :Lib_R1 .
+
+<urn:absolute:www.example.com/ontologies/project-ontology#ThomasKennerlyWolfe,Jr._1931-03-02> a :Author ;
+	:has_name "Thomas Kennerly Wolfe, Jr." ;
+	:has_date_of_birth "1931-03-02T00:00:00.000Z"^^xsd:dateTime .
+
+:Farrar__Straus_and_Giroux a :Publisher .
+
+:0-312-42444-2 a :Book ;
+	:has_isbn "0-312-42444-2" ;
+	:has_author <urn:absolute:www.example.com/ontologies/project-ontology#ThomasKennerlyWolfe,Jr._1931-03-02> ;
+	:has_title "I Am Charlotte Simmons" ;
+	:has_genre "Fiction" ;
+	:has_publication_year "2004" ;
+	:has_publisher :Farrar__Straus_and_Giroux ;
+	:is_contained_in :Lib_R1 .
+
+<urn:absolute:www.example.com/ontologies/project-ontology#RichardRussellRiordan,Jr._1964-06-05> a :Author ;
+	:has_name "Richard Russell Riordan, Jr." ;
+	:has_date_of_birth "1964-06-05T00:00:00.000+01:00"^^xsd:dateTime .
+
+:Disney_Publishing_Worldwide a :Publisher .
+
+:0-7868-5686-6 a :Book ;
+	:has_isbn "0-7868-5686-6" ;
+	:has_author <urn:absolute:www.example.com/ontologies/project-ontology#RichardRussellRiordan,Jr._1964-06-05> ;
+	:has_title "The Sea of Monsters" ;
+	:has_genre "Fantasy" ;
+	:has_publication_year "2006" ;
+	:has_publisher :Disney_Publishing_Worldwide ;
+	:is_contained_in :Lib_R1 .
+
+:TerrenceRichardson_1965-08-14 a :Author ;
+	:has_name "Terrence Richardson" ;
+	:has_date_of_birth "1965-08-14T00:00:00.000+01:00"^^xsd:dateTime .
+
+:Grand_Central_Publishing a :Publisher .
+
+:978-1-4555-1389-5 a :Book ;
+	:has_isbn "978-1-4555-1389-5" ;
+	:has_author :TerrenceRichardson_1965-08-14 ;
+	:has_title "Lady Gaga x Terry Richardson" ;
+	:has_genre "Photo-book" ;
+	:has_publication_year "2011" ;
+	:has_publisher :Grand_Central_Publishing ;
+	:is_contained_in :Lib_R1 .
+
+:Little__Brown_and_Company a :Publisher .
+
+:9781408704202 a :Book ;
+	:has_isbn "9781408704202" ;
+	:has_author :JoanneRowling_1965-07-31 ;
+	:has_title "The Casual Vacancy" ;
+	:has_genre "Fiction" ;
+	:has_publication_year "2012" ;
+	:has_publisher :Little__Brown_and_Company ;
+	:is_contained_in :Lib_R1 .
+
+:CliveStaplesLewis_1898-11-29 a :Author ;
+	:has_name "Clive Staples Lewis" ;
+	:has_date_of_birth "1898-11-29T00:00:00.000+01:00"^^xsd:dateTime .
+
+:The_Bodley_Head a :Publisher .
+
+:978-0-00-671683-9 a :Book ;
+	:has_isbn "978-0-00-671683-9" ;
+	:has_author :CliveStaplesLewis_1898-11-29 ;
+	:has_title "The Magician's Nephew" ;
+	:has_genre "Christian literature" ;
+	:has_publication_year "1955" ;
+	:has_publisher :The_Bodley_Head ;
+	:is_contained_in :Lib_R1 .

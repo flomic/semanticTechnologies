@@ -157,9 +157,9 @@ public class AddBookDialog extends JDialog {
                 //if author does not exist yet - create it
                 String id = "";
                 String dateOfBirth = RepoHandler.cleanString(bindingSet.getValue("birthDate").toString());
+                //if (dateOfBirth.length() > 4) dateOfBirth = dateOfBirth.substring(0, 4);
                 id = dbpAuthor.replaceAll(" ", "") + "_" + dateOfBirth;
                 if (!ModelHandler.contains(MainWindow.getModel(), dbpAuthor, RDF.TYPE, "Author", 'I')) {
-                    System.out.println(dateOfBirth);
                     Author a = new Author(id, dbpAuthor, "", dateOfBirth); //create a new author
                     ModelHandler.addAuthor(a, MainWindow.getModel()); //add it to the model
                     authorComboBox.addItem(id); //add the item to the combobox
@@ -186,8 +186,8 @@ public class AddBookDialog extends JDialog {
                 genreTextField.setText(dbpGenre);
             }
             if (bindingSet.hasBinding("publicationDate")) {
-                System.out.println(publicationDate);
                 publicationDate = RepoHandler.cleanString(bindingSet.getValue("publicationDate").toString());
+                if (publicationDate.length() > 4) publicationDate = publicationDate.substring(0, 4);
                 publicationYearTextField.setText(publicationDate);
             }
         } else {
