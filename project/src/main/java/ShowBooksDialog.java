@@ -74,19 +74,22 @@ public class ShowBooksDialog extends JDialog {
     private void onBookDelete() {
         String isbn = JOptionPane.showInputDialog(null, "Please insert an ISBN.", "Delete Book", JOptionPane.QUESTION_MESSAGE);
 
-        Book b = RepoHandler.searchBookWithFilter(MainWindow.getRepo(), "FILTER(?b = ex:" + isbn + ")", MainWindow.reader).getFirst();
-        int answer = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete book " + isbn + "?", "Delete Book", JOptionPane.YES_NO_OPTION);
-        if (answer == JOptionPane.YES_OPTION) {
-            ModelHandler.removeBook(b, MainWindow.reader, MainWindow.getModel());
-            try {
-                FileHandler.writeModelToFile(FILE_PATH, MainWindow.getModel());
-                MainWindow.reloadRepo();
-                books = RepoHandler.getAll(MainWindow.getRepo(), "Book");
-                showBooks(filter, false);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+        if (isbn != null) {
+            Book b = RepoHandler.searchBookWithFilter(MainWindow.getRepo(), "FILTER(?b = ex:" + isbn + ")", MainWindow.reader).getFirst();
+            int answer = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete book " + isbn + "?", "Delete Book", JOptionPane.YES_NO_OPTION);
+            if (answer == JOptionPane.YES_OPTION) {
+                ModelHandler.removeBook(b, MainWindow.reader, MainWindow.getModel());
+                try {
+                    FileHandler.writeModelToFile(FILE_PATH, MainWindow.getModel());
+                    MainWindow.reloadRepo();
+                    books = RepoHandler.getAll(MainWindow.getRepo(), "Book");
+                    showBooks(filter, false);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
         }
+
     }
 
     private void onCancel() {
