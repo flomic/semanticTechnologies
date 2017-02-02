@@ -187,3 +187,15 @@
 	:has_genre "Krimi" ;
 	:has_publication_year "2014" ;
 	:has_publisher :CL .
+
+:AgathaMaryClarissaMiller_ a :Author ;
+	:has_name "Agatha Mary Clarissa Miller" .
+
+:Dodd__Mead_and_Company a :Publisher .
+
+:9780002318525 a :Book ;
+	:has_isbn "9780002318525" ;
+	:has_author :AgathaMaryClarissaMiller_ ;
+	:has_title "Towards Zero" ;
+	:has_genre "Crime fiction" ;
+	:has_publisher :Dodd__Mead_and_Company .

@@ -14,6 +14,8 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.LinkedList;
 
 /**
@@ -170,7 +172,7 @@ public class AddBookDialog extends JDialog {
                 dbpPublisher = RepoHandler.cleanString(bindingSet.getValue("publisher").toString());
                 //if publisher does not exist yet - create it
                 if (!ModelHandler.contains(MainWindow.getModel(), dbpPublisher, RDF.TYPE, "Publisher", 'I')) {
-                    dbpPublisher =  dbpPublisher.replaceAll(" ", "_");
+                    dbpPublisher = dbpPublisher.replaceAll("[\\W+]", "_");
                     Publisher p = new Publisher(dbpPublisher); //create a new publisher
                     ModelHandler.addPublisher(p, MainWindow.getModel()); //add the publisher to the model
                     publisherComboBox.addItem(dbpPublisher); //add the publisher to the combobox
@@ -335,7 +337,8 @@ public class AddBookDialog extends JDialog {
 
                 // Show a input dialog where the user enters the publisher name, which is also the id
                 String publisher = JOptionPane.showInputDialog(null, "Please enter the publisher name", "New Publisher", JOptionPane.PLAIN_MESSAGE);
-                publisher = publisher.replaceAll(" ", "_");
+//TODO clean publisher id
+                publisher = publisher.replaceAll("[\\W+]", "_");
                 if (publisher != null && !publisher.equals("")) { //if the entered string is not empty
                     if (!RepoHandler.getAll(MainWindow.getRepo(), "Publisher").contains(publisher) && !ModelHandler.contains(MainWindow.getModel(), publisher, RDF.TYPE, "Publisher", 'I')) {
                         Publisher p = new Publisher(publisher); //create a new publisher
