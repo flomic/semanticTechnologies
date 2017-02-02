@@ -158,7 +158,7 @@ public class AddBookDialog extends JDialog {
                 String id = "";
                 String dateOfBirth = RepoHandler.cleanString(bindingSet.getValue("birthDate").toString());
                 //if (dateOfBirth.length() > 4) dateOfBirth = dateOfBirth.substring(0, 4);
-                id = dbpAuthor.replaceAll(" ", "") + "_" + dateOfBirth;
+                id = dbpAuthor.replaceAll("[\\W+]", "") + "_" + dateOfBirth;
                 if (!ModelHandler.contains(MainWindow.getModel(), dbpAuthor, RDF.TYPE, "Author", 'I')) {
                     Author a = new Author(id, dbpAuthor, "", dateOfBirth); //create a new author
                     ModelHandler.addAuthor(a, MainWindow.getModel()); //add it to the model
@@ -310,7 +310,7 @@ public class AddBookDialog extends JDialog {
                     String name = aap.getName();
                     String gender = aap.getGender();
                     String dob = aap.getDateOfBirth();
-                    String id = name.replaceAll(" ", "") + "_" + dob;
+                    String id = name.replaceAll("[\\W+]", "") + "_" + dob;
 
                     Author a = new Author(id, name, gender, dob); //create a new author
                     ModelHandler.addAuthor(a, MainWindow.getModel()); //add it to the model

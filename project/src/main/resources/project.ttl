@@ -97,7 +97,7 @@
 
 :Lib_ChristineLunger_1993-01-25 a :Library .
 
-<urn:absolute:www.example.com/ontologies/project-ontology#RichardRussellRiordan,Jr._1964-06-05> a :Author ;
+<urn:absolute:www.example.com/ontologies/project-ontology#RichardRussellRiordanJr_1964-06-05> a :Author ;
 	:has_name "Richard Russell Riordan, Jr." ;
 	:has_date_of_birth "1964-06-05T00:00:00.000+01:00"^^xsd:dateTime .
 
@@ -105,7 +105,7 @@
 
 :9781423101468 a :Book ;
 	:has_isbn "9781423101468" ;
-	:has_author <urn:absolute:www.example.com/ontologies/project-ontology#RichardRussellRiordan,Jr._1964-06-05> ;
+	:has_author <urn:absolute:www.example.com/ontologies/project-ontology#RichardRussellRiordanJr_1964-06-05> ;
 	:has_title "The Battle of the Labyrinth" ;
 	:has_genre "Fantasy" ;
 	:has_publication_year "2008" ;
@@ -129,7 +129,7 @@
 
 :0-7868-5629-7 a :Book ;
 	:has_isbn "0-7868-5629-7" ;
-	:has_author <urn:absolute:www.example.com/ontologies/project-ontology#RichardRussellRiordan,Jr._1964-06-05> ;
+	:has_author <urn:absolute:www.example.com/ontologies/project-ontology#RichardRussellRiordanJr_1964-06-05> ;
 	:has_title "The Lightning Thief" ;
 	:has_genre "Fantasy" ;
 	:has_publication_year "2005" ;
@@ -181,7 +181,7 @@
 	:has_publisher :Little__Brown_and_Company ;
 	:is_contained_in :Lib_FlorianMichaeler_1987-07-25 .
 
-<urn:absolute:www.example.com/ontologies/project-ontology#DavidMurrayPilkey,Jr._1966-03-04> a :Author ;
+<urn:absolute:www.example.com/ontologies/project-ontology#DavidMurrayPilkeyJr_1966-03-04> a :Author ;
 	:has_name "David Murray Pilkey, Jr." ;
 	:has_date_of_birth "1966-03-04T00:00:00.000+01:00"^^xsd:dateTime .
 
@@ -189,7 +189,7 @@
 
 :978-0-590-84628-8 a :Book ;
 	:has_isbn "978-0-590-84628-8" ;
-	:has_author <urn:absolute:www.example.com/ontologies/project-ontology#DavidMurrayPilkey,Jr._1966-03-04> ;
+	:has_author <urn:absolute:www.example.com/ontologies/project-ontology#DavidMurrayPilkeyJr_1966-03-04> ;
 	:has_title "The Adventures of Captain Underpants" ;
 	:has_genre "Children's literature" ;
 	:has_publication_year "1997" ;
@@ -226,7 +226,7 @@
 	:has_publisher :Baen_Books ;
 	:is_contained_in :Lib_FlorianMichaeler_1987-07-25 .
 
-<urn:absolute:www.example.com/ontologies/project-ontology#JamesOliverRigney,Jr._1948-10-17> a :Author ;
+<urn:absolute:www.example.com/ontologies/project-ontology#JamesOliverRigneyJr_1948-10-17> a :Author ;
 	:has_name "James Oliver Rigney, Jr." ;
 	:has_date_of_birth "1948-10-17T00:00:00.000+01:00"^^xsd:dateTime .
 
@@ -234,7 +234,7 @@
 
 :978-0-7653-2594-5 a :Book ;
 	:has_isbn "978-0-7653-2594-5" ;
-	:has_author <urn:absolute:www.example.com/ontologies/project-ontology#JamesOliverRigney,Jr._1948-10-17> ;
+	:has_author <urn:absolute:www.example.com/ontologies/project-ontology#JamesOliverRigneyJr_1948-10-17> ;
 	:has_title "Towers of Midnight" ;
 	:has_genre "Fantasy literature" ;
 	:has_publication_year "2010" ;
@@ -264,7 +264,7 @@
 
 :978-1-4231-4059-7 a :Book ;
 	:has_isbn "978-1-4231-4059-7" ;
-	:has_author <urn:absolute:www.example.com/ontologies/project-ontology#RichardRussellRiordan,Jr._1964-06-05> ;
+	:has_author <urn:absolute:www.example.com/ontologies/project-ontology#RichardRussellRiordanJr_1964-06-05> ;
 	:has_title "The Son of Neptune" ;
 	:has_genre "Young-adult fiction" ;
 	:has_publication_year "2011" ;

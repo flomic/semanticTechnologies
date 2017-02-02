@@ -95,7 +95,6 @@ public class ShowBooksDialog extends JDialog {
     }
 
 
-
     public static void main(String[] args) {
         ShowBooksDialog dialog = new ShowBooksDialog();
         dialog.pack();
@@ -148,8 +147,11 @@ public class ShowBooksDialog extends JDialog {
             authorInfoPanel.add(new JLabel("Name:"));
             authorInfoPanel.add(new JLabel(a.getName()));
 
-            authorInfoPanel.add(new JLabel("Gender:"));
-            authorInfoPanel.add(new JLabel(a.getGender()));
+            if (a.getGender() != null && !a.getGender().equals("")) {
+                authorInfoPanel.add(new JLabel("Gender:"));
+                authorInfoPanel.add(new JLabel(a.getGender()));
+            }
+
 
             authorInfoPanel.add(new JLabel("Date of Birth:"));
             if (a.getDateOfBirth() != null) {
