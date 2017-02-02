@@ -123,6 +123,7 @@ public class AddBookDialog extends JDialog {
         String dbpTitle = null;
         String dbpPublisher = null;
         String dbpGenre = null;
+        String publicationDate = null;
 
         String dbpQuery = "PREFIX dbpedia: <http://dbpedia.org/ontology/>" +
                 "select * " +
@@ -137,6 +138,7 @@ public class AddBookDialog extends JDialog {
                 "?book_uri dbpedia:isbn ?isbn." +
                 "?author_uri dbpedia:birthName ?author." +
                 "?author_uri dbpedia:birthDate ?birthDate." +
+                "?book_uri dbpedia:publicationDate ?publicationDate." +
                 "FILTER (regex(?isbn, '" + isbn + "'))" +
                 "FILTER (lang(?author) = 'en')" +
                 "FILTER (lang(?genre) = 'en')" +
@@ -154,9 +156,11 @@ public class AddBookDialog extends JDialog {
                 dbpAuthor = RepoHandler.cleanString(bindingSet.getValue("author").toString());
                 //if author does not exist yet - create it
                 String id = "";
+                String dateOfBirth = RepoHandler.cleanString(bindingSet.getValue("birthDate").toString());
+                id = dbpAuthor.replaceAll(" ", "") + "_" + dateOfBirth;
                 if (!ModelHandler.contains(MainWindow.getModel(), dbpAuthor, RDF.TYPE, "Author", 'I')) {
-                    id = dbpAuthor.replaceAll(" ", "") + "_";
-                    Author a = new Author(id, dbpAuthor, "", ""); //create a new author
+                    System.out.println(dateOfBirth);
+                    Author a = new Author(id, dbpAuthor, "", dateOfBirth); //create a new author
                     ModelHandler.addAuthor(a, MainWindow.getModel()); //add it to the model
                     authorComboBox.addItem(id); //add the item to the combobox
                 }
@@ -180,6 +184,11 @@ public class AddBookDialog extends JDialog {
             if (bindingSet.hasBinding("genre")) {
                 dbpGenre = RepoHandler.cleanString(bindingSet.getValue("genre").toString());
                 genreTextField.setText(dbpGenre);
+            }
+            if (bindingSet.hasBinding("publicationDate")) {
+                System.out.println(publicationDate);
+                publicationDate = RepoHandler.cleanString(bindingSet.getValue("publicationDate").toString());
+                publicationYearTextField.setText(publicationDate);
             }
         } else {
             JOptionPane.showMessageDialog(null, "ISBN was not found on dbpedia.org", "Error", JOptionPane.ERROR_MESSAGE);
@@ -364,7 +373,7 @@ public class AddBookDialog extends JDialog {
                 if (evt.getNewValue().equals("Save")) { //if the user clicked on save
 
                     //check the input for correctness and that isbn is not missing
-                    if (isbnTextField.getText().length() != 13) {
+                    if (isbnTextField.getText().length() != 13 && isbnTextField.getText().length() != 17) {
                         JOptionPane.showMessageDialog(null, "Please enter a correct ISBN number!", "Error", JOptionPane.ERROR_MESSAGE);
                         okToClose = false;
                     } else if (RepoHandler.searchBookWithFilter(MainWindow.getRepo(), "FILTER(?b = ex:" + isbnTextField.getText() + ")", MainWindow.reader).size() > 0) {

@@ -225,3 +225,45 @@
 
 :1234561234567 :has_author :AB2 ;
 	:is_contained_in :Lib_ChristineLunger_1993-01-25 .
+
+:FlorianMichaeler_1987.07.25 a :Reader ;
+	:has_gender "male" ;
+	:has_name "FlorianMichaeler" ;
+	:has_date_of_birth "Sat Jul 25 00:00:00 CEST 1987" ;
+	:has_library :Lib_FlorianMichaeler_1987.07.25 .
+
+:Lib_FlorianMichaeler_1987.07.25 a :Library .
+
+:FlorianMichaeler_1987-07-25 a :Reader ;
+	:has_gender "male" ;
+	:has_name "Florian Michaeler" ;
+	:has_date_of_birth "Sat Jul 25 00:00:00 CEST 1987" ;
+	:has_library :Lib_FlorianMichaeler_1987-07-25 .
+
+:Lib_FlorianMichaeler_1987-07-25 a :Library .
+
+:JoanneRowling_ a :Author ;
+	:has_name "Joanne Rowling" .
+
+:Sphere_Books a :Publisher .
+
+:978-1-4087-0402-8 a :Book ;
+	:has_isbn "978-1-4087-0402-8" ;
+	:has_author :JoanneRowling_ ;
+	:has_title "The Silkworm" ;
+	:has_genre "Crime fiction" ;
+	:has_publisher :Sphere_Books ;
+	:is_contained_in :Lib_FlorianMichaeler_1987-07-25 .
+
+:StephenEdwinKing_ a :Author ;
+	:has_name "Stephen Edwin King" .
+
+:Viking_Press a :Publisher .
+
+:978-0-670-85503-2 a :Book ;
+	:has_isbn "978-0-670-85503-2" ;
+	:has_author :StephenEdwinKing_ ;
+	:has_title "Insomnia (novel)" ;
+	:has_genre "Horror fiction" ;
+	:has_publisher :Viking_Press ;
+	:is_contained_in :Lib_FlorianMichaeler_1987-07-25 .
