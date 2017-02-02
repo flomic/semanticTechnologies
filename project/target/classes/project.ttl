@@ -43,13 +43,13 @@
 	rdfs:domain :Book ;
 	rdfs:range :Author .
 
+<urn:absolute:www.example.com/has_name> a owl:DatatypeProperty , owl:FunctionalProperty ;
+	rdfs:domain :Person ;
+	rdfs:range xsd:string .
+
 :has_date_of_birth a owl:DatatypeProperty , owl:FunctionalProperty ;
 	rdfs:domain :Person ;
 	rdfs:range xsd:int .
-
-:has_name a owl:DatatypeProperty , owl:FunctionalProperty ;
-	rdfs:domain :Person ;
-	rdfs:range xsd:string .
 
 :has_isbn a owl:DatatypeProperty , owl:FunctionalProperty ;
 	rdfs:domain :Book ;
@@ -114,14 +114,6 @@
 
 :P2 a :Publisher .
 
-:3214 a :Book ;
-	:has_author :F_L_ ;
-	:has_title "afsd" ;
-	:has_genre "asdfas" ;
-	:has_publisher :P2 ;
-	:has_title "aaaaaaaaaa" ;
-	:has_genre "dfsa" .
-
 :B_C_ a :Author ;
 	:has_gender "male" ;
 	:has_name "B" .
@@ -146,8 +138,6 @@
 	:has_genre "genre" ;
 	:has_publication_year "2017" ;
 	:has_publisher :hhhh .
-
-:1 :has_genre "" .
 
 :A_A_ a :Author ;
 	:has_gender "male" ;
@@ -192,8 +182,21 @@
 :1234567812345 a :Book ;
 	:has_author :kkk_ .
 
-:1 :has_genre "fff" .
-
 :1234567898765 a :Book ;
-	:has_author :A_A_ ;
-	:has_title "C_C_" .
+	:has_author :C_C_ ;
+	:has_title "hets" ;
+	:has_publisher :CL .
+
+:FM_ a :Author ;
+	:has_gender "male" ;
+	:has_name "F M" .
+
+:P_and_P a :Publisher .
+
+:9879879879876 a :Book ;
+	:has_isbn "9879879879876" ;
+	:has_author :FM_ ;
+	:has_title "Hello World" ;
+	:has_genre "Krimi" ;
+	:has_publication_year "2014" ;
+	:has_publisher :CL .

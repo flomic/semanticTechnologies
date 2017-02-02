@@ -114,6 +114,10 @@ public class ModelHandler {
     public static void addBook(Book book, Model model){
         addItem(book.getIsbn(), RDF.TYPE, "Book", 'I', model);
 
+        if(book.getIsbn()!=null && !book.getIsbn().equals("") ){
+            addItem(book.getIsbn(), "has_isbn", book.getIsbn(), 'L', model);
+        }
+
         if(book.getAuthor()!=null && !book.getAuthor().equals("") && !book.getAuthor().equals("Please select an author")){
             addItem(book.getIsbn(), "has_author", book.getAuthor(), 'I', model);
         }
@@ -203,6 +207,10 @@ public class ModelHandler {
 
     public static void removeBook(Book book, Model model){
         removeItem(book.getIsbn(), RDF.TYPE, "Book", 'I', model);
+
+        if(book.getIsbn()!=null && !book.getIsbn().equals("") ){
+            removeItem(book.getIsbn(), "has_isbn", book.getIsbn(), 'L', model);
+        }
 
         if(book.getAuthor()!=null && !book.getAuthor().equals("") && !book.getAuthor().equals("Please select an author")){
             removeItem(book.getIsbn(), "has_author", book.getAuthor(), 'I', model);

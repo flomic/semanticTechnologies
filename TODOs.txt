@@ -1,17 +1,14 @@
 
-- Decide where to get the different ids from (User input? Generation out of other values?)
-
 - Exception handling
 - More checks if input is correct
 
-- do not output if field empty
 
-
-- delete books/author/publisher
+- delete author/publisher
+- change author
 - add/delete/switch library?
 
-
-- check if isbn already exists and don't add it
+- close search dialog after click on search
 
 ----------------------------------
 - Write report
+- Make slides

@@ -334,6 +334,7 @@ public class AddBookDialog extends JDialog {
 
                 // Show a input dialog where the user enters the publisher name, which is also the id
                 String publisher = JOptionPane.showInputDialog(null, "Please enter the publisher name", "New Publisher", JOptionPane.PLAIN_MESSAGE);
+                publisher = publisher.replaceAll(" ", "_");
                 if (publisher != null && !publisher.equals("")) { //if the entered string is not empty
                     if (!RepoHandler.getAll(MainWindow.getRepo(), "Publisher").contains(publisher) && !ModelHandler.contains(MainWindow.getModel(), publisher, RDF.TYPE, "Publisher", 'I')) {
                         Publisher p = new Publisher(publisher); //create a new publisher

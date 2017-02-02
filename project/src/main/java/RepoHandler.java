@@ -52,7 +52,7 @@ public class RepoHandler {
 
                     String author = null;
                     if(bindingSet.hasBinding("author")){
-                        author =cleanString(bindingSet.getValue("author").toString());
+                        author = cleanString(bindingSet.getValue("author").toString());
                     }
 
                     String title = null;
