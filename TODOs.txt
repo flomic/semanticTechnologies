@@ -7,8 +7,6 @@
 - change author
 - add/delete/switch library?
 
-- close search dialog after click on search
-
 ----------------------------------
 - Write report
 - Make slides

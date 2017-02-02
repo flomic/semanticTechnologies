@@ -81,13 +81,6 @@
 :Reader a owl:Class ;
 	rdfs:subClassOf :Person .
 
-:9780002318525 a :Book ;
-	:has_author :AB1 ;
-	:has_title "Title1" ;
-	:has_genre "Thriller" ;
-	:has_publication_year "2016" ;
-	:has_publisher :P1 .
-
 :B2 a :Book ;
 	:has_author :AB2 ;
 	:has_title "Title2" ;
@@ -154,9 +147,6 @@
 	:has_gender "male" ;
 	:has_name "hellohello" .
 
-:2222222222222 a :Book ;
-	:has_title "hhj" .
-
 :3333333333333 a :Book ;
 	:has_title "hhh" .
 
@@ -178,9 +168,6 @@
 :kkk_ a :Author ;
 	:has_gender "male" ;
 	:has_name "kkk" .
-
-:1234567812345 a :Book ;
-	:has_author :kkk_ .
 
 :1234567898765 a :Book ;
 	:has_author :C_C_ ;

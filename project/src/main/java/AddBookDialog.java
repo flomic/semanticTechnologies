@@ -170,6 +170,7 @@ public class AddBookDialog extends JDialog {
                 dbpPublisher = RepoHandler.cleanString(bindingSet.getValue("publisher").toString());
                 //if publisher does not exist yet - create it
                 if (!ModelHandler.contains(MainWindow.getModel(), dbpPublisher, RDF.TYPE, "Publisher", 'I')) {
+                    dbpPublisher =  dbpPublisher.replaceAll(" ", "_");
                     Publisher p = new Publisher(dbpPublisher); //create a new publisher
                     ModelHandler.addPublisher(p, MainWindow.getModel()); //add the publisher to the model
                     publisherComboBox.addItem(dbpPublisher); //add the publisher to the combobox

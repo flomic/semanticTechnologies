@@ -115,8 +115,8 @@ public class MainWindow {
         public void actionPerformed(ActionEvent e) {
             //shows a dialog which contains the search book panel
             Object[] options = {"Back"}; //Button to return to the main window
-            SearchBookPanel sbp = new SearchBookPanel("Show");
-            JOptionPane.showOptionDialog(null, sbp.getSearchBookView(), "Search Book", JOptionPane.CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+            SearchBookDialog sbp = new SearchBookDialog("Show");
+            //JOptionPane.showOptionDialog(null, sbp.getSearchBookView(), "Search Book", JOptionPane.CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
         }
     }
 
@@ -169,10 +169,7 @@ public class MainWindow {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            Object[] options = {"Back"}; //Button to return to the main window
-            SearchBookPanel sbp = new SearchBookPanel("Change");
-            JOptionPane.showOptionDialog(null, sbp.getSearchBookView(), "Search Book", JOptionPane.CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
-
+            SearchBookDialog sbp = new SearchBookDialog("Change");
         }
     }
 }
