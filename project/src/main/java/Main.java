@@ -56,13 +56,13 @@ public class Main {
             //m = ModelHandler.addItem("http://www.example.org/Book","http://www.example.org/isWrittenBy", "Author",'L', m);
             ModelHandler.addAuthor(a,m);
             ModelHandler.addAuthor(a2,m);
-            ModelHandler.addBook(b,m);
-            ModelHandler.addBook(b2,m);
+            ModelHandler.addBook(b,r.getId(), m);
+            ModelHandler.addBook(b2, r.getId(), m);
             ModelHandler.addReader(r, m);
             ModelHandler.addBookToLibrary(b.getIsbn(), r.getLibrary().getId(),m);
             ModelHandler.addPublisher(p,m);
             ModelHandler.removeItem("P3", RDF.TYPE, "Publisher", 'I',m);
-            ModelHandler.removeBook(b2, m);
+            ModelHandler.removeBook(b2, r.getId(), m);
             FileHandler.writeModelToFile("src/main/resources/output.ttl", m);
 
         /* ----------------------------------------- GET BOOK FROM DBPEDIA ----------------------------------------- */

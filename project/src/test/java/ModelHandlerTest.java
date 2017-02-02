@@ -23,7 +23,7 @@ public class ModelHandlerTest {
         Resource subjectPart = factory.createIRI("http://www.example.org/B1");
         IRI predicatePart = RDF.TYPE;
         Value objectPart = factory.createIRI("http://www.example.org/Book");
-        ModelHandler.addBook(b,m);
+        ModelHandler.addBook(b, MainWindow.reader, m);
 
         Assert.assertTrue(m.contains(subjectPart, predicatePart, objectPart));
 

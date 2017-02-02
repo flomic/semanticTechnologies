@@ -74,10 +74,10 @@ public class ShowBooksDialog extends JDialog {
     private void onBookDelete() {
         String isbn = JOptionPane.showInputDialog(null, "Please insert an ISBN.", "Delete Book", JOptionPane.QUESTION_MESSAGE);
 
-        Book b = RepoHandler.searchBookWithFilter(MainWindow.getRepo(), "FILTER(?b = ex:" + isbn + ")").getFirst();
+        Book b = RepoHandler.searchBookWithFilter(MainWindow.getRepo(), "FILTER(?b = ex:" + isbn + ")", MainWindow.reader).getFirst();
         int answer = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete book " + isbn + "?", "Delete Book", JOptionPane.YES_NO_OPTION);
         if (answer == JOptionPane.YES_OPTION) {
-            ModelHandler.removeBook(b, MainWindow.getModel());
+            ModelHandler.removeBook(b, MainWindow.reader, MainWindow.getModel());
             try {
                 FileHandler.writeModelToFile(FILE_PATH, MainWindow.getModel());
                 MainWindow.reloadRepo();
@@ -168,7 +168,7 @@ public class ShowBooksDialog extends JDialog {
         dialogTitleLabel.setSize(contentPanel.getWidth(), dialogTitleLabel.getHeight());
 
 
-        LinkedList<Book> books = RepoHandler.searchBookWithFilter(MainWindow.getRepo(), filter);
+        LinkedList<Book> books = RepoHandler.searchBookWithFilter(MainWindow.getRepo(), filter, MainWindow.reader);
 
         contentPanel.setLayout(new GridLayout(books.size() + 2, 1));
         JPanel titlePanel = new JPanel();

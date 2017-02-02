@@ -102,7 +102,7 @@ public class SearchBookDialog extends JDialog {
 
                     if (isbn.length() == 0) {
                         JOptionPane.showMessageDialog(null, "Please insert an ISBN.", "Error", JOptionPane.ERROR_MESSAGE);
-                    } else if (RepoHandler.searchBookWithFilter(MainWindow.getRepo(), "FILTER(?b = ex:" + isbn + ")").size() == 0) {
+                    } else if (RepoHandler.searchBookWithFilter(MainWindow.getRepo(), "FILTER(?b = ex:" + isbn + ")", MainWindow.reader).size() == 0) {
                         JOptionPane.showMessageDialog(null, "No book with this ISBN was found.", "Error", JOptionPane.ERROR_MESSAGE);
                     } else {
                         if (scope.equals("Show")) {

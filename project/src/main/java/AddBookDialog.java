@@ -14,8 +14,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.LinkedList;
 
 /**
@@ -301,7 +299,7 @@ public class AddBookDialog extends JDialog {
 
                 //Create an new Dialog to enter the information about the author
                 Object[] options = {"Save", "Cancel"};
-                AddAuthorDialog aap = new AddAuthorDialog(null);
+                AddPersonDialog aap = new AddPersonDialog(null, true);
                 String o = aap.showDialog();
 
                 if (o.equals("Save")) { //if the user wants to save the author
@@ -376,7 +374,7 @@ public class AddBookDialog extends JDialog {
                     if (isbnTextField.getText().length() != 13) {
                         JOptionPane.showMessageDialog(null, "Please enter a correct ISBN number!", "Error", JOptionPane.ERROR_MESSAGE);
                         okToClose = false;
-                    } else if (RepoHandler.searchBookWithFilter(MainWindow.getRepo(), "FILTER(?b = ex:" + isbnTextField.getText() + ")").size() > 0) {
+                    } else if (RepoHandler.searchBookWithFilter(MainWindow.getRepo(), "FILTER(?b = ex:" + isbnTextField.getText() + ")", MainWindow.reader).size() > 0) {
                         JOptionPane.showMessageDialog(null, "There is already a book with this ISBN number! \n Please check if the one you entered is correct!", "Error", JOptionPane.ERROR_MESSAGE);
                         okToClose = false;
                     }

@@ -31,7 +31,7 @@ public class ChangeBookDetailsDialog extends JDialog {
 
         LinkedList<String> authors = RepoHandler.getAll(MainWindow.getRepo(), "Author"); //get all authors in the repo
         LinkedList<String> publisher = RepoHandler.getAll(MainWindow.getRepo(), "Publisher"); //get all publisher in the repo
-        book = RepoHandler.searchBookWithFilter(MainWindow.getRepo(), "FILTER(?b = ex:" + isbn + ")").getFirst();
+        book = RepoHandler.searchBookWithFilter(MainWindow.getRepo(), "FILTER(?b = ex:" + isbn + ")", MainWindow.reader).getFirst();
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -266,7 +266,7 @@ public class ChangeBookDetailsDialog extends JDialog {
 
                 //Create an new Dialog to enter the information about the author
                 Object[] options = {"Save", "Cancel"};
-                AddAuthorDialog aap = new AddAuthorDialog(null);
+                AddPersonDialog aap = new AddPersonDialog(null, true);
                 String o = aap.showDialog();
 
                 if (o.equals("Save")) { //if the user wants to save the author
@@ -340,8 +340,8 @@ public class ChangeBookDetailsDialog extends JDialog {
                 }
                 if (okToClose) {
                     if (changed(getNewBook())) {
-                        ModelHandler.removeBook(book, MainWindow.getModel());
-                        ModelHandler.addBook(getNewBook(), MainWindow.getModel());
+                        ModelHandler.removeBook(book, MainWindow.reader, MainWindow.getModel());
+                        ModelHandler.addBook(getNewBook(), MainWindow.reader, MainWindow.getModel());
                         MainWindow.rewriteFile();
                         MainWindow.reloadRepo();
                     }

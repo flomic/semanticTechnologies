@@ -111,7 +111,7 @@ public class ModelHandler {
      */
     //TODO check if book already exists
     //TODO don't add line if the value is missing
-    public static void addBook(Book book, Model model){
+    public static void addBook(Book book, String reader, Model model){
         addItem(book.getIsbn(), RDF.TYPE, "Book", 'I', model);
 
         if(book.getIsbn()!=null && !book.getIsbn().equals("") ){
@@ -136,6 +136,8 @@ public class ModelHandler {
         if(book.getPublisher()!=null && !book.getPublisher().equals("") && !book.getPublisher().equals("Please select a publisher")){
             addItem(book.getIsbn(), "has_publisher", book.getPublisher(), 'I', model);
         }
+
+        addItem(book.getIsbn(), "is_contained_in", "Lib_"+reader, 'I', model);
     }
 
     /**
@@ -191,7 +193,7 @@ public class ModelHandler {
     //TODO check if book is already in the library
     //TODO don't add line if one value is missing
     public static void addBookToLibrary(String isbn, String libId, Model model){
-        addItem(isbn, "belongs_to", libId, 'I', model);
+        addItem(isbn, "is_contained_in", libId, 'I', model);
     }
 
     /**
@@ -205,8 +207,8 @@ public class ModelHandler {
         addItem(publisher.getId(), RDF.TYPE, "Publisher", 'I', model);
     }
 
-    public static void removeBook(Book book, Model model){
-        removeItem(book.getIsbn(), RDF.TYPE, "Book", 'I', model);
+    public static void removeBook(Book book, String reader, Model model){
+        /*removeItem(book.getIsbn(), RDF.TYPE, "Book", 'I', model);
 
         if(book.getIsbn()!=null && !book.getIsbn().equals("") ){
             removeItem(book.getIsbn(), "has_isbn", book.getIsbn(), 'L', model);
@@ -229,7 +231,8 @@ public class ModelHandler {
 
         if(book.getPublisher()!=null && !book.getPublisher().equals("") && !book.getPublisher().equals("Please select a publisher")){
             removeItem(book.getIsbn(), "has_publisher", book.getPublisher(), 'I', model);
-        }
+        }*/
+        removeItem(book.getIsbn(), "is_contained_in", "Lib_"+reader, 'I', model);
     }
 
 

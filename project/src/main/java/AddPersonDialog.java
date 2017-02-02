@@ -17,17 +17,19 @@ import java.util.Date;
 /**
  * Used in a JOptionDialog to add a new author.
  */
-public class AddAuthorDialog extends JDialog {
+public class AddPersonDialog extends JDialog {
     private JTextField nameTextField;
     private JRadioButton maleRadioButton;
     private JRadioButton femaleRadioButton;
     private JPanel addAuthorView;
     private JTextField dateOfBirthTextField;
     private JOptionPane optionPane;
+    private boolean isAuthor;
 
 
-    public AddAuthorDialog(Frame aFrame) {
+    public AddPersonDialog(Frame aFrame, boolean isAuthor) {
         super(aFrame, true);
+        this.isAuthor = isAuthor;
 
         Object[] options = {"Save", "Cancel"}; // the two options the user can select in the optionPane
         optionPane = new JOptionPane(addAuthorView, JOptionPane.PLAIN_MESSAGE, JOptionPane.OK_CANCEL_OPTION, null, options, options[0]);
@@ -150,12 +152,15 @@ public class AddAuthorDialog extends JDialog {
                     }
                     String id = getName().replaceAll(" ", "") + "_" + getDateOfBirth();
                     if (id.length() > 1) { //if the id is not empty
-                        if (RepoHandler.getAll(MainWindow.getRepo(), "Author").contains(id) || ModelHandler.contains(MainWindow.getModel(), id, RDF.TYPE, "Author", 'I')) {
+                        if (isAuthor && (RepoHandler.getAll(MainWindow.getRepo(), "Author").contains(id) || ModelHandler.contains(MainWindow.getModel(), id, RDF.TYPE, "Author", 'I'))) {
                             JOptionPane.showMessageDialog(null, "This author exists already.", "Error", JOptionPane.ERROR_MESSAGE);
+                            okToClose = false;
+                        } else if (!isAuthor && (RepoHandler.getAll(MainWindow.getRepo(), "Reader").contains(id) || ModelHandler.contains(MainWindow.getModel(), id, RDF.TYPE, "Reader", 'I'))) {
+                            JOptionPane.showMessageDialog(null, "This reader exists already.", "Error", JOptionPane.ERROR_MESSAGE);
                             okToClose = false;
                         }
                     } else {
-                        JOptionPane.showMessageDialog(null, "Please enter some information about the author.", "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Please enter some information about the person.", "Error", JOptionPane.ERROR_MESSAGE);
                         okToClose = false;
                     }
                 } else if (evt.getNewValue().equals("wait")) { //used to keep the dialog open, if the input was not ok

@@ -24,7 +24,7 @@ public class RepoHandler {
         return result;
     }
 
-    public static LinkedList<Book> searchBookWithFilter(Repository repo, String filter) {
+    public static LinkedList<Book> searchBookWithFilter(Repository repo, String filter, String reader) {
         LinkedList<Book> books = new LinkedList<Book>();
 
         try (RepositoryConnection conn = repo.getConnection()) {
@@ -33,7 +33,8 @@ public class RepoHandler {
                             "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
                             "PREFIX ex: <urn:absolute:www.example.com/ontologies/project-ontology#>\n" +
                             "SELECT * WHERE { " +
-                            "?b rdf:type ex:Book " +
+                            "?b rdf:type ex:Book ." +
+                            "?b ex:is_contained_in ex:Lib_"+reader+ " "+
                             "OPTIONAL{?b ex:has_author ?author } " +
                             "OPTIONAL{?b ex:has_title ?title } " +
                             "OPTIONAL{?b ex:has_publisher ?publisher } " +

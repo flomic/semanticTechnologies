@@ -90,7 +90,7 @@
 
 :Lib_R1 a :Library .
 
-:9780002318525 :belongs_to :Lib_R1 .
+:9780002318525 :is_contained_in :Lib_R1 .
 
 :P1 a :Publisher .
 
@@ -199,3 +199,29 @@
 	:has_title "Towards Zero" ;
 	:has_genre "Crime fiction" ;
 	:has_publisher :Dodd__Mead_and_Company .
+
+:hhh a :Publisher .
+
+:1234123412345 a :Book ;
+	:has_isbn "1234123412345" ;
+	:has_author :A_A_ ;
+	:has_title "testing" ;
+	:has_genre "kk" ;
+	:has_publisher :hhh ;
+	:is_contained_in :Lib_R1 .
+
+:Lib_R1 :belongs_to :R1 .
+
+:1234561234567 a :Book ;
+	:has_isbn "1234561234567" .
+
+:ChristineLunger_1993-01-25 a :Reader ;
+	:has_gender "female" ;
+	:has_name "Christine Lunger" ;
+	:has_date_of_birth "Mon Jan 25 00:00:00 CET 1993" ;
+	:has_library :Lib_ChristineLunger_1993-01-25 .
+
+:Lib_ChristineLunger_1993-01-25 a :Library .
+
+:1234561234567 :has_author :AB2 ;
+	:is_contained_in :Lib_ChristineLunger_1993-01-25 .
