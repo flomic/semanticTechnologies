@@ -47,7 +47,7 @@ public class AddBookDialog extends JDialog {
                 if (isbn.length() == 0) {
                     JOptionPane.showMessageDialog(null, "Please enter an ISBN number!", "Error", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    if (isbn.length() < 13) {
+                    if (isbn.length() < 10) {
                         JOptionPane.showMessageDialog(null, "Please enter a valid ISBN number!", "Error", JOptionPane.ERROR_MESSAGE);
                     } else downloadInfo(isbn);
                 }
@@ -373,7 +373,7 @@ public class AddBookDialog extends JDialog {
                 if (evt.getNewValue().equals("Save")) { //if the user clicked on save
 
                     //check the input for correctness and that isbn is not missing
-                    if (isbnTextField.getText().length() != 13 && isbnTextField.getText().length() != 17) {
+                    if (isbnTextField.getText().length() < 10) {
                         JOptionPane.showMessageDialog(null, "Please enter a correct ISBN number!", "Error", JOptionPane.ERROR_MESSAGE);
                         okToClose = false;
                     } else if (RepoHandler.searchBookWithFilter(MainWindow.getRepo(), "FILTER(?b = ex:" + isbnTextField.getText() + ")", MainWindow.reader).size() > 0) {

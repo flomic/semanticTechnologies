@@ -81,159 +81,6 @@
 :Reader a owl:Class ;
 	rdfs:subClassOf :Person .
 
-:B2 a :Book ;
-	:has_author :AB2 ;
-	:has_title "Title2" ;
-	:has_genre "Thriller" ;
-	:has_publication_year "2016" ;
-	:has_publisher :P1 .
-
-:Lib_R1 a :Library .
-
-:9780002318525 :is_contained_in :Lib_R1 .
-
-:P1 a :Publisher .
-
-:asdfsfa a :Book ;
-	:has_author :AB1 ;
-	:has_title "title" ;
-	:has_genre "asdf" ;
-	:has_publication_year "2123" ;
-	:has_publisher :P1 .
-
-:F_L_ a :Author ;
-	:has_gender "male" ;
-	:has_name "F" .
-
-:P2 a :Publisher .
-
-:B_C_ a :Author ;
-	:has_gender "male" ;
-	:has_name "B" .
-
-:P3 a :Publisher .
-
-:555 a :Book ;
-	:has_author :B_C_ ;
-	:has_title "Five" ;
-	:has_genre "Ger" ;
-	:has_publisher :P3 .
-
-:fn_lm_ a :Author ;
-	:has_gender "female" ;
-	:has_name "fn" .
-
-:hhhh a :Publisher .
-
-:123345 a :Book ;
-	:has_author :fn_lm_ ;
-	:has_title "hallo" ;
-	:has_genre "genre" ;
-	:has_publication_year "2017" ;
-	:has_publisher :hhhh .
-
-:A_A_ a :Author ;
-	:has_gender "male" ;
-	:has_name "A" .
-
-:C_C_ a :Author ;
-	:has_gender "male" ;
-	:has_name "C" .
-
-:34 a :Book ;
-	:has_author :AB1 .
-
-:hellohello_ a :Author ;
-	:has_gender "male" ;
-	:has_name "hellohello" .
-
-:3333333333333 a :Book ;
-	:has_title "hhh" .
-
-:Christine_1993-01-25 a :Author ;
-	:has_gender "female" ;
-	:has_name "Christine" ;
-	:has_date_of_birth "1993-01-25T00:00:00.000+01:00"^^xsd:dateTime .
-
-:CL a :Publisher .
-
-:1234567891011 a :Book ;
-	:has_author :Christine_1993-01-25 ;
-	:has_publisher :CL .
-
-:hhh_ a :Author ;
-	:has_gender "male" ;
-	:has_name "hhh" .
-
-:kkk_ a :Author ;
-	:has_gender "male" ;
-	:has_name "kkk" .
-
-:1234567898765 a :Book ;
-	:has_author :C_C_ ;
-	:has_title "hets" ;
-	:has_publisher :CL .
-
-:FM_ a :Author ;
-	:has_gender "male" ;
-	:has_name "F M" .
-
-:P_and_P a :Publisher .
-
-:9879879879876 a :Book ;
-	:has_isbn "9879879879876" ;
-	:has_author :FM_ ;
-	:has_title "Hello World" ;
-	:has_genre "Krimi" ;
-	:has_publication_year "2014" ;
-	:has_publisher :CL .
-
-:AgathaMaryClarissaMiller_ a :Author ;
-	:has_name "Agatha Mary Clarissa Miller" .
-
-:Dodd__Mead_and_Company a :Publisher .
-
-:9780002318525 a :Book ;
-	:has_isbn "9780002318525" ;
-	:has_author :AgathaMaryClarissaMiller_ ;
-	:has_title "Towards Zero" ;
-	:has_genre "Crime fiction" ;
-	:has_publisher :Dodd__Mead_and_Company .
-
-:hhh a :Publisher .
-
-:1234123412345 a :Book ;
-	:has_isbn "1234123412345" ;
-	:has_author :A_A_ ;
-	:has_title "testing" ;
-	:has_genre "kk" ;
-	:has_publisher :hhh ;
-	:is_contained_in :Lib_R1 .
-
-:Lib_R1 :belongs_to :R1 .
-
-:1234561234567 a :Book ;
-	:has_isbn "1234561234567" .
-
-:ChristineLunger_1993-01-25 a :Reader ;
-	:has_gender "female" ;
-	:has_name "Christine Lunger" ;
-	:has_date_of_birth "Mon Jan 25 00:00:00 CET 1993" ;
-	:has_library :Lib_ChristineLunger_1993-01-25 .
-
-:Lib_ChristineLunger_1993-01-25 a :Library .
-
-:1234561234567 :has_author :AB2 ;
-	:is_contained_in :Lib_ChristineLunger_1993-01-25 .
-
-:FlorianMichaeler_1987.07.25 a :Reader ;
-	:has_gender "male" ;
-	:has_name "FlorianMichaeler" ;
-	:has_date_of_birth "Sat Jul 25 00:00:00 CEST 1987" ;
-	:has_library :Lib_FlorianMichaeler_1987.07.25 .
-
-:Lib_FlorianMichaeler_1987.07.25 a :Library .
-
 :FlorianMichaeler_1987-07-25 a :Reader ;
 	:has_gender "male" ;
 	:has_name "Florian Michaeler" ;
@@ -242,99 +89,13 @@
 
 :Lib_FlorianMichaeler_1987-07-25 a :Library .
 
-:JoanneRowling_ a :Author ;
-	:has_name "Joanne Rowling" .
+:ChristineLunger_1993-01-25 a :Reader ;
+	:has_gender "male" ;
+	:has_name "Christine Lunger" ;
+	:has_date_of_birth "Mon Jan 25 00:00:00 CET 1993" ;
+	:has_library :Lib_ChristineLunger_1993-01-25 .
 
-:Sphere_Books a :Publisher .
-
-:978-1-4087-0402-8 a :Book ;
-	:has_isbn "978-1-4087-0402-8" ;
-	:has_author :JoanneRowling_ ;
-	:has_title "The Silkworm" ;
-	:has_genre "Crime fiction" ;
-	:has_publisher :Sphere_Books ;
-	:is_contained_in :Lib_FlorianMichaeler_1987-07-25 .
-
-:StephenEdwinKing_ a :Author ;
-	:has_name "Stephen Edwin King" .
-
-:Viking_Press a :Publisher .
-
-:978-0-670-85503-2 a :Book ;
-	:has_isbn "978-0-670-85503-2" ;
-	:has_author :StephenEdwinKing_ ;
-	:has_title "Insomnia (novel)" ;
-	:has_genre "Horror fiction" ;
-	:has_publisher :Viking_Press ;
-	:is_contained_in :Lib_FlorianMichaeler_1987-07-25 .
-
-:JoanneRowling_1965-07-31 a :Author ;
-	:has_name "Joanne Rowling" ;
-	:has_date_of_birth "1965-07-31T00:00:00.000+01:00"^^xsd:dateTime .
-
-:978-1-4087-0402-8 :has_author :JoanneRowling_1965-07-31 ;
-	:has_publication_year "2014" ;
-	:is_contained_in :Lib_R1 .
-
-:PhilipMichaelOndaatje_1943-09-12 a :Author ;
-	:has_name "Philip Michael Ondaatje" ;
-	:has_date_of_birth "1943-09-12T00:00:00.000+02:00"^^xsd:dateTime .
-
-:McClelland___Stewart a :Publisher .
-
-:978-0-224-09361-3 a :Book ;
-	:has_isbn "978-0-224-09361-3" ;
-	:has_author :PhilipMichaelOndaatje_1943-09-12 ;
-	:has_title "The Cat's Table" ;
-	:has_genre "Bildungsroman" ;
-	:has_publication_year "2011" ;
-	:has_publisher :McClelland___Stewart ;
-	:is_contained_in :Lib_R1 .
-
-:EricMatthewSchlosser_1959-08-17 a :Author ;
-	:has_name "Eric Matthew Schlosser" ;
-	:has_date_of_birth "1959-08-17T00:00:00.000+01:00"^^xsd:dateTime .
-
-:Houghton_Mifflin_Harcourt a :Publisher .
-
-:0-395-97789-4 a :Book ;
-	:has_isbn "0-395-97789-4" ;
-	:has_author :EricMatthewSchlosser_1959-08-17 ;
-	:has_title "Fast Food Nation" ;
-	:has_genre "Non-fiction" ;
-	:has_publication_year "2001" ;
-	:has_publisher :Houghton_Mifflin_Harcourt ;
-	:is_contained_in :Lib_R1 .
-
-:JanetSchneider_1943-04-22 a :Author ;
-	:has_name "Janet Schneider" ;
-	:has_date_of_birth "1943-04-22T00:00:00.000+02:00"^^xsd:dateTime .
-
-:St__Martin_s_Press a :Publisher .
-
-:978-0-312-37763-2 a :Book ;
-	:has_isbn "978-0-312-37763-2" ;
-	:has_author :JanetSchneider_1943-04-22 ;
-	:has_title "Plum Lucky" ;
-	:has_genre "Crime fiction" ;
-	:has_publication_year "2008" ;
-	:has_publisher :St__Martin_s_Press ;
-	:is_contained_in :Lib_R1 .
-
-<urn:absolute:www.example.com/ontologies/project-ontology#ThomasKennerlyWolfe,Jr._1931-03-02> a :Author ;
-	:has_name "Thomas Kennerly Wolfe, Jr." ;
-	:has_date_of_birth "1931-03-02T00:00:00.000Z"^^xsd:dateTime .
-
-:Farrar__Straus_and_Giroux a :Publisher .
-
-:0-312-42444-2 a :Book ;
-	:has_isbn "0-312-42444-2" ;
-	:has_author <urn:absolute:www.example.com/ontologies/project-ontology#ThomasKennerlyWolfe,Jr._1931-03-02> ;
-	:has_title "I Am Charlotte Simmons" ;
-	:has_genre "Fiction" ;
-	:has_publication_year "2004" ;
-	:has_publisher :Farrar__Straus_and_Giroux ;
-	:is_contained_in :Lib_R1 .
+:Lib_ChristineLunger_1993-01-25 a :Library .
 
 <urn:absolute:www.example.com/ontologies/project-ontology#RichardRussellRiordan,Jr._1964-06-05> a :Author ;
 	:has_name "Richard Russell Riordan, Jr." ;
@@ -342,52 +103,226 @@
 
 :Disney_Publishing_Worldwide a :Publisher .
 
-:0-7868-5686-6 a :Book ;
-	:has_isbn "0-7868-5686-6" ;
+:9781423101468 a :Book ;
+	:has_isbn "9781423101468" ;
 	:has_author <urn:absolute:www.example.com/ontologies/project-ontology#RichardRussellRiordan,Jr._1964-06-05> ;
-	:has_title "The Sea of Monsters" ;
+	:has_title "The Battle of the Labyrinth" ;
 	:has_genre "Fantasy" ;
-	:has_publication_year "2006" ;
+	:has_publication_year "2008" ;
 	:has_publisher :Disney_Publishing_Worldwide ;
-	:is_contained_in :Lib_R1 .
+	:is_contained_in :Lib_ChristineLunger_1993-01-25 .
 
-:TerrenceRichardson_1965-08-14 a :Author ;
-	:has_name "Terrence Richardson" ;
-	:has_date_of_birth "1965-08-14T00:00:00.000+01:00"^^xsd:dateTime .
+:DavidMarkWeber_1952-10-24 a :Author ;
+	:has_name "David Mark Weber" ;
+	:has_date_of_birth "1952-10-24T00:00:00.000+01:00"^^xsd:dateTime .
 
-:Grand_Central_Publishing a :Publisher .
+:Tor_Books a :Publisher .
 
-:978-1-4555-1389-5 a :Book ;
-	:has_isbn "978-1-4555-1389-5" ;
-	:has_author :TerrenceRichardson_1965-08-14 ;
-	:has_title "Lady Gaga x Terry Richardson" ;
-	:has_genre "Photo-book" ;
-	:has_publication_year "2011" ;
-	:has_publisher :Grand_Central_Publishing ;
-	:is_contained_in :Lib_R1 .
+:978-0-7653-2156-5 a :Book ;
+	:has_isbn "978-0-7653-2156-5" ;
+	:has_author :DavidMarkWeber_1952-10-24 ;
+	:has_title "Like a Mighty Army" ;
+	:has_genre "Science fiction" ;
+	:has_publication_year "2014" ;
+	:has_publisher :Tor_Books ;
+	:is_contained_in :Lib_ChristineLunger_1993-01-25 .
+
+:0-7868-5629-7 a :Book ;
+	:has_isbn "0-7868-5629-7" ;
+	:has_author <urn:absolute:www.example.com/ontologies/project-ontology#RichardRussellRiordan,Jr._1964-06-05> ;
+	:has_title "The Lightning Thief" ;
+	:has_genre "Fantasy" ;
+	:has_publication_year "2005" ;
+	:has_publisher :Disney_Publishing_Worldwide ;
+	:is_contained_in :Lib_ChristineLunger_1993-01-25 .
+
+:MichaelPeterScott_1959-09-28 a :Author ;
+	:has_name "Michael Peter Scott" ;
+	:has_date_of_birth "1959-09-28T00:00:00.000+01:00"^^xsd:dateTime .
+
+:Random_House a :Publisher .
+
+:978-0-385-73529-2 a :Book ;
+	:has_isbn "978-0-385-73529-2" ;
+	:has_author :MichaelPeterScott_1959-09-28 ;
+	:has_title "The Sorceress: The Secrets of the Immortal Nicholas Flamel" ;
+	:has_genre "Fiction" ;
+	:has_publication_year "2009" ;
+	:has_publisher :Random_House ;
+	:is_contained_in :Lib_ChristineLunger_1993-01-25 .
+
+:MatthewWoodringStover_1962-01-29 a :Author ;
+	:has_name "Matthew Woodring Stover" ;
+	:has_date_of_birth "1962-01-29T00:00:00.000+01:00"^^xsd:dateTime .
+
+:Del_Rey_Books a :Publisher .
+
+:0-345-45587-8 a :Book ;
+	:has_isbn "0-345-45587-8" ;
+	:has_author :MatthewWoodringStover_1962-01-29 ;
+	:has_title "Caine Black Knife" ;
+	:has_genre "Science fiction" ;
+	:has_publication_year "2008" ;
+	:has_publisher :Del_Rey_Books ;
+	:is_contained_in :Lib_ChristineLunger_1993-01-25 .
+
+:JamesBrendanPatterson_1947-03-22 a :Author ;
+	:has_name "James Brendan Patterson" ;
+	:has_date_of_birth "1947-03-22T00:00:00.000+01:00"^^xsd:dateTime .
 
 :Little__Brown_and_Company a :Publisher .
 
-:9781408704202 a :Book ;
-	:has_isbn "9781408704202" ;
-	:has_author :JoanneRowling_1965-07-31 ;
-	:has_title "The Casual Vacancy" ;
-	:has_genre "Fiction" ;
-	:has_publication_year "2012" ;
+:978-0-316-69300-4 a :Book ;
+	:has_isbn "978-0-316-69300-4" ;
+	:has_author :JamesBrendanPatterson_1947-03-22 ;
+	:has_title "Four Blind Mice" ;
+	:has_genre "Thriller (genre)" ;
+	:has_publication_year "2002" ;
 	:has_publisher :Little__Brown_and_Company ;
-	:is_contained_in :Lib_R1 .
+	:is_contained_in :Lib_FlorianMichaeler_1987-07-25 .
 
-:CliveStaplesLewis_1898-11-29 a :Author ;
-	:has_name "Clive Staples Lewis" ;
-	:has_date_of_birth "1898-11-29T00:00:00.000+01:00"^^xsd:dateTime .
+<urn:absolute:www.example.com/ontologies/project-ontology#DavidMurrayPilkey,Jr._1966-03-04> a :Author ;
+	:has_name "David Murray Pilkey, Jr." ;
+	:has_date_of_birth "1966-03-04T00:00:00.000+01:00"^^xsd:dateTime .
 
-:The_Bodley_Head a :Publisher .
+:Scholastic_Corporation a :Publisher .
 
-:978-0-00-671683-9 a :Book ;
-	:has_isbn "978-0-00-671683-9" ;
-	:has_author :CliveStaplesLewis_1898-11-29 ;
-	:has_title "The Magician's Nephew" ;
-	:has_genre "Christian literature" ;
-	:has_publication_year "1955" ;
-	:has_publisher :The_Bodley_Head ;
-	:is_contained_in :Lib_R1 .
+:978-0-590-84628-8 a :Book ;
+	:has_isbn "978-0-590-84628-8" ;
+	:has_author <urn:absolute:www.example.com/ontologies/project-ontology#DavidMurrayPilkey,Jr._1966-03-04> ;
+	:has_title "The Adventures of Captain Underpants" ;
+	:has_genre "Children's literature" ;
+	:has_publication_year "1997" ;
+	:has_publisher :Scholastic_Corporation ;
+	:is_contained_in :Lib_FlorianMichaeler_1987-07-25 .
+
+:JoanneRowling_1965-07-31 a :Author ;
+	:has_name "Joanne Rowling" ;
+	:has_date_of_birth "1965-07-31T00:00:00.000+01:00"^^xsd:dateTime .
+
+:Sphere_Books a :Publisher .
+
+:978-0-7515-6227-9 a :Book ;
+	:has_isbn "978-0-7515-6227-9" ;
+	:has_author :JoanneRowling_1965-07-31 ;
+	:has_title "Career of Evil" ;
+	:has_genre "Crime fiction" ;
+	:has_publication_year "2015" ;
+	:has_publisher :Sphere_Books ;
+	:is_contained_in :Lib_FlorianMichaeler_1987-07-25 .
+
+:LoisJoyMcMaster_1949-11-02 a :Author ;
+	:has_name "Lois Joy McMaster" ;
+	:has_date_of_birth "1949-11-02T00:00:00.000+01:00"^^xsd:dateTime .
+
+:Baen_Books a :Publisher .
+
+:9781476781228 a :Book ;
+	:has_isbn "9781476781228" ;
+	:has_author :LoisJoyMcMaster_1949-11-02 ;
+	:has_title "Gentleman Jole and the Red Queen" ;
+	:has_genre "Science fiction" ;
+	:has_publication_year "2016" ;
+	:has_publisher :Baen_Books ;
+	:is_contained_in :Lib_FlorianMichaeler_1987-07-25 .
+
+<urn:absolute:www.example.com/ontologies/project-ontology#JamesOliverRigney,Jr._1948-10-17> a :Author ;
+	:has_name "James Oliver Rigney, Jr." ;
+	:has_date_of_birth "1948-10-17T00:00:00.000+01:00"^^xsd:dateTime .
+
+:Orbit_Books a :Publisher .
+
+:978-0-7653-2594-5 a :Book ;
+	:has_isbn "978-0-7653-2594-5" ;
+	:has_author <urn:absolute:www.example.com/ontologies/project-ontology#JamesOliverRigney,Jr._1948-10-17> ;
+	:has_title "Towers of Midnight" ;
+	:has_genre "Fantasy literature" ;
+	:has_publication_year "2010" ;
+	:has_publisher :Orbit_Books ;
+	:is_contained_in :Lib_FlorianMichaeler_1987-07-25 .
+
+:ExampleReader_2017-02-03 a :Reader ;
+	:has_gender "male" ;
+	:has_name "Example Reader" ;
+	:has_date_of_birth "Fri Feb 03 00:00:00 CET 2017" ;
+	:has_library :Lib_ExampleReader_2017-02-03 .
+
+:Lib_ExampleReader_2017-02-03 a :Library .
+
+:MarionFayBeardsley_1943-05-07 a :Author ;
+	:has_name "Marion Fay Beardsley" ;
+	:has_date_of_birth "1943-05-07T00:00:00.000+02:00"^^xsd:dateTime .
+
+:978-1-4000-6910-1 a :Book ;
+	:has_isbn "978-1-4000-6910-1" ;
+	:has_author :MarionFayBeardsley_1943-05-07 ;
+	:has_title "Once Upon a Secret" ;
+	:has_genre "Autobiography" ;
+	:has_publication_year "2012" ;
+	:has_publisher :Random_House ;
+	:is_contained_in :Lib_ExampleReader_2017-02-03 .
+
+:978-1-4231-4059-7 a :Book ;
+	:has_isbn "978-1-4231-4059-7" ;
+	:has_author <urn:absolute:www.example.com/ontologies/project-ontology#RichardRussellRiordan,Jr._1964-06-05> ;
+	:has_title "The Son of Neptune" ;
+	:has_genre "Young-adult fiction" ;
+	:has_publication_year "2011" ;
+	:has_publisher :Disney_Publishing_Worldwide ;
+	:is_contained_in :Lib_ExampleReader_2017-02-03 .
+
+:AnnaSophiaGodbersen_1980-04-10 a :Author ;
+	:has_name "Anna Sophia Godbersen" ;
+	:has_date_of_birth "1980-04-10T00:00:00.000+02:00"^^xsd:dateTime .
+
+:HarperCollins a :Publisher .
+
+:0-06-134569-5 a :Book ;
+	:has_isbn "0-06-134569-5" ;
+	:has_author :AnnaSophiaGodbersen_1980-04-10 ;
+	:has_title "Rumors: A Luxe Novel" ;
+	:has_genre "Young-adult fiction" ;
+	:has_publication_year "2008" ;
+	:has_publisher :HarperCollins ;
+	:is_contained_in :Lib_ExampleReader_2017-02-03 .
+
+:FrancisMartinPatrickBoyle_1972-08-16 a :Author ;
+	:has_name "Francis Martin Patrick Boyle" ;
+	:has_date_of_birth "1972-08-16T00:00:00.000+01:00"^^xsd:dateTime .
+
+:0-00-732450-2 a :Book ;
+	:has_isbn "0-00-732450-2" ;
+	:has_author :FrancisMartinPatrickBoyle_1972-08-16 ;
+	:has_title "My Shit Life So Far" ;
+	:has_genre "Autobiography" ;
+	:has_publication_year "2009" ;
+	:has_publisher :HarperCollins ;
+	:is_contained_in :Lib_ExampleReader_2017-02-03 .
+
+:JacquelineAnneFrench_1953-11-29 a :Author ;
+	:has_name "Jacqueline Anne French" ;
+	:has_date_of_birth "1953-11-29T00:00:00.000+01:00"^^xsd:dateTime .
+
+:978-0-207-20011-3 a :Book ;
+	:has_isbn "978-0-207-20011-3" ;
+	:has_author :JacquelineAnneFrench_1953-11-29 ;
+	:has_title "They Came on Viking Ships" ;
+	:has_genre "Children's literature" ;
+	:has_publication_year "2005" ;
+	:has_publisher :HarperCollins ;
+	:is_contained_in :Lib_ExampleReader_2017-02-03 .
+
+:JacquelineAmandaWoodson_1963-02-12 a :Author ;
+	:has_name "Jacqueline Amanda Woodson" ;
+	:has_date_of_birth "1963-02-12T00:00:00.000+01:00"^^xsd:dateTime .
+
+:Penguin_Group a :Publisher .
+
+:0399252517 a :Book ;
+	:has_isbn "0399252517" ;
+	:has_author :JacquelineAmandaWoodson_1963-02-12 ;
+	:has_title "Brown Girl Dreaming" ;
+	:has_genre "Children's literature" ;
+	:has_publication_year "2014" ;
+	:has_publisher :Penguin_Group ;
+	:is_contained_in :Lib_ExampleReader_2017-02-03 .
